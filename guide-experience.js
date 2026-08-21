@@ -40,6 +40,8 @@
 
   const natureTitles=['Arnika-Route KB 3','XXL-Bank Kerschenbach','Wassererlebnisplatz'];
   const serviceTitles=['REWE Stadtkyll','Marien-Apotheke','Ärztliche Versorgung','E-Auto laden','Tourist-Information'];
+  const HOME_ROTATION_KEY='waldhaus2.homeDiscoverTipIndex';
+  let currentHomeFeature=null;
 
   function esc(value){return String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');}
   function itemByTitle(title){return typeof guideItems==='undefined'?null:guideItems.find(item=>item.title===title)||null;}
@@ -105,6 +107,90 @@
     }
   }
 
+  function homeFeatureCards(hub){
+    return [...hub.querySelectorAll('#stayActivityRail .stay-experience-card,#stayDiningRail .stay-experience-card')]
+      .filter(card=>card.querySelector('img')&&card.querySelector('h3')&&card.querySelector('p'));
+  }
+
+  function featureFromCard(card){
+    const image=card.querySelector('img');
+    return {
+      title:card.querySelector('h3')?.textContent.trim()||'',
+      text:card.querySelector('p')?.textContent.trim()||'',
+      label:card.querySelector('small')?.textContent.trim()||'Für eure Auszeit',
+      image:image?.currentSrc||image?.src||''
+    };
+  }
+
+  function applyHomeFeature(feature,hub){
+    if(!feature?.title||!feature.image)return;
+    const label=document.querySelector('#smartTipLabel');
+    const title=document.querySelector('#smartTipTitle');
+    const text=document.querySelector('#smartTipText');
+    const media=document.querySelector('.feature-media-guide');
+    const card=document.querySelector('.smart-card');
+    if(label)label.textContent=feature.label;
+    if(title)title.textContent=feature.title;
+    if(text)text.textContent=feature.text;
+    if(card)card.dataset.discoverFeature=feature.title;
+    if(media){
+      let preview=media.querySelector('img[data-home-discover-image]');
+      if(!preview){
+        preview=document.createElement('img');
+        preview.dataset.homeDiscoverImage='1';
+        preview.alt='';
+        preview.loading='eager';
+        preview.decoding='async';
+        preview.referrerPolicy='no-referrer';
+        Object.assign(preview.style,{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center',display:'block'});
+        media.replaceChildren(preview);
+      }
+      if(preview.src!==feature.image)preview.src=feature.image;
+      preview.onerror=()=>{if(currentHomeFeature===feature)rotateHomeFeature(hub,true);};
+    }
+  }
+
+  function rotateHomeFeature(hub,advance=true){
+    const features=homeFeatureCards(hub).map(featureFromCard).filter(item=>item.title&&item.image);
+    if(!features.length)return;
+    let index=Number.parseInt(localStorage.getItem(HOME_ROTATION_KEY)??'-1',10);
+    if(!Number.isFinite(index)||index<0||index>=features.length)index=-1;
+    if(advance||index<0)index=(index+1)%features.length;
+    currentHomeFeature=features[index];
+    localStorage.setItem(HOME_ROTATION_KEY,String(index));
+    applyHomeFeature(currentHomeFeature,hub);
+  }
+
+  function ensureHomeFeature(hub){
+    if(!currentHomeFeature)return;
+    const title=document.querySelector('#smartTipTitle')?.textContent.trim();
+    const text=document.querySelector('#smartTipText')?.textContent.trim();
+    const label=document.querySelector('#smartTipLabel')?.textContent.trim();
+    if(title!==currentHomeFeature.title||text!==currentHomeFeature.text||label!==currentHomeFeature.label)applyHomeFeature(currentHomeFeature,hub);
+  }
+
+  function bindHomeFeatureRotation(hub){
+    const card=document.querySelector('.smart-card');
+    if(!card||card.dataset.discoverRotationBound==='1')return;
+    card.dataset.discoverRotationBound='1';
+    rotateHomeFeature(hub,true);
+
+    document.querySelectorAll('[data-view-target="home"],#backToGuest,#salesGuestPreview').forEach(button=>button.addEventListener('click',()=>setTimeout(()=>rotateHomeFeature(hub,true),40)));
+
+    const cta=card.querySelector('[data-view-target="guide"]');
+    cta?.addEventListener('click',()=>setTimeout(()=>{
+      if(!currentHomeFeature)return;
+      const target=homeFeatureCards(hub).find(node=>node.querySelector('h3')?.textContent.trim()===currentHomeFeature.title);
+      target?.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+    },80));
+
+    const copy=card.querySelector('.feature-copy');
+    if(copy){
+      const observer=new MutationObserver(()=>ensureHomeFeature(hub));
+      observer.observe(copy,{subtree:true,childList:true,characterData:true});
+    }
+  }
+
   function unifyDiscover(){
     const guide=document.querySelector('[data-view="guide"]');
     const hub=document.querySelector('#stayExperiences');
@@ -138,6 +224,7 @@
 
     extra.querySelectorAll('.stay-experience-rail').forEach(bindRail);
     extra.querySelectorAll('[data-guide-scroll]').forEach(button=>button.addEventListener('click',()=>{const rail=document.getElementById(button.dataset.guideScroll);if(!rail)return;const card=rail.querySelector('.stay-experience-card');const step=(card?.getBoundingClientRect().width||300)+16;rail.scrollBy({left:(Number(button.dataset.direction)||1)*step,behavior:'smooth'});}));
+    bindHomeFeatureRotation(hub);
     return true;
   }
 

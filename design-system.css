@@ -450,3 +450,24 @@ body .mobile-nav-item:active{transform:scale(.97)}
   body .button:hover,body .text-link:hover,body .nav-item:hover,body .quick-card:hover,
   body .house-card:hover,body .mobile-nav-item:active{transform:none!important}
 }
+
+/* Rotating home feature: contrast must stay reliable for every photograph. */
+body .feature-card .feature-overlay{
+  background:linear-gradient(90deg,rgba(5,17,12,.96) 0%,rgba(5,17,12,.86) 34%,rgba(5,17,12,.62) 55%,rgba(5,17,12,.28) 76%,rgba(5,17,12,.12) 100%);
+}
+body .feature-card .feature-copy{color:#FFFDF8}
+body .feature-card .feature-copy .card-label,
+body .feature-card .feature-copy h2,
+body .feature-card .feature-copy p{
+  color:#FFFDF8;
+  text-shadow:0 2px 16px rgba(0,0,0,.34);
+}
+body .feature-card .feature-copy .card-label{opacity:.96}
+body .feature-card .feature-copy p{color:rgba(255,253,248,.94)}
+body .feature-card .button-white{text-shadow:none}
+
+@media(prefers-contrast:more){
+  body .feature-card .feature-overlay{
+    background:linear-gradient(90deg,rgba(3,12,8,.98) 0%,rgba(3,12,8,.92) 42%,rgba(3,12,8,.72) 62%,rgba(3,12,8,.38) 82%,rgba(3,12,8,.20) 100%);
+  }
+}

@@ -91,6 +91,280 @@ body .hero-daytime .hero-plan-button{
 body .hero-daytime .hero-plan-button:hover{background:#e2b462;border-color:#e9c887}
 body .hero-daytime .hero-plan-button:focus-visible{outline-color:#fffdf8}
 
+/* Start · approved welcome-card direction
+   Calm ivory surfaces, restrained forest linework and one strong forest CTA. */
+body .view[data-view="home"] .welcome-grid{
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:stretch;
+}
+body .view[data-view="home"] .trip-card,
+body .view[data-view="home"] .next-card{
+  position:relative;
+  min-height:430px;
+  overflow:hidden;
+  border:1px solid #d6d3c9;
+  border-radius:30px;
+  background:#fbfaf5!important;
+  box-shadow:0 18px 46px rgba(31,58,48,.085)!important;
+  color:#17201c;
+  isolation:isolate;
+}
+body .view[data-view="home"] .trip-card::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:-24px;
+  right:-28px;
+  width:320px;
+  height:210px;
+  opacity:.13;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 210' fill='none' stroke='%23587364' stroke-width='2'%3E%3Cpath d='M40 0l18 55-7 49 39 15 22 60M86 0l10 49 45 8 7 42 35 17 15 94M126 0l8 34 44 11 5 42 46 9 12 50M170 0l8 28 42 14 9 44 42 14 8 50M216 0l11 36 40 17 10 42 43 12'/%3E%3Cpath d='M58 55l38-6 38-15 44-6 49 8M51 104l45-7 52 2 35-12 46-1 48 9M90 119l51-12 42 9 46-20 48 11M112 179l36-40 50 71M241 146l8 34m-8-22h16m-13 9h11'/%3E%3C/svg%3E");
+}
+body .view[data-view="home"] .trip-card{
+  display:grid;
+  grid-template-columns:118px minmax(0,1fr);
+  grid-template-rows:auto 1fr;
+  column-gap:30px;
+  row-gap:0;
+  padding:34px 34px 130px;
+  align-items:center;
+}
+body .view[data-view="home"] .trip-card>.card-label{
+  grid-column:1/-1;
+  grid-row:1;
+  align-self:start;
+  margin:0 0 20px;
+  color:#385846!important;
+  font-size:12px;
+  letter-spacing:.15em;
+}
+body .view[data-view="home"] .trip-card .trip-date{
+  grid-column:1;
+  grid-row:2;
+  width:112px;
+  height:112px;
+  border-radius:22px;
+  align-self:center;
+  background-color:#f7f3e8;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:72px 72px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%236b8978' stroke-width='4' stroke-linejoin='round'%3E%3Cpath d='M13 79L50 17l37 62H13z'/%3E%3Cpath d='M28 79V50h44v29M41 79V60h18v19M22 64h56M50 17v17'/%3E%3C/svg%3E");
+  border:1px solid rgba(214,166,90,.12);
+  box-shadow:0 14px 30px rgba(31,58,48,.07);
+}
+body .view[data-view="home"] .trip-card .trip-date>*{visibility:hidden!important}
+body .view[data-view="home"] .trip-card .trip-copy{
+  grid-column:2;
+  grid-row:2;
+  align-self:center;
+  padding-right:145px;
+}
+body .view[data-view="home"] .trip-card .trip-copy h2{
+  margin:0;
+  max-width:540px;
+  color:#17201c;
+  font-size:clamp(38px,3.2vw,54px);
+  line-height:1.05;
+  letter-spacing:-.035em;
+}
+body .view[data-view="home"] .trip-card .trip-copy p{
+  max-width:560px;
+  margin:20px 0 0;
+  color:#59635c!important;
+  font-size:16px;
+  line-height:1.6;
+}
+body .view[data-view="home"] .trip-card .avatar-row{
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:18px;
+  margin:0;
+  justify-content:center;
+  min-height:24px;
+}
+body .view[data-view="home"] .trip-card .avatar-row>*{display:none!important}
+body .view[data-view="home"] .trip-card .avatar-row::after{
+  content:"Oder Inspiration finden unter „Highlights“";
+  color:#536159;
+  font-size:14px;
+  line-height:1.35;
+}
+body .view[data-view="home"] .trip-card>.trip-add-button{
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:54px;
+  width:auto;
+  min-height:58px;
+  padding:0 22px;
+  border:1px solid #557361;
+  border-radius:8px;
+  background:linear-gradient(180deg,#557361,#4c6858);
+  color:#fffdf8;
+  box-shadow:0 11px 24px rgba(31,58,48,.12);
+  text-align:center;
+  text-transform:uppercase;
+  letter-spacing:.035em;
+  font-size:15px;
+  font-weight:900;
+}
+body .view[data-view="home"] .trip-card>.trip-add-button:hover{
+  background:linear-gradient(180deg,#5f7c69,#53705e);
+  transform:translateY(-1px);
+}
+body .view[data-view="home"] .trip-details-link{
+  position:absolute;
+  top:51%;
+  right:34px;
+  z-index:2;
+  border:0;
+  padding:8px 0;
+  background:transparent;
+  color:#385846;
+  font-size:13px;
+  line-height:1;
+  font-weight:900;
+  cursor:pointer;
+  white-space:nowrap;
+}
+body .view[data-view="home"] .trip-details-link:hover{text-decoration:underline;text-underline-offset:4px}
+
+body .view[data-view="home"] .next-card{
+  padding:34px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+body .view[data-view="home"] .next-card::before,
+body .view[data-view="home"] .next-card::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  opacity:.12;
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+body .view[data-view="home"] .next-card::before{
+  top:-18px;
+  right:-18px;
+  width:270px;
+  height:150px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 270 150' fill='none' stroke='%23587364' stroke-width='2'%3E%3Cpath d='M12 1l38 48 37-17 37 38 44-45 42 20 49-37M161 0l12 42 47 11 8 52 42 15'/%3E%3Cpath d='M38 10l-9 16h7l-12 19h11v16m34-48l-8 14h6l-10 17h10v14m45-35l-7 13h6l-9 16h9v14m38-20l-8 15h7l-11 18h10v15m40-42l-8 14h7l-10 17h9v15'/%3E%3C/svg%3E");
+}
+body .view[data-view="home"] .next-card::after{
+  right:-6px;
+  bottom:-10px;
+  width:290px;
+  height:180px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 290 180' fill='none' stroke='%23587364' stroke-width='2'%3E%3Cpath d='M204 164l34-58 34 58h-68zM219 164v-27h38v27M233 164v-17h12v17'/%3E%3Cpath d='M22 117l-10 17h8L8 154h11v22m34-94l-9 16h7l-11 18h10v22m39-51l-9 16h7l-11 19h10v25m42-35l-10 17h8l-12 20h11v27m45-93l-9 16h7l-11 19h10v24'/%3E%3Cpath d='M8 176c42-4 67-28 102-28 35 0 52 27 88 27'/%3E%3C/svg%3E");
+}
+body .view[data-view="home"] .next-card>.card-label{
+  margin:0 0 24px;
+  color:#385846!important;
+  font-size:12px;
+  letter-spacing:.15em;
+}
+body .view[data-view="home"] .next-card .next-icon{
+  width:54px;
+  height:54px;
+  margin:0 0 26px;
+  border:1px solid #dbe5dd;
+  border-radius:15px;
+  background:#edf3ee;
+  color:#4b745f;
+  font-size:21px;
+  box-shadow:none;
+}
+body .view[data-view="home"] .next-card h2{
+  max-width:620px;
+  color:#17201c;
+  font-size:clamp(34px,2.7vw,45px);
+  line-height:1.08;
+  letter-spacing:-.03em;
+}
+body .view[data-view="home"] .next-card>p{
+  max-width:640px;
+  margin:24px 0 18px;
+  color:#59635c!important;
+  font-size:16px;
+  line-height:1.65;
+}
+body .view[data-view="home"] .next-card .mini-list{
+  margin:4px 0 24px;
+  gap:9px;
+}
+body .view[data-view="home"] .next-card .mini-list span{
+  padding:9px 12px;
+  border:1px solid #789183;
+  border-radius:11px;
+  background:rgba(251,250,245,.78);
+  color:#536159;
+  font-size:12px;
+  box-shadow:0 4px 12px rgba(31,58,48,.025);
+}
+body .view[data-view="home"] .next-card .mini-list b{color:#17201c;font-weight:900}
+body .view[data-view="home"] .next-card>.button-soft{
+  min-height:56px;
+  margin-top:auto;
+  padding:0 20px;
+  border:2px solid #496857;
+  border-radius:10px;
+  background:#fffdf8;
+  color:#17201c;
+  box-shadow:0 8px 20px rgba(31,58,48,.055);
+  font-size:14px;
+  font-weight:900;
+}
+body .view[data-view="home"] .next-card>.button-soft:hover{background:#f1f4ef;border-color:#385846}
+
+@media(max-width:1080px){
+  body .view[data-view="home"] .welcome-grid{grid-template-columns:1fr}
+  body .view[data-view="home"] .trip-card,
+  body .view[data-view="home"] .next-card{min-height:400px}
+}
+@media(max-width:760px){
+  body .view[data-view="home"] .trip-card,
+  body .view[data-view="home"] .next-card{border-radius:24px}
+  body .view[data-view="home"] .trip-card{
+    min-height:500px;
+    grid-template-columns:92px minmax(0,1fr);
+    column-gap:20px;
+    padding:26px 22px 132px;
+  }
+  body .view[data-view="home"] .trip-card .trip-date{width:88px;height:88px;background-size:58px 58px;border-radius:18px}
+  body .view[data-view="home"] .trip-card .trip-copy{padding-right:0}
+  body .view[data-view="home"] .trip-card .trip-copy h2{font-size:clamp(34px,9vw,46px)}
+  body .view[data-view="home"] .trip-card .trip-copy p{font-size:15px;margin-top:14px}
+  body .view[data-view="home"] .trip-details-link{top:auto;right:22px;bottom:190px;font-size:12px}
+  body .view[data-view="home"] .trip-card>.trip-add-button{left:22px;right:22px;bottom:58px;min-height:56px}
+  body .view[data-view="home"] .trip-card .avatar-row{left:22px;right:22px;bottom:20px}
+  body .view[data-view="home"] .trip-card .avatar-row::after{font-size:12px}
+  body .view[data-view="home"] .next-card{padding:28px 22px;min-height:430px}
+  body .view[data-view="home"] .next-card h2{font-size:clamp(32px,8vw,42px)}
+  body .view[data-view="home"] .next-card>p{font-size:15px;margin-top:18px}
+}
+@media(max-width:520px){
+  body .view[data-view="home"] .trip-card{
+    display:block;
+    min-height:570px;
+    padding:24px 18px 132px;
+  }
+  body .view[data-view="home"] .trip-card>.card-label{margin-bottom:24px}
+  body .view[data-view="home"] .trip-card .trip-date{margin-bottom:22px}
+  body .view[data-view="home"] .trip-card .trip-copy h2{font-size:38px}
+  body .view[data-view="home"] .trip-details-link{right:18px;bottom:194px}
+  body .view[data-view="home"] .trip-card>.trip-add-button{left:18px;right:18px}
+  body .view[data-view="home"] .next-card{padding:24px 18px}
+  body .view[data-view="home"] .next-card .mini-list{gap:7px}
+  body .view[data-view="home"] .next-card .mini-list span{padding:8px 9px}
+}
+
 @media(max-width:900px){
   body .hero.hero-daytime{min-height:640px}
   body .hero-daytime .hero-image{background-position:58% center!important}

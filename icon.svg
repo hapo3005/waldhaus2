@@ -1,20 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="waldhausLogoTitle waldhausLogoDesc">
   <title id="waldhausLogoTitle">Waldhaus – Natur &amp; Entspannung</title>
-  <desc id="waldhausLogoDesc">Waldhaus Kreislogo mit A-Frame-Haus und Kamin in Warm Ivory auf Deep Forest.</desc>
+  <desc id="waldhausLogoDesc">Die freigegebene Waldhaus-Logoform als helle UI-Variante in Warm White auf Deep Forest.</desc>
+  <defs>
+    <filter id="waldhausLightUi" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="logoLuminance"/>
+      <feComponentTransfer in="logoLuminance" result="logoMask">
+        <feFuncA type="linear" slope="8" intercept="-4"/>
+      </feComponentTransfer>
+      <feFlood flood-color="#F8F5ED" result="warmWhite"/>
+      <feComposite in="warmWhite" in2="logoMask" operator="in"/>
+    </filter>
+  </defs>
   <rect width="192" height="192" rx="36" fill="#13261F"/>
-  <g fill="none" stroke="#F8F5ED" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="96" cy="96" r="82" stroke-width="3"/>
-    <path d="M48 120H144" stroke-width="3.4"/>
-    <path d="M51 120L96 35L141 120" stroke-width="4.2"/>
-    <path d="M60 120L96 50L132 120" stroke-width="2.7"/>
-    <path d="M72 86H120" stroke-width="3"/>
-    <path d="M79 86L96 58L113 86" stroke-width="2.5"/>
-    <path d="M84 86V74M96 86V59M108 86V74" stroke-width="2"/>
-    <path d="M85 120V87H107V120" stroke-width="2.7"/>
-    <path d="M85 104H107M96 87V120" stroke-width="2"/>
-    <path d="M65 82V47H74V67" stroke-width="3"/>
-    <path d="M63 47H76L73 43H66Z" stroke-width="2.4"/>
-  </g>
-  <text x="96" y="145" text-anchor="middle" fill="#F8F5ED" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="1.1">WALDHAUS</text>
-  <text x="96" y="158.5" text-anchor="middle" fill="#F8F5ED" font-family="Arial, Helvetica, sans-serif" font-size="7.5" font-weight="400" letter-spacing=".35">Natur &amp; Entspannung</text>
+  <image href="icon-192.png" width="192" height="192" preserveAspectRatio="xMidYMid meet" filter="url(#waldhausLightUi)"/>
 </svg>

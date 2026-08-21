@@ -1,5 +1,6 @@
 /* Waldhaus2 · content pruning
    Remove low-value informational blocks from the guest journey. */
-#guestContribution{
+#guestContribution,
+#verifiedHouseFacts{
   display:none!important;
 }

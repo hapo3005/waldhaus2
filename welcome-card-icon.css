@@ -1,0 +1,7 @@
+/* Waldhaus2 · refined A-frame icon for the empty-trip card */
+body .view[data-view="home"] .trip-card .trip-date{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100' fill='none' stroke='%236B8978' stroke-width='4.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 87L60 15l46 72'/%3E%3Cpath d='M26 87L60 34l34 53' opacity='.56'/%3E%3Cpath d='M12 87h96' opacity='.85'/%3E%3Cpath d='M35 64h50v23H35z'/%3E%3Cpath d='M35 64l25-30 25 30' opacity='.72'/%3E%3Cpath d='M53 87V68h14v19'/%3E%3Cpath d='M40 70h9v10h-9zM71 70h9v10h-9z' stroke-width='3.4'/%3E%3Cpath d='M32 58h56' opacity='.45'/%3E%3C/svg%3E")!important;
+  background-size:82px 72px!important;
+  background-position:center 51%!important;
+  background-repeat:no-repeat!important;
+}

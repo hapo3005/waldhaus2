@@ -1,0 +1,171 @@
+/* Waldhaus2 · Illustrated hospitality shortcuts
+   Visual direction based on the approved 2×2 concept: calm editorial line-art,
+   clear icon chips and a stronger checkout moment without reducing readability. */
+
+body .quick-grid{
+  gap:18px;
+}
+
+body .quick-card{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:300px;
+  padding:30px 30px 28px;
+  align-content:end;
+  justify-items:start;
+  text-align:left;
+  border-radius:28px;
+  border:1px solid #D7D4CA;
+  background-color:#FFFDF8;
+  background-repeat:no-repeat;
+  background-size:78% auto;
+  background-position:105% 18%;
+  box-shadow:0 10px 30px rgba(31,47,40,.065);
+}
+
+body .quick-card>*{
+  position:relative;
+  z-index:2;
+}
+
+body .quick-card .quick-icon{
+  position:absolute;
+  top:28px;
+  left:28px;
+  width:64px;
+  height:64px;
+  border-radius:20px;
+  font-size:0;
+  background-color:#DDF2ED;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:34px 34px;
+  box-shadow:inset 0 0 0 1px rgba(28,77,61,.05);
+}
+
+body .quick-card strong{
+  display:block;
+  margin:0 0 8px;
+  color:#1F2521;
+  font-size:clamp(23px,2.1vw,30px);
+  line-height:1.05;
+  font-weight:850;
+  letter-spacing:-.025em;
+}
+
+body .quick-card small{
+  display:block;
+  max-width:24ch;
+  color:#59625B;
+  font-size:16px;
+  line-height:1.5;
+  opacity:1;
+}
+
+/* WLAN · small devices and a calm wifi arc composition. */
+body .quick-card:nth-child(1){
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 250'%3E%3Cg fill='none' stroke='%2379B7AB' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' opacity='.28'%3E%3Cpath d='M214 202c32-33 83-33 115 0'/%3E%3Cpath d='M231 220c23-22 59-22 82 0'/%3E%3Cpath d='M249 237c13-12 33-12 46 0'/%3E%3C/g%3E%3Cg fill='%23DDF2ED' stroke='%236FA79C' stroke-width='2.5' opacity='.78'%3E%3Crect x='142' y='46' width='55' height='42' rx='7' transform='rotate(12 169 67)'/%3E%3Crect x='222' y='76' width='58' height='44' rx='7' transform='rotate(6 251 98)'/%3E%3Crect x='162' y='126' width='66' height='49' rx='8' transform='rotate(-14 195 150)'/%3E%3C/g%3E%3Cg stroke='%23385F52' stroke-width='2' opacity='.42'%3E%3Cpath d='M154 63h28M153 70h18M233 93h30M232 100h22M177 146h31M176 154h24'/%3E%3C/g%3E%3Cg fill='%2388BBB1' opacity='.42'%3E%3Ccircle cx='112' cy='76' r='6'/%3E%3Ccircle cx='96' cy='146' r='5'/%3E%3Crect x='116' y='108' width='9' height='20' rx='2' transform='rotate(-30 120 118)'/%3E%3Crect x='290' y='52' width='9' height='20' rx='2' transform='rotate(20 295 62)'/%3E%3C/g%3E%3C/svg%3E");
+}
+body .quick-card:nth-child(1) .quick-icon{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M27 5 12 27h11l-2 16 15-23H25z' fill='none' stroke='%23194E3D' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Draußen · quiet top-view garden sketch. */
+body .quick-card:nth-child(2){
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 270'%3E%3Cg fill='none' stroke='%23A7A494' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.30'%3E%3Cpath d='M126 16 338 98 265 265 54 186z'/%3E%3Cpath d='M105 60c28-20 56-24 82-7s40 13 64-1 46-7 65 11'/%3E%3Cpath d='M82 140c26-21 54-19 75 2 20 20 45 23 70 8 29-18 59-14 86 9'/%3E%3Cellipse cx='181' cy='113' rx='46' ry='27'/%3E%3Cpath d='M146 188h74M157 174h52M168 160h30M164 160v42M202 160v42'/%3E%3Cpath d='M87 100c18 1 29 12 29 29s-11 29-29 30M293 128c-17 1-29 13-28 30 1 16 12 28 29 28'/%3E%3C/g%3E%3C/svg%3E");
+}
+body .quick-card:nth-child(2) .quick-icon{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23194E3D' stroke-width='3.1' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 18h32M11 23h26M15 23l-5 16M33 23l5 16M17 23l-2 16M31 23l2 16M10 39h28'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* In der Nähe · abstract map lines and destination markers. */
+body .quick-card:nth-child(3){
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 280'%3E%3Cg fill='none' stroke='%23B0AC9F' stroke-width='3' opacity='.30'%3E%3Cpath d='M12 43c54 27 70 66 65 116-3 34 11 63 43 97'/%3E%3Cpath d='M78 20c22 45 57 61 103 54 51-8 93 7 137 48'/%3E%3Cpath d='M18 211c57-43 108-48 156-16 43 29 93 23 164-20'/%3E%3Cpath d='M153 8c-11 52 5 91 48 117 42 25 60 63 52 115'/%3E%3C/g%3E%3Cg fill='%23E9EFE8' stroke='%2394AA9B' stroke-width='2' opacity='.78'%3E%3Ccircle cx='250' cy='95' r='26'/%3E%3Ccircle cx='174' cy='178' r='29'/%3E%3Ccircle cx='292' cy='207' r='24'/%3E%3C/g%3E%3Cg fill='none' stroke='%234D6E61' stroke-width='2.7' stroke-linecap='round' opacity='.65'%3E%3Cpath d='M243 91c0-8 13-8 13 0 0 8-6 13-6 13s-7-5-7-13z'/%3E%3Cpath d='M165 178c8-13 19-13 27 0-8 13-19 13-27 0z'/%3E%3Ccircle cx='179' cy='178' r='4'/%3E%3Cpath d='M284 198v18M292 195v21M300 199v17M281 207h22'/%3E%3C/g%3E%3C/svg%3E");
+}
+body .quick-card:nth-child(3) .quick-icon{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 43S10 31 10 20a14 14 0 1 1 28 0c0 11-14 23-14 23z' fill='none' stroke='%23194E3D' stroke-width='3.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='24' cy='20' r='4.5' fill='none' stroke='%23194E3D' stroke-width='3.1'/%3E%3C/svg%3E");
+}
+
+/* Abreise · richer forest moment with subtle luggage/key illustration. */
+body .quick-card:nth-child(4),
+body .quick-card.accent{
+  background-color:#183E32;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 360 270'%3E%3Cg fill='none' stroke='%23E5EFE9' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='.11'%3E%3Cpath d='M222 31h61c15 0 27 12 27 27v91H195V58c0-15 12-27 27-27z'/%3E%3Cpath d='M236 31V15h33v16M182 74v59M322 74v59'/%3E%3Cpath d='M205 224h108M222 195c-18 0-32 14-32 32 0 13 8 24 19 29l9-16 18 5 8-17 15 2 10-18-17-8-12 11z'/%3E%3Ccircle cx='222' cy='227' r='6'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:86% auto;
+  background-position:116% 14%;
+  border-color:#183E32;
+  box-shadow:0 16px 36px rgba(19,56,44,.16);
+}
+body .quick-card:nth-child(4) .quick-icon,
+body .quick-card.accent .quick-icon{
+  background-color:rgba(248,245,237,.12);
+  box-shadow:inset 0 0 0 1px rgba(248,245,237,.13);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='m11 25 9 9L38 11' fill='none' stroke='%23FFFDF8' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+body .quick-card:nth-child(4) strong,
+body .quick-card.accent strong{color:#FFFDF8}
+body .quick-card:nth-child(4) small,
+body .quick-card.accent small{color:#DDE8E1}
+
+/* Thin progress/accent line gives the tiles a finished product feel. */
+body .quick-card::after{
+  content:'';
+  position:absolute;
+  z-index:2;
+  left:30px;
+  right:30px;
+  bottom:18px;
+  height:3px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#AFCFC3 0 34%,#E4E7DE 34% 100%);
+  opacity:.9;
+}
+body .quick-card:nth-child(4)::after,
+body .quick-card.accent::after{
+  background:linear-gradient(90deg,#BCE5D8 0 34%,rgba(236,245,240,.16) 34% 100%);
+}
+
+body .quick-card:hover{
+  transform:translateY(-2px);
+  border-color:#C6CEC7;
+  box-shadow:0 18px 38px rgba(31,47,40,.10);
+}
+body .quick-card:nth-child(4):hover,
+body .quick-card.accent:hover{
+  background-color:#1C493A;
+  border-color:#1C493A;
+  box-shadow:0 18px 42px rgba(19,56,44,.20);
+}
+
+@media(max-width:980px){
+  body .quick-card{min-height:270px;padding:26px 26px 26px;background-size:82% auto}
+  body .quick-card .quick-icon{top:24px;left:24px;width:58px;height:58px;border-radius:18px;background-size:31px 31px}
+  body .quick-card::after{left:26px;right:26px;bottom:16px}
+}
+
+@media(max-width:620px){
+  body .quick-grid{grid-template-columns:1fr 1fr;gap:12px}
+  body .quick-card{min-height:230px;padding:22px 20px 24px;border-radius:22px;background-size:92% auto;background-position:112% 16%}
+  body .quick-card .quick-icon{top:18px;left:18px;width:52px;height:52px;border-radius:16px;background-size:28px 28px}
+  body .quick-card strong{font-size:20px;margin-bottom:6px}
+  body .quick-card small{font-size:14px;line-height:1.4}
+  body .quick-card::after{left:20px;right:20px;bottom:14px;height:3px}
+}
+
+@media(max-width:420px){
+  body .quick-grid{grid-template-columns:1fr}
+  body .quick-card{min-height:210px;background-size:70% auto;background-position:110% 10%}
+}
+
+@media(prefers-contrast:more){
+  body .quick-card{border-width:2px;border-color:#AAA79D}
+  body .quick-card small{color:#39443D}
+  body .quick-card:nth-child(4) small,body .quick-card.accent small{color:#F0F6F2}
+  body .quick-card::after{height:4px;opacity:1}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body .quick-card{transition:none!important}
+  body .quick-card:hover{transform:none!important}
+}

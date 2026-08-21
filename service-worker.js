@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-owner-fest-v4';
+const CACHE = 'waldhaus2-product-v5';
 const CORE = ['./','./index.html','./styles.css','./app.js','./owner-ops.js','./owner-ops.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',

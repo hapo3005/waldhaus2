@@ -1,28 +1,48 @@
-# Waldhaus 2 — Owner Fest Demo
+# Waldhaus 2
 
-A polished mobile-first guest app concept for private holiday homes in Kerschenbach / Eifel.
+Waldhaus2 is the optimized successor to the original `Waldhaus`: a focused mobile-first guest experience and lightweight owner workspace for the holiday homes in Kerschenbach / Eifel.
 
-## Demo goal
+## Product principle
 
-The product is intentionally presented as more than a website: it accompanies guests before arrival, during the stay, and at checkout — while giving owners a white-label digital guest experience they can customize for their own property.
+Reuse what already worked in the original Waldhaus, simplify it, and only add functionality that is useful for the small Kerschenbach owner group. Waldhaus2 is deliberately not being expanded into a generic vacation-rental SaaS at this stage.
 
-## Included in this demo
+## Guest experience
 
-- premium guest home screen
-- live weather via Open-Meteo (with graceful demo fallback)
-- dynamic arrival/stay presentation
-- curated local guide for Kerschenbach / Stadtkyll / Kronenburg
+- time-aware home screen without fake guest data
+- live Kerschenbach weather via Open-Meteo with a neutral unavailable state
+- arrival and stay guidance
+- curated Kerschenbach / Stadtkyll / Kronenburg guide, including verified food recommendations
 - digital housebook
 - interactive checkout checklist with local persistence
-- owner sales mode
-- live white-label house-name and visual-mood customization
-- installable PWA shell + offline cache for local app files
+- installable PWA shell and offline cache for local app files
 - responsive desktop/mobile navigation
 - reduced-motion accessibility support and keyboard focus states
 
+## Modes
+
+The normal GitHub Pages URL is the guest-facing Waldhaus and does not expose an owner/demo switch.
+
+- Guest: `/waldhaus2/`
+- Owner workspace: `/waldhaus2/?owner=1`
+- Presentation/demo mode with example data and sales content: `/waldhaus2/?demo=1`
+
+The query-string owner mode is currently only a UX separation for this static prototype, **not authentication**. Real authentication, central storage and tenant isolation are production infrastructure for a later validated phase.
+
+## Owner workspace
+
+- monthly occupancy view
+- upcoming stays
+- open inquiries
+- manual stay entry
+- overlap protection
+- source labels (Direkt / Booking / Airbnb / Privat)
+- house-name and visual-mood customization
+
+Normal mode removes old demo seed rows automatically. Demo rows are created only in explicit `?demo=1` presentation mode.
+
 ## Architecture
 
-This owner-fest version deliberately has no build step so it is easy to demo and deploy. `index.html`, `styles.css`, and `app.js` form the static app shell. Production multi-user auth, owner CMS, central database, tenant isolation, media management, analytics, and automated content freshness belong to the next product phase rather than being faked in the sales demo.
+There is intentionally no build step. `index.html`, `styles.css`, `app.js`, `owner-ops.js` and `owner-ops.css` form the static app shell. Production multi-user auth, owner CMS, central database, tenant isolation, media management, channel synchronization, payments and analytics are not faked in the static version.
 
 ## Local preview
 

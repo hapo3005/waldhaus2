@@ -1,0 +1,36 @@
+name: Demo quality gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Verify required demo files
+        run: |
+          test -f index.html
+          test -f styles.css
+          test -f app.js
+          test -f manifest.webmanifest
+          test -f service-worker.js
+          test -f icon-192.png
+          test -f icon-512.png
+
+      - name: Validate JavaScript syntax
+        run: node --check app.js
+
+      - name: Validate web manifest JSON
+        run: python -m json.tool manifest.webmanifest > /dev/null
+
+      - name: Guard against accidental placeholder secrets
+        run: |
+          ! grep -RniE '(api[_-]?key|secret|password)[[:space:]]*[:=][[:space:]]*["'"'][A-Za-z0-9_-]{20,}' --exclude-dir=.git .

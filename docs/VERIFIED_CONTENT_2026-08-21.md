@@ -102,6 +102,14 @@ Official sources:
 - emergency number: 112
 - medical on-call service: 116117
 
+### EV charging in Kerschenbach
+- two charging stations for electric cars at the Gemeindehaus
+- in operation since 19.09.2023
+- payment requires an app; the municipality provides Free WiFi on site if the app needs to be installed
+- the current municipality overview also references additional e-bike charging infrastructure
+- https://kerschenbach.de/aktuelles/?e-page-baf20b0=2
+- https://kerschenbach.de/der-ort/
+
 ### Tourist Information Stadtkyll
 - Burgberg 22, 54589 Stadtkyll
 - Mon–Fri 09:00–16:30
@@ -112,16 +120,18 @@ Official sources:
 ## Curated local guide
 
 ### Arnika-Route KB3
-The newer official route sheet is authoritative for the app:
+Consistent official facts:
 - 7 km
 - approx. 1:50 h
-- medium difficulty
 - 127 m ascent/descent
 - dog-friendly
 - views toward Kronenburger See and historic Kronenburg
+
+Official sources conflict on the difficulty rating: the current Gerolsteiner Land web page says **leicht**, while the official downloadable route sheet says **mittel**. Because both are first-party tourism sources, Waldhaus2 does not display a difficulty rating until the source is reconciled.
+- https://www.gerolsteiner-land.de/touren/kerschenbach-kb3
 - https://www.gerolsteiner-land.de/action/download?downloadId=3389518&id=address_23802
 
-Note: a Kerschenbach municipality summary describes local routes more generally and gives KB3 as 9 km. Waldhaus2 uses the newer, route-specific tourism data instead.
+A Kerschenbach municipality overview also gives KB3 generically as 9 km; Waldhaus2 uses the more specific tourism route data for the consistent 7 km distance.
 
 ### XXL-Bank Kerschenbach
 - on local route KB2
@@ -166,6 +176,13 @@ Note: a Kerschenbach municipality summary describes local routes more generally 
 - opening schedule varies by service; the app links to the live tourism source rather than hard-coding every time window
 - https://www.eifel.info/gastro/restaurant-villa-kronenburg
 
+### Café Doppelfeld, Stadtkyll
+- Raiffeisenplatz 3, 54589 Stadtkyll
+- bakery, café and ice cream
+- +49 6597 4973
+- the tourism page currently contains inconsistent Saturday-hour text in different page sections/language variants, so Waldhaus2 deliberately links to the source rather than hard-coding the hours
+- https://www.eifel.info/gastro/cafe-conditorei-baeckerei-doppelfeld
+
 ## Intentionally not treated as verified house facts
 
 ### Indoor fireplace / stove
@@ -182,4 +199,4 @@ Some current booking profiles show EUR 100. It is not made canonical until the o
 
 ## Maintenance rule
 
-Time-sensitive opening hours and tourism details should carry a verification date and link to the authoritative source. Private house facts (Wi-Fi credentials, access instructions, personal contacts beyond publicly listed accommodation contact, appliance-specific instructions) must be owner-confirmed before publication.
+Time-sensitive opening hours and tourism details should carry a verification date and link to the authoritative source. Conflicting first-party facts should not be collapsed into false precision: Waldhaus2 should either omit the disputed value or state the conflict. Private house facts (Wi-Fi credentials, access instructions, personal contacts beyond publicly listed accommodation contact, appliance-specific instructions) must be owner-confirmed before publication.

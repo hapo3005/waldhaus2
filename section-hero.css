@@ -83,8 +83,7 @@ body .view[data-view="checkout"] .page-hero .eyebrow {
 /* Status controls stay within the Waldhaus palette, but sit one quiet shade
    lighter than the hero so they read as controls without becoming colourful. */
 body .view[data-view="stay"] .stay-badge,
-body .view[data-view="guide"] .weather-panel,
-body .view[data-view="house"] .house-status {
+body .view[data-view="guide"] .weather-panel {
   position: relative;
   overflow: hidden;
   background:
@@ -99,6 +98,11 @@ body .view[data-view="house"] .house-status {
     0 14px 30px rgba(6,15,11,.14),
     inset 0 1px 0 rgba(248,245,237,.08),
     0 0 0 1px rgba(214,166,90,.025);
+}
+
+/* House verification badge intentionally removed from the guest-facing hero. */
+body .view[data-view="house"] .house-status {
+  display: none !important;
 }
 
 body .view[data-view="stay"] .stay-badge strong,
@@ -150,15 +154,9 @@ body .view[data-view="guide"] .weather-panel > div strong {
   }
 }
 
-body .view[data-view="house"] .house-status i {
-  background: #d6a65a !important;
-  box-shadow: 0 0 0 5px rgba(214,166,90,.17) !important;
-}
-
 body .view[data-view="stay"] .stay-badge small,
 body .view[data-view="stay"] .stay-badge span,
-body .view[data-view="guide"] .weather-panel small,
-body .view[data-view="house"] .house-status small {
+body .view[data-view="guide"] .weather-panel small {
   color: #e2e5dd;
 }
 
@@ -210,8 +208,7 @@ body .view[data-view="checkout"] .progress-ring span {
   }
 
   body .view[data-view="stay"] .stay-badge,
-  body .view[data-view="guide"] .weather-panel,
-  body .view[data-view="house"] .house-status {
+  body .view[data-view="guide"] .weather-panel {
     background:
       linear-gradient(145deg, rgba(232,196,119,.07), rgba(40,66,56,.96) 46%),
       rgba(40,66,56,.96) !important;

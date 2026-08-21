@@ -22,6 +22,7 @@ jobs:
           test -f app.js
           test -f home-hero.js
           test -f home-hero.css
+          test -f assets/hero-start-clean.webp
           test -f owner-ops.js
           test -f owner-ops.css
           test -f verified-content.js
@@ -40,31 +41,29 @@ jobs:
           node --check verified-content.js
           node --check guide-experience.js
 
-      - name: Validate Start hero image payload
+      - name: Validate clean Start hero asset
         run: |
+          grep -q "./assets/hero-start-clean.webp" home-hero.js
+          ! grep -q "hero-start-day.parts" home-hero.js
           python - <<'PY'
           from pathlib import Path
-          import base64, struct
+          import hashlib, struct
 
-          parts = [
-              'assets/hero-start-day.parts/part-01.txt',
-              'assets/hero-start-day.parts/part-01-tail.txt',
-              'assets/hero-start-day.parts/part-02.txt',
-              'assets/hero-start-day.parts/part-03.txt',
-              'assets/hero-start-day.parts/part-04.txt',
-              'assets/hero-start-day.parts/part-05.txt',
-              'assets/hero-start-day.parts/part-06.txt',
-          ]
-          payload = ''.join(Path(path).read_text().strip() for path in parts)
-          if len(payload) != 69368:
-              raise SystemExit(f'Hero base64 incomplete: {len(payload)}/69368')
-          data = base64.b64decode(payload, validate=True)
+          path = Path('assets/hero-start-clean.webp')
+          data = path.read_bytes()
+          expected_size = 96084
+          expected_sha = '121d21258a7ebbd4f664ff29e631f8c02c9c09a04585b625f3d53c4818726c84'
+          if len(data) != expected_size:
+              raise SystemExit(f'Clean hero size mismatch: {len(data)}/{expected_size}')
           if data[:4] != b'RIFF' or data[8:12] != b'WEBP':
-              raise SystemExit('Hero payload is not a WebP RIFF file')
-          expected = struct.unpack('<I', data[4:8])[0] + 8
-          if len(data) != expected:
-              raise SystemExit(f'Hero WebP incomplete: {len(data)}/{expected} bytes')
-          print(f'Hero WebP valid: {len(data)} bytes')
+              raise SystemExit('Clean hero is not a WebP RIFF file')
+          riff_size = struct.unpack('<I', data[4:8])[0] + 8
+          if riff_size != len(data):
+              raise SystemExit(f'Clean hero RIFF incomplete: {len(data)}/{riff_size}')
+          digest = hashlib.sha256(data).hexdigest()
+          if digest != expected_sha:
+              raise SystemExit(f'Clean hero hash mismatch: {digest}')
+          print(f'Clean Start hero valid: {len(data)} bytes, sha256={digest}')
           PY
 
       - name: Validate web manifest JSON

@@ -23,6 +23,8 @@ jobs:
           test -f owner-ops.js
           test -f owner-ops.css
           test -f verified-content.js
+          test -f guide-experience.js
+          test -f guide-experience.css
           test -f manifest.webmanifest
           test -f service-worker.js
           test -f icon-192.png
@@ -33,6 +35,7 @@ jobs:
           node --check app.js
           node --check owner-ops.js
           node --check verified-content.js
+          node --check guide-experience.js
 
       - name: Validate web manifest JSON
         run: python -m json.tool manifest.webmanifest > /dev/null

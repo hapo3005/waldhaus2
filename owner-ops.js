@@ -1,17 +1,26 @@
 (() => {
   const BKEY='waldhaus2.bookings', RKEY='waldhaus2.requests', DAY=86400000;
+  const mode=window.WALDHAUS_APP_MODE || {demo:false,owner:false};
   const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
   const date=s=>new Date(`${s}T12:00:00`);
   const plus=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
   const safe=v=>String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
-  const load=(key,fallback)=>{try{const raw=localStorage.getItem(key);if(raw!==null){const v=JSON.parse(raw);return Array.isArray(v)?v:[];}}catch{}return fallback();};
-  const seedBookings=()=>{const a=plus(new Date(),1),b=plus(new Date(),12);return[
+  const load=key=>{try{const raw=localStorage.getItem(key);if(raw!==null){const v=JSON.parse(raw);return Array.isArray(v)?v:[];}}catch{}return[];};
+  const demoBookings=()=>{const a=plus(new Date(),1),b=plus(new Date(),12);return[
     {id:'demo-becker',guest:'Familie Becker',guests:4,start:iso(a),end:iso(plus(a,3)),source:'Direkt'},
     {id:'demo-schmitz',guest:'Familie Schmitz',guests:2,start:iso(b),end:iso(plus(b,4)),source:'Booking'}
   ];};
-  const seedRequests=()=>{const a=plus(new Date(),22);return[{id:'demo-weber',guest:'Familie Weber',guests:3,start:iso(a),end:iso(plus(a,3)),note:'Wochenende in der Eifel'}];};
-  const state={month:new Date(new Date().getFullYear(),new Date().getMonth(),1),bookings:load(BKEY,seedBookings),requests:load(RKEY,seedRequests)};
+  const demoRequests=()=>{const a=plus(new Date(),22);return[{id:'demo-weber',guest:'Familie Weber',guests:3,start:iso(a),end:iso(plus(a,3)),note:'Wochenende in der Eifel'}];};
+  const cleanDemoRows=rows=>mode.demo ? rows : rows.filter(x=>!String(x.id||'').startsWith('demo-'));
+  const existingBookings=cleanDemoRows(load(BKEY));
+  const existingRequests=cleanDemoRows(load(RKEY));
+  const state={
+    month:new Date(new Date().getFullYear(),new Date().getMonth(),1),
+    bookings:mode.demo && !existingBookings.length ? demoBookings() : existingBookings,
+    requests:mode.demo && !existingRequests.length ? demoRequests() : existingRequests
+  };
   const persist=()=>{localStorage.setItem(BKEY,JSON.stringify(state.bookings));localStorage.setItem(RKEY,JSON.stringify(state.requests));};
+  if(!mode.demo) persist();
   const upcoming=()=>state.bookings.filter(x=>x.end>=iso(new Date())).sort((a,b)=>a.start.localeCompare(b.start));
   const overlap=(a,b)=>state.bookings.some(x=>a<x.end&&b>x.start);
   const nights=x=>Math.max(1,Math.round((date(x.end)-date(x.start))/DAY));
@@ -26,7 +35,7 @@
     if(stats[0]){stats[0].querySelector('strong').id='ownerStayCount';stats[0].querySelector('span').textContent='im Blick';}
     if(stats[1]){stats[1].querySelector('small').textContent='Offene Anfragen';stats[1].querySelector('strong').id='ownerRequestCount';stats[1].querySelector('span').textContent='noch zu entscheiden';}
     const s=document.createElement('section');s.id='ownerOps';s.className='content-section owner-ops';s.innerHTML=`
-      <div class="owner-ops-head"><span class="card-label">Aus Waldhaus übernommen · vereinfacht</span><h2>Belegung & Anfragen.</h2><p>Freie Zeiten sehen, Anfragen entscheiden und Aufenthalte eintragen – ohne Verwaltungsballast.</p></div>
+      <div class="owner-ops-head"><span class="card-label">Übersicht</span><h2>Belegung & Anfragen.</h2><p>Freie Zeiten sehen, Anfragen entscheiden und Aufenthalte eintragen – ohne unnötige Verwaltung.</p></div>
       <div class="owner-ops-grid">
         <article class="card owner-calendar-card"><div class="owner-card-head"><div><span class="card-label">Belegung</span><h3 id="ownerCalendarTitle"></h3></div><div><button id="ownerPrevMonth" aria-label="Vorheriger Monat">‹</button><button id="ownerNextMonth" aria-label="Nächster Monat">›</button></div></div><div class="owner-weekdays"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div><div id="ownerCalendar" class="owner-calendar"></div><div class="owner-legend"><span><i class="booked"></i>Belegt</span><span><i></i>Anfrage</span></div></article>
         <article class="card"><span class="card-label">Nächste Aufenthalte</span><h3>Wer kommt als Nächstes?</h3><div id="ownerBookingList" class="owner-list"></div></article>
@@ -53,9 +62,23 @@
   }
 
   function syncGuest(){
-    const x=upcoming()[0];if(!x)return;const s=date(x.start),e=date(x.end),days=Math.round((s-date(iso(new Date())))/DAY),set=(q,v)=>{const el=document.querySelector(q);if(el)el.textContent=v;};
-    set('#tripDay',new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(s).replace('.','').toUpperCase());set('#tripDate',new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(s));set('#tripMonth',new Intl.DateTimeFormat('de-DE',{month:'short'}).format(s).replace('.','').toUpperCase());set('#tripHeadline',days<=0?'Eure Auszeit läuft.':days===1?'Morgen geht\'s los.':`Noch ${days} Tage.`);set('#tripRange',`${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(s)}–${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(e)} · ${nights(x)} Nächte`);set('#stayDateBadge',new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'short'}).format(s));set('.avatar-row small',`${x.guests} Gäste`);
+    const x=upcoming()[0];
+    if(!x){
+      if(mode.demo)return;
+      const avatars=document.querySelector('.avatar-row');
+      if(avatars)avatars.innerHTML='<span>+</span><small>Aufenthalt wird hier angezeigt</small>';
+      return;
+    }
+    const s=date(x.start),e=date(x.end),days=Math.round((s-date(iso(new Date())))/DAY),set=(q,v)=>{const el=document.querySelector(q);if(el)el.textContent=v;};
+    set('#tripDay',new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(s).replace('.','').toUpperCase());
+    set('#tripDate',new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(s));
+    set('#tripMonth',new Intl.DateTimeFormat('de-DE',{month:'short'}).format(s).replace('.','').toUpperCase());
+    set('#tripHeadline',days<=0?'Eure Auszeit läuft.':days===1?'Morgen geht\'s los.':`Noch ${days} Tage.`);
+    set('#tripRange',`${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(s)}–${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(e)} · ${nights(x)} Nächte`);
+    set('#stayDateBadge',new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'short'}).format(s));
+    const avatars=document.querySelector('.avatar-row');if(avatars)avatars.innerHTML=`<span>✓</span><small>${x.guests} Gäste</small>`;
     const g=document.querySelector('#greeting');if(g){const h=new Date().getHours(),w=h<11?'Guten Morgen':h<18?'Guten Tag':'Guten Abend';g.textContent=`${w}, ${x.guest}.`;}
+    const pill=document.querySelector('.status-pill');if(pill)pill.innerHTML='<i></i> Aufenthalt vorbereitet';
   }
 
   function render(){const a=document.querySelector('#ownerStayCount'),r=document.querySelector('#ownerRequestCount');if(a)a.textContent=upcoming().length;if(r)r.textContent=state.requests.length;renderCalendar();renderLists();syncGuest();}

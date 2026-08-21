@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-product-v26';
+const CACHE = 'waldhaus2-product-v27';
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css',
   './app.js','./home-hero.js','./home-hero.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',

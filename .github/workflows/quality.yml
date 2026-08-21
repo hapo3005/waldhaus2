@@ -20,13 +20,17 @@ jobs:
           test -f index.html
           test -f styles.css
           test -f app.js
+          test -f owner-ops.js
+          test -f owner-ops.css
           test -f manifest.webmanifest
           test -f service-worker.js
           test -f icon-192.png
           test -f icon-512.png
 
       - name: Validate JavaScript syntax
-        run: node --check app.js
+        run: |
+          node --check app.js
+          node --check owner-ops.js
 
       - name: Validate web manifest JSON
         run: python -m json.tool manifest.webmanifest > /dev/null

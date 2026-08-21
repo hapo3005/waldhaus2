@@ -52,15 +52,14 @@
       style.dataset.headerLogoStyle='1';
       style.textContent=`
         body .topbar .brand-mark{
-          width:58px;height:58px;flex:0 0 58px;
+          width:62px;height:62px;flex:0 0 62px;
           background:transparent!important;color:#F8F5ED!important;
           border-radius:0!important;overflow:visible!important;
-          display:grid;place-items:center;
+          display:grid;place-items:center;box-shadow:none!important;
         }
-        body .topbar .brand-mark svg{width:100%;height:100%;display:block;overflow:visible}
-        body .topbar .brand-mark image{pointer-events:none}
+        body .topbar .brand-mark img{width:100%;height:100%;display:block;object-fit:contain;pointer-events:none}
         @media(max-width:760px){
-          body .topbar .brand-mark{width:50px;height:50px;flex-basis:50px}
+          body .topbar .brand-mark{width:54px;height:54px;flex-basis:54px}
           body .topbar .brand{gap:9px}
         }
       `;
@@ -70,21 +69,9 @@
 
   function applyHeaderLogo(){
     const mark=document.querySelector('.topbar .brand-mark');
-    if(!mark||mark.dataset.approvedLogo==='1') return;
-    mark.innerHTML=`<svg viewBox="0 0 192 192" role="presentation" aria-hidden="true" focusable="false">
-      <defs>
-        <filter id="waldhausHeaderLight" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-          <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="logoLuminance"/>
-          <feComponentTransfer in="logoLuminance" result="logoMask">
-            <feFuncA type="linear" slope="8" intercept="-4"/>
-          </feComponentTransfer>
-          <feFlood flood-color="#F8F5ED" result="warmWhite"/>
-          <feComposite in="warmWhite" in2="logoMask" operator="in"/>
-        </filter>
-      </defs>
-      <image href="icon-192.png?v=31" x="0" y="0" width="192" height="192" preserveAspectRatio="xMidYMid meet" filter="url(#waldhausHeaderLight)"/>
-    </svg>`;
-    mark.dataset.approvedLogo='1';
+    if(!mark||mark.dataset.approvedLogo==='white-48') return;
+    mark.innerHTML='<img src="assets/waldhaus-logo-mark-white.svg?v=48" alt="" aria-hidden="true" width="120" height="120">';
+    mark.dataset.approvedLogo='white-48';
   }
 
   function applyWelcomeCards(){
@@ -125,7 +112,7 @@
     footer.innerHTML=`
       <div class="waldhaus-footer-main">
         <div class="waldhaus-footer-brand">
-          <span class="waldhaus-footer-mark" aria-hidden="true">W</span>
+          <span class="waldhaus-footer-mark" aria-hidden="true" style="background:transparent;box-shadow:none;border-radius:0;color:transparent;font-size:0;line-height:0"><img src="assets/waldhaus-logo-mark-white.svg?v=48" alt="" width="120" height="120" style="width:100%;height:100%;display:block;object-fit:contain"></span>
           <div class="waldhaus-footer-copy">
             <strong>Waldhaus</strong>
             <span>Kerschenbach · Eifel</span>

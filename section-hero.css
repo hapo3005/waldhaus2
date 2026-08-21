@@ -91,6 +91,17 @@ body .view[data-view="house"] .house-status {
   box-shadow: 0 14px 30px rgba(6,15,11,.12);
 }
 
+/* The red house in the approved map is the rental property and is a permanent
+   orientation anchor. Keep the floating guest UI below it on desktop so the
+   marker is never covered by check-in, weather or checkout status controls. */
+@media (min-width: 761px) {
+  body .view[data-view="stay"] .stay-badge,
+  body .view[data-view="guide"] .weather-panel,
+  body .view[data-view="checkout"] .progress-ring {
+    transform: translateY(clamp(36px, 3vw, 50px));
+  }
+}
+
 body .view[data-view="house"] .house-status i {
   background: #d6a65a;
   box-shadow: 0 0 0 5px rgba(214,166,90,.17);
@@ -125,7 +136,9 @@ body .view[data-view="checkout"] .progress-ring {
         rgba(19,38,31,.96) 100%),
       url('./assets/hero-sections-feriendorf.webp');
     background-size: auto 100%;
-    background-position: 72% center;
+    /* Bias the crop toward the right edge so the marked rental house remains
+       inside the visible map area on narrow screens as well. */
+    background-position: 84% center;
   }
 
   body .view[data-view="stay"] .page-hero > div:first-child,

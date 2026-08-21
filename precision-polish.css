@@ -1,0 +1,157 @@
+/* Waldhaus2 · Precision Polish v1
+   Purpose: refine the approved PR12 structure without redesigning it.
+   Priorities: readability, visual rhythm, real photography, strong interaction states.
+*/
+
+html:root{
+  --muted:#4B554E;
+  --line:#CBC8BD;
+}
+
+html body{
+  font-size:16px;
+  line-height:1.55;
+}
+
+body main{margin-top:22px}
+body .content-section{margin-top:28px}
+
+/* Typography: important information must never feel tiny. */
+body .brand-text strong{font-size:15px}
+body .brand-text small{font-size:12px;color:#DDE2D8}
+body .nav-item{font-size:13px}
+body .button{font-size:14px;font-weight:800}
+body .text-link{font-size:13px;font-weight:850}
+body .eyebrow,body .card-label{font-size:11px;letter-spacing:.14em}
+body .status-pill,body .weather-pill{font-size:12px}
+body .weather-pill small{font-size:12px;color:#E7E7DF}
+body .hero-copy>p:not(.eyebrow){font-size:clamp(17px,1.45vw,20px);line-height:1.65;max-width:610px;color:rgba(255,255,255,.90)}
+body .page-hero p{font-size:16px;line-height:1.65;color:#E5E8E2;max-width:64ch}
+
+body .trip-copy p,
+body .next-card>p,
+body .timeline-body>p,
+body .house-card p,
+body .checkout-side>p,
+body .feature-copy p,
+body .verified-copy,
+body .stay-experiences-intro p{
+  font-size:16px;
+  line-height:1.65;
+  color:var(--muted);
+}
+
+body .avatar-row small{font-size:13px;color:var(--muted)}
+body .mini-list span{font-size:12px;line-height:1.35}
+body .quick-card strong{font-size:16px}
+body .quick-card small{font-size:12px;line-height:1.4;opacity:.78}
+body .info-grid small,body .timeline-time,body .house-card small{font-size:12px;color:var(--muted)}
+body .info-grid strong{font-size:15px;line-height:1.45}
+body .step-list span{font-size:15px;line-height:1.45}
+body .checkout-item strong{font-size:16px}
+body .checkout-item small{font-size:14px;line-height:1.5;color:var(--muted)}
+body .sheet p,body .sheet li{font-size:16px;line-height:1.7;color:var(--muted)}
+body .toast{font-size:13px}
+
+/* Surfaces: slightly crisper separation, no structural changes. */
+body .card,
+body .quick-card,
+body .timeline-body,
+body .house-card,
+body .checkout-item{
+  border-color:var(--line);
+  box-shadow:0 14px 36px rgba(31,37,33,.075);
+}
+body .trip-card{box-shadow:0 18px 44px rgba(31,37,33,.09)}
+body .quick-card{transition:transform 160ms cubic-bezier(.23,1,.32,1),border-color 160ms ease,box-shadow 180ms ease,background-color 160ms ease}
+body .quick-card:hover{transform:translateY(-2px);border-color:#AEB7AE;box-shadow:0 18px 40px rgba(31,37,33,.10)}
+body .quick-card:active{transform:scale(.985)}
+body .button{transition:transform 150ms cubic-bezier(.23,1,.32,1),background-color 150ms ease,border-color 150ms ease,box-shadow 180ms ease}
+body .button:hover{transform:translateY(-1px)}
+body .button:active,body .icon-button:active,body .owner-switch:active,body .copy-button:active{transform:scale(.98)}
+
+/* Homepage feature: use the real Arnika route photo already used in Discover. */
+body .feature-media-guide{
+  background-image:url('https://imxplatform-cust-et.fsn1.your-objectstorage.com/media/20250624_150912.jpg');
+  background-size:cover;
+  background-position:center 48%;
+}
+body .feature-media-guide::before{display:none}
+body .feature-overlay{background:linear-gradient(90deg,rgba(8,22,16,.90),rgba(8,22,16,.48) 53%,rgba(8,22,16,.14) 82%)}
+body .feature-copy{max-width:620px}
+body .feature-copy p{color:rgba(255,255,255,.92)}
+body .feature-card{box-shadow:0 20px 48px rgba(19,38,31,.15)}
+
+/* Aufenthalt: preserve the restored card/timeline composition; only improve clarity. */
+body .timeline-body{padding:30px;border-color:#D1CEC4}
+body .timeline-card.is-highlighted .timeline-body{
+  border-color:#BFC9BF;
+  background:linear-gradient(135deg,#F1F4EF,#FBF9F4);
+  box-shadow:0 18px 44px rgba(31,58,48,.09);
+}
+body .timeline-time{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+body .timeline-dot{width:14px;height:14px}
+body .info-grid div{background:#F0F1EA;border:1px solid #DEDDD5}
+body .step-list span{background:#F1F2EC}
+
+/* House and checkout: keep cards, strengthen hierarchy. */
+body .house-card h2{font-size:clamp(24px,2.4vw,32px)}
+body .house-card.featured{border-color:#C5CEC5;box-shadow:0 18px 44px rgba(31,58,48,.09)}
+body .copy-button{font-size:13px;min-height:44px}
+body .checkout-item{min-height:78px}
+body .fake-check{width:25px;height:25px;flex:0 0 25px}
+
+/* Discover: photography stays dominant, copy becomes easier to scan. */
+body .guide-experience-hub .stay-experiences-intro p{color:var(--muted)}
+body .guide-experience-hub .stay-experience-head h2{font-size:clamp(28px,3vw,38px)}
+body .guide-experience-hub .stay-experience-copy h3{font-size:clamp(24px,2.1vw,31px);line-height:1.06}
+body .guide-experience-hub .stay-experience-copy p{font-size:15px;line-height:1.55;color:rgba(255,253,248,.94)}
+body .guide-experience-hub .stay-experience-copy small{font-size:12px;color:#F0C878}
+body .guide-experience-hub .stay-experience-link{font-size:13px;min-height:44px}
+body .guide-experience-hub .stay-experience-note,
+body .guide-verification-note,
+body .verified-note{font-size:14px;line-height:1.55;color:var(--muted)}
+body .guide-experience-hub .stay-experience-card:after{background:linear-gradient(180deg,rgba(8,18,13,.01) 7%,rgba(8,18,13,.12) 40%,rgba(8,18,13,.82) 75%,rgba(8,18,13,.96))}
+
+/* Owner and forms: same standards as guest UI. */
+body .owner-ops-head p,body .owner-weekdays,body .owner-legend,body .owner-item span,
+body .owner-item small,body .owner-empty,body .owner-form label{font-size:14px;line-height:1.5;color:var(--muted)}
+body .input-row input,body .owner-form input,body .owner-form select{font-size:16px}
+
+/* Mobile: never shrink useful information to decorative sizes. */
+body .mobile-nav-item{min-height:58px}
+body .mobile-nav-item small{font-size:12px;line-height:1.2}
+
+@media(max-width:760px){
+  body main{margin-top:16px}
+  body .content-section{margin-top:22px}
+  body .page-hero p{font-size:16px}
+  body .timeline-body{padding:24px}
+  body .quick-card{min-height:180px}
+  body .guide-experience-hub .stay-experience-copy p{font-size:15px}
+}
+
+@media(max-width:520px){
+  body .hero-copy>p:not(.eyebrow){font-size:17px}
+  body .button{font-size:14px}
+  body .quick-card strong{font-size:16px}
+  body .quick-card small{font-size:12px}
+  body .info-grid strong{font-size:15px}
+  body .sheet p,body .sheet li{font-size:16px}
+}
+
+@media(prefers-contrast:more){
+  html:root{--muted:#374139;--line:#AAA79D}
+  body .card,body .quick-card,body .timeline-body,body .house-card,body .checkout-item{border-width:2px}
+}
+
+@media(prefers-reduced-transparency:reduce){
+  body .topbar,body .mobile-nav{background:#1F3A30;backdrop-filter:none}
+  body .status-pill,body .weather-pill{background:#183128;backdrop-filter:none}
+  body .button-glass{background:#24473A;backdrop-filter:none}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body .button,body .quick-card,body .icon-button,body .owner-switch,body .copy-button{transition:none!important}
+  body .button:hover,body .quick-card:hover{transform:none!important}
+}

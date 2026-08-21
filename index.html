@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="de" data-accent="forest">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1713" />
+  <meta name="description" content="Waldhaus – die digitale Gäste-App für entspannte Ferienhaus-Aufenthalte." />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Waldhaus · Gäste-App</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="brand" type="button" data-view-target="home" aria-label="Startseite öffnen">
+        <span class="brand-mark">W</span>
+        <span class="brand-text"><strong data-brand-name>Waldhaus</strong><small>Kerschenbach · Eifel</small></span>
+      </button>
+
+      <nav class="desktop-nav" aria-label="Hauptnavigation">
+        <button type="button" class="nav-item is-active" data-view-target="home">Heute</button>
+        <button type="button" class="nav-item" data-view-target="stay">Aufenthalt</button>
+        <button type="button" class="nav-item" data-view-target="guide">Entdecken</button>
+        <button type="button" class="nav-item" data-view-target="house">Haus</button>
+        <button type="button" class="nav-item" data-view-target="checkout">Abreise</button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="icon-button" id="installButton" type="button" aria-label="App installieren" title="App installieren">⌄</button>
+        <button class="owner-switch" id="ownerSwitch" type="button"><span>Eigentümer</span><b>Demo</b></button>
+      </div>
+    </header>
+
+    <main>
+      <section class="view is-active" data-view="home">
+        <div class="hero">
+          <div class="hero-image" aria-hidden="true"></div>
+          <div class="hero-shade" aria-hidden="true"></div>
+          <div class="hero-content">
+            <div class="hero-topline">
+              <span class="status-pill"><i></i> Bereit für euren Aufenthalt</span>
+              <span class="weather-pill"><span id="heroWeatherIcon">☀</span><strong id="heroWeatherTemp">19°</strong><small>Kerschenbach</small></span>
+            </div>
+
+            <div class="hero-copy">
+              <p class="eyebrow" id="greeting">Guten Morgen, Familie Becker.</p>
+              <h1>Willkommen in<br><span data-brand-name>Waldhaus</span>.</h1>
+              <p>Alles, was ihr für eine entspannte Auszeit braucht – genau dann, wenn ihr es braucht.</p>
+              <div class="hero-actions">
+                <button class="button button-primary" type="button" data-view-target="stay">Aufenthalt öffnen <span>→</span></button>
+                <button class="button button-glass" type="button" data-view-target="guide">Was machen wir heute?</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="content-section welcome-grid">
+          <article class="card trip-card">
+            <div class="card-label">Eure Auszeit</div>
+            <div class="trip-date"><span id="tripDay">SO</span><strong id="tripDate">23</strong><small id="tripMonth">AUG</small></div>
+            <div class="trip-copy">
+              <h2 id="tripHeadline">Morgen geht's los.</h2>
+              <p id="tripRange">23.–26. August · 3 Nächte</p>
+              <div class="avatar-row"><span>JB</span><span>MB</span><span>+2</span><small>4 Gäste</small></div>
+            </div>
+            <button class="text-link" type="button" data-view-target="stay">Details ansehen →</button>
+          </article>
+
+          <article class="card next-card">
+            <div class="card-label">Als Nächstes</div>
+            <div class="next-icon">⌂</div>
+            <h2>Anreise entspannt vorbereiten.</h2>
+            <p>Adresse, Parkplatz, Schlüssel und WLAN sind schon für euch gebündelt.</p>
+            <div class="mini-list">
+              <span><b>15:00</b> Check-in</span>
+              <span><b>✓</b> Zugang vorbereitet</span>
+              <span><b>5 min</b> bis Stadtkyll</span>
+            </div>
+            <button class="button button-soft" type="button" data-view-target="stay">Anreise ansehen</button>
+          </article>
+        </section>
+
+        <section class="content-section split-section">
+          <article class="feature-card smart-card">
+            <div class="feature-media feature-media-guide"></div>
+            <div class="feature-overlay"></div>
+            <div class="feature-copy">
+              <span class="card-label light">Waldhaus Tipp · <span id="smartTipLabel">Bei schönem Wetter</span></span>
+              <h2 id="smartTipTitle">Arnika-Route nach Kronenburg.</h2>
+              <p id="smartTipText">Leichte 7-km-Runde direkt aus Kerschenbach – Natur, Aussicht und historischer Ortskern.</p>
+              <button class="button button-white" type="button" data-view-target="guide">Mehr entdecken</button>
+            </div>
+          </article>
+
+          <div class="quick-grid">
+            <button class="quick-card" type="button" data-view-target="house"><span class="quick-icon">⌁</span><strong>WLAN</strong><small>Mit einem Tipp verbunden</small></button>
+            <button class="quick-card" type="button" data-view-target="house"><span class="quick-icon">♨</span><strong>Kamin</strong><small>Kurzanleitung öffnen</small></button>
+            <button class="quick-card" type="button" data-view-target="guide"><span class="quick-icon">⌖</span><strong>In der Nähe</strong><small>Ausflüge & Essen</small></button>
+            <button class="quick-card accent" type="button" data-view-target="checkout"><span class="quick-icon">✓</span><strong>Abreise</strong><small>Stressfrei auschecken</small></button>
+          </div>
+        </section>
+
+        <section class="content-section section-heading">
+          <div><span class="card-label">Für euch kuratiert</span><h2>Die Eifel vor der Haustür.</h2></div>
+          <button class="text-link" type="button" data-view-target="guide">Alle Tipps →</button>
+        </section>
+
+        <section class="content-section recommendation-row" id="homeRecommendations"></section>
+      </section>
+
+      <section class="view" data-view="stay">
+        <div class="page-hero compact-hero">
+          <div><span class="eyebrow">Euer Aufenthalt</span><h1>Von der Anreise bis zum ersten Kaffee.</h1><p>Die wichtigsten Informationen erscheinen in der richtigen Reihenfolge – ohne Suchen, ohne PDFs, ohne Rückfragen.</p></div>
+          <div class="stay-badge"><small>Check-in</small><strong>15:00</strong><span id="stayDateBadge">So, 23. Aug.</span></div>
+        </div>
+
+        <section class="content-section timeline">
+          <article class="timeline-card is-highlighted">
+            <div class="timeline-time">Vorher</div><div class="timeline-dot"></div>
+            <div class="timeline-body"><span class="card-label">Vorbereiten</span><h2>Anreise auf einen Blick</h2><p>Die genaue Adresse, Parkhinweise und der Zugang sind hier gebündelt.</p>
+              <div class="info-grid"><div><small>Adresse</small><strong>Kerschenbach · 54589</strong></div><div><small>Parken</small><strong>Direkt am Haus</strong></div><div><small>Schlüssel</small><strong>Schlüsseltresor</strong></div><div><small>Check-in</small><strong>ab 15:00 Uhr</strong></div></div>
+              <a class="button button-primary inline-button" href="https://www.google.com/maps/search/?api=1&query=Kerschenbach%2054589" target="_blank" rel="noreferrer">Route starten <span>↗</span></a>
+            </div>
+          </article>
+
+          <article class="timeline-card"><div class="timeline-time">Ankunft</div><div class="timeline-dot"></div><div class="timeline-body"><span class="card-label">Die ersten 10 Minuten</span><h2>Ankommen statt organisieren.</h2><div class="step-list"><span><b>1</b> Schlüssel holen & eintreten</span><span><b>2</b> WLAN verbinden</span><span><b>3</b> Heizung prüfen</span><span><b>4</b> Kühlschrank füllen & Urlaub starten</span></div></div></article>
+          <article class="timeline-card"><div class="timeline-time">Währenddessen</div><div class="timeline-dot"></div><div class="timeline-body"><span class="card-label">Vor Ort</span><h2>Das Haus erklärt sich selbst.</h2><p>Kamin, Heizung, Geräte, Müll, Ansprechpartner und regionale Tipps bleiben jederzeit griffbereit.</p><button class="button button-soft inline-button" type="button" data-view-target="house">Hauswissen öffnen</button></div></article>
+        </section>
+      </section>
+
+      <section class="view" data-view="guide">
+        <div class="page-hero">
+          <div><span class="eyebrow">Digitaler Concierge</span><h1>Was passt heute zu euch?</h1><p>Empfehlungen nach Wetter, Stimmung und Entfernung – ausgewählt statt überladen.</p></div>
+          <div class="weather-panel"><div><span id="guideWeatherIcon">☀</span><strong id="guideWeatherTemp">19°</strong></div><p id="guideWeatherText">Gutes Wetter für draußen.</p><small>Live · Kerschenbach</small></div>
+        </div>
+
+        <section class="content-section filter-row" aria-label="Empfehlungen filtern">
+          <button class="filter-chip is-active" type="button" data-guide-filter="all">Für heute</button>
+          <button class="filter-chip" type="button" data-guide-filter="nature">Natur</button>
+          <button class="filter-chip" type="button" data-guide-filter="culture">Entdecken</button>
+          <button class="filter-chip" type="button" data-guide-filter="service">Praktisch</button>
+        </section>
+        <section class="content-section guide-grid" id="guideGrid"></section>
+      </section>
+
+      <section class="view" data-view="house">
+        <div class="page-hero">
+          <div><span class="eyebrow">Digitales Hausbuch</span><h1>Das Haus erklärt sich selbst.</h1><p>Kurze Antworten auf die Fragen, die Gäste sonst per Nachricht oder Telefon stellen.</p></div>
+          <div class="house-status"><i></i><div><strong>Alles bereit</strong><small>Letzte Prüfung · heute</small></div></div>
+        </div>
+
+        <section class="content-section house-grid">
+          <article class="house-card featured"><span class="house-icon">⌁</span><div><small>WLAN</small><h2>Waldhaus Gäste</h2><p>Passwort: <strong id="wifiPassword">eifelzeit26</strong></p></div><button class="copy-button" id="copyWifi" type="button">Kopieren</button></article>
+          <article class="house-card"><span class="house-icon">♨</span><div><small>Wohlfühlen</small><h2>Kamin</h2><p>In 4 Schritten sicher Feuer machen.</p></div><button class="text-link" type="button" data-sheet="fireplace">Anleitung →</button></article>
+          <article class="house-card"><span class="house-icon">◌</span><div><small>Technik</small><h2>Heizung</h2><p>Die richtige Einstellung für Tag und Nacht.</p></div><button class="text-link" type="button" data-sheet="heating">Anleitung →</button></article>
+          <article class="house-card"><span class="house-icon">♲</span><div><small>Alltag</small><h2>Müll & Recycling</h2><p>Wo was hingehört und wo die Tonnen stehen.</p></div><button class="text-link" type="button" data-sheet="waste">Details →</button></article>
+          <article class="house-card"><span class="house-icon">!</span><div><small>Wichtig</small><h2>Notfall & Kontakte</h2><p>Eigentümer, Hausmeister und wichtige Nummern.</p></div><button class="text-link" type="button" data-sheet="emergency">Öffnen →</button></article>
+          <article class="house-card"><span class="house-icon">☕</span><div><small>Küche</small><h2>Geräte</h2><p>Kaffee, Spülmaschine und weitere Helfer.</p></div><button class="text-link" type="button" data-sheet="appliances">Ansehen →</button></article>
+        </section>
+      </section>
+
+      <section class="view" data-view="checkout">
+        <div class="page-hero checkout-hero">
+          <div><span class="eyebrow">Abreise-Assistent</span><h1>Schön, dass ihr da wart.</h1><p>Ein letzter kurzer Rundgang. Danach heißt es nur noch: gute Heimfahrt.</p></div>
+          <div class="progress-ring" id="progressRing"><span id="checkoutPercent">0%</span><small>erledigt</small></div>
+        </div>
+        <section class="content-section checkout-layout">
+          <div class="checkout-list" id="checkoutList"></div>
+          <aside class="card checkout-side"><span class="card-label">Check-out</span><h2>Bis 11:00 Uhr</h2><p>Wenn alles erledigt ist, könnt ihr den Schlüssel wieder in den Tresor legen.</p><div class="farewell"><span>♥</span><p>Danke, dass ihr gut auf <strong data-brand-name>Waldhaus</strong> aufgepasst habt.</p></div><button class="button button-primary" id="finishCheckout" type="button">Abreise abschließen</button></aside>
+        </section>
+      </section>
+
+      <section class="view owner-view" data-view="owner">
+        <div class="page-hero owner-hero">
+          <div><span class="eyebrow">Eigentümer-Demo</span><h1>Ihr Ferienhaus.<br>Als digitales Gästeerlebnis.</h1><p>White Label, individuell auf Ihr Haus zugeschnitten – und für Gäste so einfach wie eine App.</p></div>
+          <button class="button button-white" id="backToGuest" type="button">Gästeansicht öffnen</button>
+        </div>
+
+        <section class="content-section owner-dashboard">
+          <article class="owner-stat"><small>Nächste Aufenthalte</small><strong>4</strong><span>alles vorbereitet</span></article>
+          <article class="owner-stat"><small>Offene Gästefragen</small><strong>0</strong><span>Hauswissen digital</span></article>
+          <article class="owner-stat"><small>Check-in-Infos</small><strong>100%</strong><span>automatisch verfügbar</span></article>
+          <article class="owner-stat"><small>App-Status</small><strong>Live</strong><span>installierbar & mobil</span></article>
+        </section>
+
+        <section class="content-section owner-columns">
+          <article class="card configurator-card"><span class="card-label">Live individualisieren</span><h2>Wie heißt Ihr Ferienhaus?</h2><p>Schon in der Präsentation lässt sich zeigen, dass die Plattform nicht „Waldhaus“ heißt – sondern genau wie Ihr Haus.</p><label class="field-label" for="brandInput">Hausname</label><div class="input-row"><input id="brandInput" type="text" value="Waldhaus" maxlength="32" /><button class="button button-primary" id="applyBrand" type="button">Übernehmen</button></div><div class="mood-row"><span>Stimmung</span><button class="mood is-active" data-accent-choice="forest" type="button">Wald</button><button class="mood" data-accent-choice="sand" type="button">Natur</button><button class="mood" data-accent-choice="slate" type="button">Modern</button></div></article>
+          <article class="card owner-value"><span class="card-label">Was Eigentümer gewinnen</span><h2>Weniger erklären. Mehr Gastgeber sein.</h2><ul class="benefit-list"><li><span>01</span><div><strong>Weniger Rückfragen</strong><small>WLAN, Schlüssel, Geräte und Regeln sind jederzeit verfügbar.</small></div></li><li><span>02</span><div><strong>Besserer erster Eindruck</strong><small>Gäste erleben das Haus professionell – schon vor der Anreise.</small></div></li><li><span>03</span><div><strong>Eigene Empfehlungen</strong><small>Restaurants, Ausflüge und Geheimtipps bleiben unter Ihrer Kontrolle.</small></div></li><li><span>04</span><div><strong>Wiedererkennbarer Auftritt</strong><small>Name, Bilder, Farben und Inhalte passend zum eigenen Ferienhaus.</small></div></li></ul></article>
+        </section>
+
+        <section class="content-section owner-flow"><div class="section-heading"><div><span class="card-label">Ein Produkt · vier Momente</span><h2>Die ganze Gästereise in einer App.</h2></div></div><div class="flow-grid"><article><span>01</span><strong>Vor der Reise</strong><p>Vorfreude, Anreise, Wetter und Check-in.</p></article><article><span>02</span><strong>Beim Ankommen</strong><p>Adresse, Parkplatz, Schlüssel und WLAN.</p></article><article><span>03</span><strong>Im Urlaub</strong><p>Hauswissen, Concierge und Empfehlungen.</p></article><article><span>04</span><strong>Bei Abreise</strong><p>Check-out-Assistent und klare Übergabe.</p></article></div></section>
+
+        <section class="content-section sales-banner"><div><span class="eyebrow">White-Label Gäste-App</span><h2>Stellen Sie sich das mit Ihrem Haus vor.</h2><p>Ihr Name. Ihre Bilder. Ihre Informationen. Ihre Region.</p></div><button class="button button-white" id="salesGuestPreview" type="button">Mein Haus ansehen →</button></section>
+      </section>
+    </main>
+
+    <nav class="mobile-nav" aria-label="Mobile Navigation">
+      <button class="mobile-nav-item is-active" type="button" data-view-target="home"><span>⌂</span><small>Heute</small></button>
+      <button class="mobile-nav-item" type="button" data-view-target="stay"><span>◷</span><small>Aufenthalt</small></button>
+      <button class="mobile-nav-item" type="button" data-view-target="guide"><span>⌖</span><small>Entdecken</small></button>
+      <button class="mobile-nav-item" type="button" data-view-target="house"><span>⌁</span><small>Haus</small></button>
+      <button class="mobile-nav-item" type="button" data-view-target="checkout"><span>✓</span><small>Abreise</small></button>
+    </nav>
+  </div>
+
+  <div class="sheet-backdrop" id="sheetBackdrop" hidden></div>
+  <aside class="sheet" id="detailSheet" aria-hidden="true" aria-labelledby="sheetTitle">
+    <button class="sheet-close" id="sheetClose" type="button" aria-label="Schließen">×</button>
+    <span class="card-label" id="sheetLabel">Hauswissen</span>
+    <h2 id="sheetTitle">Details</h2>
+    <div id="sheetContent"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>

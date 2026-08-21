@@ -14,18 +14,22 @@
   const cleanDemoRows=rows=>mode.demo ? rows : rows.filter(x=>!String(x.id||'').startsWith('demo-'));
   const existingBookings=cleanDemoRows(load(BKEY));
   const existingRequests=cleanDemoRows(load(RKEY));
-  const state={
-    month:new Date(new Date().getFullYear(),new Date().getMonth(),1),
-    bookings:mode.demo && !existingBookings.length ? demoBookings() : existingBookings,
-    requests:mode.demo && !existingRequests.length ? demoRequests() : existingRequests
-  };
+  const state={month:new Date(new Date().getFullYear(),new Date().getMonth(),1),bookings:mode.demo&&!existingBookings.length?demoBookings():existingBookings,requests:mode.demo&&!existingRequests.length?demoRequests():existingRequests};
   const persist=()=>{localStorage.setItem(BKEY,JSON.stringify(state.bookings));localStorage.setItem(RKEY,JSON.stringify(state.requests));};
-  if(!mode.demo) persist();
+  if(!mode.demo)persist();
   const upcoming=()=>state.bookings.filter(x=>x.end>=iso(new Date())).sort((a,b)=>a.start.localeCompare(b.start));
   const overlap=(a,b)=>state.bookings.some(x=>a<x.end&&b>x.start);
   const nights=x=>Math.max(1,Math.round((date(x.end)-date(x.start))/DAY));
   const fmt=s=>new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit'}).format(date(s));
   const toast=m=>{if(typeof window.showToast==='function')return window.showToast(m);const t=document.querySelector('#toast');if(t){t.textContent=m;t.classList.add('is-visible');setTimeout(()=>t.classList.remove('is-visible'),2200);}};
+
+  function cleanVisiblePlaceholders(){
+    if(mode.demo)return;
+    const wifi=document.querySelector('#wifiPassword');
+    const copy=document.querySelector('#copyWifi');
+    if(wifi?.textContent.trim()==='eifelzeit26')wifi.textContent='noch nicht hinterlegt';
+    if(copy && wifi?.textContent.trim()==='noch nicht hinterlegt'){copy.disabled=true;copy.textContent='Offen';copy.title='WLAN-Zugangsdaten müssen noch hinterlegt werden';}
+  }
 
   function inject(){
     if(document.querySelector('#ownerOps'))return;
@@ -34,6 +38,8 @@
     const stats=dash.querySelectorAll('.owner-stat');
     if(stats[0]){stats[0].querySelector('strong').id='ownerStayCount';stats[0].querySelector('span').textContent='im Blick';}
     if(stats[1]){stats[1].querySelector('small').textContent='Offene Anfragen';stats[1].querySelector('strong').id='ownerRequestCount';stats[1].querySelector('span').textContent='noch zu entscheiden';}
+    if(!mode.demo&&stats[2]){stats[2].querySelector('small').textContent='Gästeansicht';stats[2].querySelector('strong').textContent='Aktiv';stats[2].querySelector('span').textContent='Hauswissen gebündelt';}
+    if(!mode.demo&&stats[3]){stats[3].querySelector('small').textContent='App';stats[3].querySelector('strong').textContent='PWA';stats[3].querySelector('span').textContent='installierbar & mobil';}
     const s=document.createElement('section');s.id='ownerOps';s.className='content-section owner-ops';s.innerHTML=`
       <div class="owner-ops-head"><span class="card-label">Übersicht</span><h2>Belegung & Anfragen.</h2><p>Freie Zeiten sehen, Anfragen entscheiden und Aufenthalte eintragen – ohne unnötige Verwaltung.</p></div>
       <div class="owner-ops-grid">
@@ -63,19 +69,9 @@
 
   function syncGuest(){
     const x=upcoming()[0];
-    if(!x){
-      if(mode.demo)return;
-      const avatars=document.querySelector('.avatar-row');
-      if(avatars)avatars.innerHTML='<span>+</span><small>Aufenthalt wird hier angezeigt</small>';
-      return;
-    }
+    if(!x){if(mode.demo)return;const avatars=document.querySelector('.avatar-row');if(avatars)avatars.innerHTML='<span>+</span><small>Aufenthalt wird hier angezeigt</small>';return;}
     const s=date(x.start),e=date(x.end),days=Math.round((s-date(iso(new Date())))/DAY),set=(q,v)=>{const el=document.querySelector(q);if(el)el.textContent=v;};
-    set('#tripDay',new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(s).replace('.','').toUpperCase());
-    set('#tripDate',new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(s));
-    set('#tripMonth',new Intl.DateTimeFormat('de-DE',{month:'short'}).format(s).replace('.','').toUpperCase());
-    set('#tripHeadline',days<=0?'Eure Auszeit läuft.':days===1?'Morgen geht\'s los.':`Noch ${days} Tage.`);
-    set('#tripRange',`${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(s)}–${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(e)} · ${nights(x)} Nächte`);
-    set('#stayDateBadge',new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'short'}).format(s));
+    set('#tripDay',new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(s).replace('.','').toUpperCase());set('#tripDate',new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(s));set('#tripMonth',new Intl.DateTimeFormat('de-DE',{month:'short'}).format(s).replace('.','').toUpperCase());set('#tripHeadline',days<=0?'Eure Auszeit läuft.':days===1?'Morgen geht\'s los.':`Noch ${days} Tage.`);set('#tripRange',`${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(s)}–${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(e)} · ${nights(x)} Nächte`);set('#stayDateBadge',new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'short'}).format(s));
     const avatars=document.querySelector('.avatar-row');if(avatars)avatars.innerHTML=`<span>✓</span><small>${x.guests} Gäste</small>`;
     const g=document.querySelector('#greeting');if(g){const h=new Date().getHours(),w=h<11?'Guten Morgen':h<18?'Guten Tag':'Guten Abend';g.textContent=`${w}, ${x.guest}.`;}
     const pill=document.querySelector('.status-pill');if(pill)pill.innerHTML='<i></i> Aufenthalt vorbereitet';
@@ -91,6 +87,6 @@
     form.onsubmit=e=>{e.preventDefault();const x={id:crypto.randomUUID?.()||`b-${Date.now()}`,guest:document.querySelector('#ownerGuest').value.trim(),guests:+document.querySelector('#ownerGuests').value||1,start:start.value,end:end.value,source:document.querySelector('#ownerSource').value};if(x.end<=x.start)return toast('Abreise muss nach der Anreise liegen');if(overlap(x.start,x.end))return toast('Zeitraum ist bereits belegt');state.bookings.push(x);persist();form.reset();document.querySelector('#ownerGuests').value=2;document.querySelector('#ownerSource').value='Direkt';seed();render();toast('Aufenthalt gespeichert');};
   }
 
-  function init(){inject();if(!document.querySelector('#ownerOps'))return;bind();render();}
+  function init(){cleanVisiblePlaceholders();inject();if(!document.querySelector('#ownerOps'))return;bind();render();}
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init,{once:true}):init();
 })();

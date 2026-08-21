@@ -1,10 +1,45 @@
-const CACHE = 'waldhaus2-owner-fest-v2';
+const CACHE = 'waldhaus2-owner-fest-v3';
 const CORE = ['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
-self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
-self.addEventListener('fetch',event=>{
-  if(event.request.method!=='GET') return;
-  const url=new URL(event.request.url);
-  if(url.origin!==location.origin) return;
-  event.respondWith(fetch(event.request).then(response=>{const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response;}).catch(()=>caches.match(event.request).then(hit=>hit||caches.match('./index.html'))));
+const PRESENTATION_MEDIA = [
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-activity-hiking.svg'
+];
+const presentationHosts = new Set(['raw.githubusercontent.com']);
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then(async cache => {
+        await cache.addAll(CORE);
+        await Promise.allSettled(PRESENTATION_MEDIA.map(url => cache.add(url)));
+      })
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+  const isLocal = url.origin === location.origin;
+  const isPresentationMedia = presentationHosts.has(url.hostname) && PRESENTATION_MEDIA.includes(url.href);
+  if (!isLocal && !isPresentationMedia) return;
+
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
+        return response;
+      }).catch(() => isLocal ? caches.match('./index.html') : Response.error());
+    })
+  );
 });

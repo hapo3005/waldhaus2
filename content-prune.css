@@ -36,28 +36,31 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
   }
 }
 
-/* Mobile principle:
-   1) a dedicated map strip at the top,
-   2) copy below on calm forest green,
-   3) only compact functional status controls after the copy.
-   Nothing is allowed to cover the red rental-house marker. */
+/* Mobile: postcard composition.
+   The map is a distinct, inset location image with no controls or copy laid on
+   top of it. The copy sits calmly below, followed by tiny functional chips. */
 @media (max-width:760px){
   html body .view[data-view="stay"] .page-hero,
   html body .view[data-view="guide"] .page-hero,
   html body .view[data-view="house"] .page-hero,
   html body .view[data-view="checkout"] .page-hero{
     min-height:0!important;
-    padding:252px 24px 24px!important;
+    padding:262px 22px 22px!important;
     display:block!important;
     position:relative!important;
     overflow:hidden!important;
-    background:#13261f!important;
-    background-image:none!important;
+    background:
+      radial-gradient(circle at 82% 72%,rgba(214,166,90,.055),transparent 31%),
+      linear-gradient(180deg,#18352b 0%,#13261f 100%)!important;
+    background-image:
+      radial-gradient(circle at 82% 72%,rgba(214,166,90,.055),transparent 31%),
+      linear-gradient(180deg,#18352b 0%,#13261f 100%)!important;
+    border:1px solid rgba(248,245,237,.14)!important;
     border-radius:26px!important;
+    box-shadow:0 18px 42px rgba(19,38,31,.13)!important;
   }
 
-  /* Dedicated location image. The shorter strip reveals substantially more of
-     the wide source artwork than the previous full-height mobile crop. */
+  /* Inset map postcard. Right alignment keeps the red rental house in frame. */
   html body .view[data-view="stay"] .page-hero::after,
   html body .view[data-view="guide"] .page-hero::after,
   html body .view[data-view="house"] .page-hero::after,
@@ -65,50 +68,56 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
     content:"";
     position:absolute;
     z-index:0;
-    left:0;
-    top:0;
-    right:0;
-    height:220px;
+    left:12px;
+    top:12px;
+    right:12px;
+    height:204px;
     pointer-events:none;
-    background-color:#163027;
+    border:1px solid rgba(248,245,237,.18);
+    border-radius:18px;
+    background-color:#173027;
     background-image:
-      linear-gradient(180deg,rgba(19,38,31,.03),rgba(19,38,31,.10)),
+      linear-gradient(180deg,rgba(19,38,31,0),rgba(19,38,31,.035)),
       url('./assets/hero-sections-feriendorf.webp');
     background-repeat:no-repeat;
     background-size:auto 100%;
-    background-position:100% center;
-    border-bottom:1px solid rgba(248,245,237,.15);
+    background-position:100% 54%;
+    box-shadow:
+      0 12px 26px rgba(6,15,11,.16),
+      inset 0 0 0 1px rgba(255,255,255,.025);
   }
 
-  /* Small legend instead of a floating control: it explains why the map is
-     here without hiding the property itself. */
+  /* Editorial image caption rather than a badge. The red dot explains the map
+     without covering any part of the property marker. */
   html body .view[data-view="stay"] .page-hero::before,
   html body .view[data-view="guide"] .page-hero::before,
   html body .view[data-view="house"] .page-hero::before,
   html body .view[data-view="checkout"] .page-hero::before{
-    content:"●  Rot markiert: Euer Waldhaus"!important;
+    content:"Euer Waldhaus"!important;
     position:absolute!important;
     z-index:3!important;
-    left:16px!important;
-    top:176px!important;
+    left:24px!important;
+    top:228px!important;
     right:auto!important;
     bottom:auto!important;
     inset:auto!important;
     width:auto!important;
     height:auto!important;
-    padding:7px 10px!important;
-    border:1px solid rgba(248,245,237,.20)!important;
-    border-radius:999px!important;
-    background:rgba(19,38,31,.82)!important;
-    color:#f8f5ed!important;
+    padding:0 0 0 16px!important;
+    border:0!important;
+    border-radius:0!important;
+    background:
+      radial-gradient(circle at 4px 50%,#b34036 0 3px,transparent 3.6px)!important;
+    color:#dfe6de!important;
     opacity:1!important;
     filter:none!important;
-    box-shadow:0 5px 14px rgba(6,15,11,.14)!important;
+    box-shadow:none!important;
     font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-    font-size:10px!important;
+    font-size:9px!important;
     line-height:1.2!important;
-    font-weight:800!important;
-    letter-spacing:.01em!important;
+    font-weight:850!important;
+    letter-spacing:.13em!important;
+    text-transform:uppercase!important;
     pointer-events:none!important;
   }
 
@@ -127,94 +136,137 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
     max-width:100%!important;
   }
 
-  /* Aufenthalt: one quiet information row instead of a large card. */
+  html body .view[data-view="stay"] .page-hero .eyebrow,
+  html body .view[data-view="guide"] .page-hero .eyebrow,
+  html body .view[data-view="house"] .page-hero .eyebrow,
+  html body .view[data-view="checkout"] .page-hero .eyebrow{
+    display:block!important;
+    margin:0 0 10px!important;
+    font-size:10px!important;
+    line-height:1.25!important;
+    letter-spacing:.14em!important;
+  }
+
+  html body .view[data-view="stay"] .page-hero h1,
+  html body .view[data-view="guide"] .page-hero h1,
+  html body .view[data-view="house"] .page-hero h1,
+  html body .view[data-view="checkout"] .page-hero h1{
+    margin:0!important;
+    max-width:10.5em!important;
+    font-size:clamp(38px,11.5vw,50px)!important;
+    line-height:.98!important;
+    letter-spacing:-.045em!important;
+    text-wrap:balance!important;
+  }
+
+  html body .view[data-view="stay"] .page-hero p,
+  html body .view[data-view="guide"] .page-hero>div:first-child>p,
+  html body .view[data-view="house"] .page-hero p,
+  html body .view[data-view="checkout"] .page-hero>div:first-child>p{
+    margin:16px 0 0!important;
+    max-width:34ch!important;
+    color:#e5e8e2!important;
+    font-size:15px!important;
+    line-height:1.55!important;
+  }
+
+  /* Aufenthalt: small capsule instead of a card. */
   html body .view[data-view="stay"] .stay-badge{
-    width:100%!important;
+    width:max-content!important;
+    max-width:100%!important;
     min-width:0!important;
-    min-height:52px!important;
+    min-height:42px!important;
     margin:18px 0 0!important;
-    padding:10px 13px!important;
+    padding:8px 11px!important;
     transform:none!important;
-    display:flex!important;
+    display:inline-flex!important;
     flex-direction:row!important;
     align-items:center!important;
-    gap:9px!important;
-    border-radius:14px!important;
+    gap:8px!important;
+    border:1px solid rgba(232,196,119,.30)!important;
+    border-left:1px solid rgba(232,196,119,.30)!important;
+    border-radius:999px!important;
+    background:rgba(248,245,237,.075)!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
   }
   html body .view[data-view="stay"] .stay-badge small{
-    font-size:10px!important;
+    font-size:9px!important;
     letter-spacing:.10em!important;
     text-transform:uppercase!important;
   }
   html body .view[data-view="stay"] .stay-badge strong{
-    font-size:24px!important;
+    font-size:20px!important;
     line-height:1!important;
   }
   html body .view[data-view="stay"] .stay-badge span{
-    margin-left:auto!important;
-    font-size:11px!important;
+    display:none!important;
   }
 
-  /* Entdecken: live weather becomes a compact horizontal status row. */
+  /* Entdecken: temperature + one useful sentence only. */
   html body .view[data-view="guide"] .weather-panel{
-    width:100%!important;
+    width:max-content!important;
+    max-width:100%!important;
     min-width:0!important;
     margin:18px 0 0!important;
-    padding:10px 13px!important;
+    padding:8px 11px!important;
     transform:none!important;
-    display:grid!important;
-    grid-template-columns:auto minmax(0,1fr)!important;
-    grid-template-areas:"temp copy" "temp meta"!important;
-    column-gap:12px!important;
-    row-gap:2px!important;
+    display:inline-flex!important;
     align-items:center!important;
-    border-radius:14px!important;
+    gap:10px!important;
+    border:1px solid rgba(232,196,119,.30)!important;
+    border-left:1px solid rgba(232,196,119,.30)!important;
+    border-radius:999px!important;
+    background:rgba(248,245,237,.075)!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
   }
   html body .view[data-view="guide"] .weather-panel>div{
-    grid-area:temp!important;
     display:flex!important;
     align-items:center!important;
-    gap:6px!important;
+    gap:5px!important;
+    flex:0 0 auto!important;
   }
   html body .view[data-view="guide"] .weather-panel>div span{
-    font-size:18px!important;
+    font-size:16px!important;
   }
   html body .view[data-view="guide"] .weather-panel>div strong{
-    font-size:27px!important;
+    font-size:21px!important;
     line-height:1!important;
   }
   html body .view[data-view="guide"] .weather-panel p{
-    grid-area:copy!important;
     margin:0!important;
-    font-size:12px!important;
-    line-height:1.25!important;
+    max-width:19ch!important;
+    font-size:11px!important;
+    line-height:1.2!important;
+    white-space:normal!important;
   }
   html body .view[data-view="guide"] .weather-panel small{
-    grid-area:meta!important;
-    font-size:9px!important;
-    line-height:1.2!important;
+    display:none!important;
   }
 
-  /* House needs no separate status control; the map + red marker is the status. */
+  /* House: the red marker itself is the orientation cue. */
   html body .view[data-view="house"] .house-status{
     display:none!important;
   }
 
-  /* Abreise: turn the progress circle into one compact status pill. */
+  /* Abreise: tiny status capsule, no dashboard-like progress circle. */
   html body .view[data-view="checkout"] .progress-ring{
     width:max-content!important;
     height:auto!important;
     min-width:0!important;
-    min-height:50px!important;
+    min-height:42px!important;
     margin:18px 0 0!important;
-    padding:9px 14px!important;
+    padding:8px 12px!important;
     transform:none!important;
     display:inline-flex!important;
     align-items:baseline!important;
     justify-content:flex-start!important;
-    gap:8px!important;
-    border-radius:14px!important;
-    background:#284238!important;
+    gap:7px!important;
+    border:1px solid rgba(232,196,119,.30)!important;
+    border-radius:999px!important;
+    background:rgba(248,245,237,.075)!important;
+    box-shadow:none!important;
   }
   html body .view[data-view="checkout"] .progress-ring::before{
     display:none!important;
@@ -222,12 +274,13 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
   }
   html body .view[data-view="checkout"] .progress-ring span{
     position:static!important;
-    font-size:25px!important;
+    font-size:21px!important;
     line-height:1!important;
   }
   html body .view[data-view="checkout"] .progress-ring small{
     position:static!important;
-    font-size:10px!important;
+    font-size:9px!important;
     line-height:1!important;
+    letter-spacing:.05em!important;
   }
 }

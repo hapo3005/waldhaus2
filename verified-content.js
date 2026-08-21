@@ -4,8 +4,8 @@
   const verifiedGuideItems = [
     {
       category:'nature', kicker:'Direkt ab Kerschenbach', title:'Arnika-Route KB 3',
-      text:'7-km-Rundtour entlang des Dürrbachs Richtung Kronenburg. Die offizielle Tour ist als mittel eingestuft, hat rund 127 Höhenmeter und ist hundefreundlich.',
-      meta:['7,0 km','ca. 1:50 h','mittel'], url:'https://www.gerolsteiner-land.de/action/download?downloadId=3389518&id=address_23802'
+      text:'7-km-Rundtour entlang des Dürrbachs Richtung Kronenburg mit rund 127 Höhenmetern, Arnikawiese und schönen Blicken auf Kronenburg. Die offiziellen Quellen widersprechen sich bei der Einstufung „leicht/mittel“, deshalb zeigen wir bewusst keine Schwierigkeitsstufe.',
+      meta:['7,0 km','ca. 1:50 h','127 hm'], url:'https://www.gerolsteiner-land.de/touren/kerschenbach-kb3'
     },
     {
       category:'nature', kicker:'Kerschenbach · KB2', title:'XXL-Bank Kerschenbach',
@@ -48,6 +48,11 @@
       meta:['regional','vegetarisch','Terrasse'], url:'https://www.eifel.info/gastro/restaurant-villa-kronenburg'
     },
     {
+      category:'food', kicker:'Stadtkyll · Raiffeisenplatz 3', title:'Café Doppelfeld',
+      text:'Bäckerei, Café und Eisdiele mit selbst angesetztem Sauerteig und Eis nach italienischem Originalrezept. Aktuelle Öffnungszeiten bitte vor dem Besuch über die verlinkte Tourismusseite prüfen.',
+      meta:['Bäckerei','Café','06597 4973'], url:'https://www.eifel.info/gastro/cafe-conditorei-baeckerei-doppelfeld'
+    },
+    {
       category:'service', kicker:'Einkaufen · Stadtkyll', title:'REWE Stadtkyll',
       text:'Vollsortimenter in Stadtkyll, Im Hahnborn 5. Aktuell Montag bis Samstag von 07:00 bis 22:00 Uhr geöffnet.',
       meta:['Im Hahnborn 5','07–22 Uhr','06597 2990'], url:'https://www.rewe.de/marktseite/stadtkyll/1765219/rewe-markt-im-hahnborn-5'
@@ -61,6 +66,11 @@
       category:'service', kicker:'Gesundheit · Stadtkyll', title:'Ärztliche Versorgung',
       text:'Gemeinschaftspraxen in der Kurallee 8 (06597 3609) und Schwammertstraße 3 (06597 2425). Außerhalb der Sprechzeiten hilft der ärztliche Bereitschaftsdienst unter 116117.',
       meta:['2 Praxen','116117','Stadtkyll'], url:'https://www.stadtkyll.de/wohnen/gesundheit/aerzte/'
+    },
+    {
+      category:'service', kicker:'Kerschenbach · Gemeindehaus', title:'E-Auto laden',
+      text:'Am Gemeindehaus stehen zwei Ladestationen für E-Autos. Die Bedienung wird am Display erklärt; für die Bezahlung ist eine App erforderlich. Vor Ort steht dafür auch das freie WLAN der Ortsgemeinde zur Verfügung.',
+      meta:['2 Ladepunkte','Gemeindehaus','Free WiFi'], url:'https://kerschenbach.de/aktuelles/?e-page-baf20b0=2'
     },
     {
       category:'service', kicker:'Vor Ort · Stadtkyll', title:'Tourist-Information',

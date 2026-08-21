@@ -1,9 +1,9 @@
-const CACHE = 'waldhaus2-product-v29';
+const CACHE = 'waldhaus2-product-v30';
+const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css',
   './app.js','./home-hero.js','./home-hero.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',
-  './assets/hero-start-day.parts/part-01.txt','./assets/hero-start-day.parts/part-01-tail.txt','./assets/hero-start-day.parts/part-02.txt','./assets/hero-start-day.parts/part-03.txt',
-  './assets/hero-start-day.parts/part-04.txt','./assets/hero-start-day.parts/part-05.txt','./assets/hero-start-day.parts/part-06.txt',
+  ...HERO_PARTS,
   './manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'
 ];
 const PRESENTATION_MEDIA = [

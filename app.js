@@ -1,20 +1,29 @@
+const modeParams = new URLSearchParams(window.location.search);
+const appMode = {
+  demo: modeParams.get('demo') === '1',
+  owner: modeParams.get('owner') === '1' || modeParams.get('demo') === '1'
+};
+window.WALDHAUS_APP_MODE = appMode;
+
 const appState = {
   view: 'home',
   brand: localStorage.getItem('waldhaus2.brand') || 'Waldhaus',
   accent: localStorage.getItem('waldhaus2.accent') || 'forest',
-  weather: { temp: 19, code: 1, live: false },
+  weather: { temp: null, code: 1, live: false },
   installPrompt: null,
   guideFilter: 'all',
   checkout: JSON.parse(localStorage.getItem('waldhaus2.checkout') || '{}')
 };
 
 const guideItems = [
-  { category:'nature', kicker:'Direkt ab Kerschenbach', title:'Arnika-Route KB 3', text:'Leichte 7-km-Rundtour Richtung Kronenburg – Natur, Aussicht und ein starker Einstieg in die Region.', meta:['7,0 km','ca. 1:50 h','leicht'], url:'https://www.eifel.info/touren/kerschenbach-kb3' },
-  { category:'culture', kicker:'Historische Eifel', title:'Kronenburg', text:'Historischer Burgort auf dem Bergkegel mit alten Gassen, Wehranlage und Blick in die Eifellandschaft.', meta:['Ausflug','Spaziergang','Kronenburger See'], url:'https://www.eifel.info/pois/kronenburg' },
-  { category:'nature', kicker:'Stadtkyll', title:'Kyllpark', text:'Entspannt am Wasser, kurze Runde durch den Park oder Startpunkt für eine kleine Radtour auf dem Kyllradweg.', meta:['Park','Wasser','Radweg'], url:'https://www.eifel.info/en/pois/kurpark-stadtkyll' },
+  { category:'nature', kicker:'Direkt ab Kerschenbach', title:'Arnika-Route KB 3', text:'Leichte 7-km-Rundtour Richtung Kronenburg – Natur, Aussicht und ein schöner Einstieg in die Region.', meta:['7,0 km','ca. 1:50 h','leicht'], url:'https://www.eifel.info/touren/kerschenbach-kb3' },
+  { category:'culture', kicker:'Historische Eifel', title:'Kronenburg', text:'Historischer Burgort mit alten Gassen, Wehranlage und weitem Blick in die Eifellandschaft.', meta:['Ausflug','Spaziergang','Kronenburger See'], url:'https://www.eifel.info/pois/kronenburg' },
+  { category:'nature', kicker:'Stadtkyll', title:'Kyllpark', text:'Entspannt am Wasser, eine kleine Runde durch den Park oder weiter auf dem Kyllradweg.', meta:['Park','Wasser','Radweg'], url:'https://www.eifel.info/en/pois/kurpark-stadtkyll' },
+  { category:'food', kicker:'Stadtkyll', title:'Pizzeria La Sirena', text:'Mediterrane Küche mit Pizza, Pasta sowie Fisch- und Fleischgerichten.', meta:['Restaurant','Pizzeria','Stadtkyll'], url:'https://www.eifel.info/gastro/pizzeria-la-sirena-stadtkyll' },
+  { category:'food', kicker:'Stadtkyll', title:'Bistro am See', text:'Unkomplizierte Einkehr am Wirftstausee mit regionaler Küche und Hausmannskost.', meta:['Bistro','Wirftstausee','regional'], url:'https://www.eifel.info/gastro/stadtkyll-bistro-am-see' },
+  { category:'food', kicker:'Kronenburg', title:'Restaurant Villa Kronenburg', text:'Restaurant mit Gartenterrasse, regionalen Angeboten und vegetarischen Optionen.', meta:['Restaurant','Terrasse','Kronenburg'], url:'https://www.eifel.info/gastro/restaurant-villa-kronenburg' },
   { category:'service', kicker:'Gut vorbereitet', title:'Tourist-Information Stadtkyll', text:'Wanderkarten, aktuelle Ausflugstipps, Tickets und persönliche Beratung direkt in Stadtkyll.', meta:['Infos','Karten','Tickets'], url:'https://www.eifel.info/pois/tourist-information-oberes-kylltal' },
-  { category:'nature', kicker:'Kerschenbach', title:'Freizeitfläche & Schutzhütte', text:'Rastplatz, Übersichtskarte des Naturparks und Sinnesliege – ideal für einen kurzen Spaziergang ohne große Planung.', meta:['nah','Picknick','Naturpark'], url:'https://www.eifel.info/pois/wanderschutzhuette-kerschenbach' },
-  { category:'service', kicker:'Waldhaus Tipp', title:'Einfach spontan bleiben', text:'Das Wetter kippt? In der App können Empfehlungen automatisch angepasst werden – ohne dass der Gast lange suchen muss.', meta:['wetterabhängig','persönlich','aktuell'], url:'' }
+  { category:'nature', kicker:'Kerschenbach', title:'Freizeitfläche & Schutzhütte', text:'Rastplatz, Naturpark-Übersicht und Sinnesliege – gut für einen kurzen Spaziergang ohne große Planung.', meta:['nah','Picknick','Naturpark'], url:'https://www.eifel.info/pois/wanderschutzhuette-kerschenbach' }
 ];
 
 const checkoutItems = [
@@ -27,11 +36,11 @@ const checkoutItems = [
 ];
 
 const sheetContent = {
-  fireplace:{label:'Wohlfühlen',title:'Kamin sicher nutzen',html:'<ol><li>Luftzufuhr öffnen und trockenes Holz bereitlegen.</li><li>Anzünder und kleines Holz locker stapeln.</li><li>Nach dem Entzünden die Tür schließen und Zug beobachten.</li><li>Vor der Abreise prüfen, dass Feuer und Glut vollständig aus sind.</li></ol><p>In einer echten Hausversion ergänzen wir hier die konkrete Anleitung, Fotos und Besonderheiten Ihres Kamins.</p>'},
-  heating:{label:'Technik',title:'Heizung ohne Rätsel',html:'<p>Für Gäste reichen wenige klare Regeln: Komforttemperatur, Nachtabsenkung und die Einstellung bei Abreise.</p><ul><li>Tagsüber: 20–21 °C</li><li>Nachts: 18–19 °C</li><li>Abreise: hinterlegte Eco-Einstellung</li></ul>'},
-  waste:{label:'Alltag',title:'Müll & Recycling',html:'<p>Die Tonnen stehen in der vorgesehenen Müllzone am Grundstück. In der finalen Hausversion können hier Müllarten, Abholtage und ein Foto der Stellfläche hinterlegt werden.</p>'},
-  emergency:{label:'Wichtig',title:'Notfall & Kontakte',html:'<p><strong>Notruf:</strong> 112</p><p><strong>Eigentümer:</strong> Kontakt wird individuell hinterlegt.</p><p><strong>Hausservice:</strong> Kontakt wird individuell hinterlegt.</p><p>So finden Gäste im Ernstfall alles sofort – ohne alte Nachrichten durchsuchen zu müssen.</p>'},
-  appliances:{label:'Küche',title:'Geräte kurz erklärt',html:'<p>Statt Bedienungsanleitungen im Schrank: kurze, bildgestützte Schritte für Kaffeemaschine, Spülmaschine, Herd und weitere Geräte.</p><p>Für jedes Ferienhaus können genau die Geräte aufgenommen werden, die tatsächlich vor Ort stehen.</p>'}
+  fireplace:{label:'Wohlfühlen',title:'Kamin sicher nutzen',html:'<ol><li>Luftzufuhr öffnen und trockenes Holz bereitlegen.</li><li>Anzünder und kleines Holz locker stapeln.</li><li>Nach dem Entzünden die Tür schließen und den Kamin im Blick behalten.</li><li>Vor der Abreise prüfen, dass Feuer und Glut vollständig aus sind.</li></ol><p>Bitte den Kamin nur nutzen, wenn ihr euch mit der Bedienung sicher fühlt.</p>'},
+  heating:{label:'Technik',title:'Heizung',html:'<p>Bitte die Heizung nur so weit verändern, wie es für euren Aufenthalt nötig ist. Vor der Abreise wieder auf die am Haus hinterlegte Grundeinstellung zurückstellen.</p><p>Wenn etwas nicht wie erwartet funktioniert, lieber kurz beim Eigentümer melden statt an technischen Einstellungen zu experimentieren.</p>'},
+  waste:{label:'Alltag',title:'Müll & Recycling',html:'<p>Bitte Abfälle trennen und die dafür vorgesehenen Tonnen nutzen. Vor der Abreise Restmüll und Recycling aus dem Haus bringen.</p>'},
+  emergency:{label:'Wichtig',title:'Notfall & Kontakte',html:'<p><strong>Notruf:</strong> 112</p><p>Bei einem Problem am Haus bitte den hinterlegten Eigentümer- oder Hauskontakt nutzen. Die wichtigsten Hauskontakte werden hier zentral bereitgestellt.</p>'},
+  appliances:{label:'Küche',title:'Geräte kurz erklärt',html:'<p>Die wichtigsten Geräte im Waldhaus sind hier gebündelt. Bei Spülmaschine, Kaffeemaschine und Herd gilt: kurz, verständlich und ohne lange Bedienungsanleitung suchen zu müssen.</p>'}
 };
 
 function $(selector, root=document){ return root.querySelector(selector); }
@@ -39,24 +48,36 @@ function $$(selector, root=document){ return [...root.querySelectorAll(selector)
 function escapeHtml(value){ return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;'); }
 function toLocalDate(date){ return new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'short'}).format(date); }
 
-function setDynamicTrip(){
+function setNeutralTrip(){
+  $('#tripDay').textContent = '—';
+  $('#tripDate').textContent = '—';
+  $('#tripMonth').textContent = '';
+  $('#tripHeadline').textContent = 'Noch kein Aufenthalt geplant.';
+  $('#tripRange').textContent = 'Sobald ein Aufenthalt eingetragen ist, stehen hier die Reisedetails.';
+  $('#stayDateBadge').textContent = 'Termin folgt';
+  const avatars=$('.avatar-row');
+  if(avatars) avatars.innerHTML='<span>+</span><small>Aufenthalt wird hier angezeigt</small>';
+  const pill=$('.status-pill');
+  if(pill) pill.innerHTML='<i></i> Willkommen im Waldhaus';
+}
+
+function setDemoTrip(){
   const start = new Date(); start.setDate(start.getDate()+1);
   const end = new Date(start); end.setDate(end.getDate()+3);
-  const day = new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(start).replace('.','').toUpperCase();
-  const date = new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(start);
-  const month = new Intl.DateTimeFormat('de-DE',{month:'short'}).format(start).replace('.','').toUpperCase();
-  $('#tripDay').textContent = day;
-  $('#tripDate').textContent = date;
-  $('#tripMonth').textContent = month;
+  $('#tripDay').textContent = new Intl.DateTimeFormat('de-DE',{weekday:'short'}).format(start).replace('.','').toUpperCase();
+  $('#tripDate').textContent = new Intl.DateTimeFormat('de-DE',{day:'2-digit'}).format(start);
+  $('#tripMonth').textContent = new Intl.DateTimeFormat('de-DE',{month:'short'}).format(start).replace('.','').toUpperCase();
   $('#tripHeadline').textContent = 'Morgen geht\'s los.';
   $('#tripRange').textContent = `${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(start)}–${new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long'}).format(end)} · 3 Nächte`;
   $('#stayDateBadge').textContent = toLocalDate(start);
 }
 
+function setDynamicTrip(){ appMode.demo ? setDemoTrip() : setNeutralTrip(); }
+
 function setGreeting(){
   const hour = new Date().getHours();
   const word = hour < 11 ? 'Guten Morgen' : hour < 18 ? 'Guten Tag' : 'Guten Abend';
-  $('#greeting').textContent = `${word}, Familie Becker.`;
+  $('#greeting').textContent = appMode.demo ? `${word}, Familie Becker.` : `${word} im Waldhaus.`;
 }
 
 function updateBrand(name){
@@ -82,11 +103,57 @@ function navigate(view){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function configureProductMode(){
+  const ownerSwitch=$('#ownerSwitch');
+  if(ownerSwitch){
+    ownerSwitch.hidden=!appMode.owner;
+    if(appMode.owner) ownerSwitch.innerHTML=`<span>Eigentümer</span><b>${appMode.demo?'Demo':'Bereich'}</b>`;
+  }
+
+  const wlanQuick=[...$$('.quick-card')].find(el=>el.querySelector('strong')?.textContent==='WLAN');
+  if(wlanQuick) wlanQuick.querySelector('small').textContent='Passwort anzeigen';
+
+  const guideEyebrow=$('[data-view="guide"] .eyebrow');
+  if(guideEyebrow) guideEyebrow.textContent='Tipps für euren Aufenthalt';
+
+  const filterRow=$('.filter-row');
+  if(filterRow && !filterRow.querySelector('[data-guide-filter="food"]')){
+    const button=document.createElement('button');
+    button.className='filter-chip'; button.type='button'; button.dataset.guideFilter='food'; button.textContent='Essen';
+    const service=filterRow.querySelector('[data-guide-filter="service"]');
+    filterRow.insertBefore(button,service || null);
+  }
+
+  const ownerHero=$('.owner-hero');
+  if(ownerHero){
+    const eyebrow=ownerHero.querySelector('.eyebrow');
+    const title=ownerHero.querySelector('h1');
+    const copy=ownerHero.querySelector('p');
+    if(appMode.demo){
+      eyebrow.textContent='Eigentümer-Präsentation';
+    } else {
+      eyebrow.textContent='Eigentümerbereich';
+      title.innerHTML='Waldhaus.<br>Einfach verwalten.';
+      copy.textContent='Belegung, Anfragen und die wichtigsten Hausinformationen an einem Ort.';
+    }
+  }
+
+  if(!appMode.demo){
+    $$('.owner-value,.owner-flow,.sales-banner').forEach(el=>el.hidden=true);
+    const configLabel=$('.configurator-card .card-label');
+    if(configLabel) configLabel.textContent='Hausdarstellung';
+    const configTitle=$('.configurator-card h2');
+    if(configTitle) configTitle.textContent='Name & Erscheinungsbild';
+    const configCopy=$('.configurator-card p');
+    if(configCopy) configCopy.textContent='Hausname und Grundstimmung der Gästeansicht anpassen.';
+  }
+}
+
 function bindNavigation(){
   $$('[data-view-target]').forEach(btn => btn.addEventListener('click', () => navigate(btn.dataset.viewTarget)));
-  $('#ownerSwitch').addEventListener('click', () => navigate('owner'));
-  $('#backToGuest').addEventListener('click', () => navigate('home'));
-  $('#salesGuestPreview').addEventListener('click', () => navigate('home'));
+  $('#ownerSwitch')?.addEventListener('click', () => navigate('owner'));
+  $('#backToGuest')?.addEventListener('click', () => navigate('home'));
+  $('#salesGuestPreview')?.addEventListener('click', () => navigate('home'));
 }
 
 function weatherSymbol(code){
@@ -113,14 +180,13 @@ function renderWeather(){
   const icon = weatherSymbol(code);
   $('#heroWeatherIcon').textContent = icon;
   $('#guideWeatherIcon').textContent = icon;
-  $('#heroWeatherTemp').textContent = `${Math.round(temp)}°`;
-  $('#guideWeatherTemp').textContent = `${Math.round(temp)}°`;
-  $('#guideWeatherText').textContent = weatherText(code);
-  const wet = [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(code);
-  $('#smartTipLabel').textContent = wet ? 'Wenn es draußen nass ist' : 'Bei gutem Wetter';
+  $('#heroWeatherTemp').textContent = live ? `${Math.round(temp)}°` : '—°';
+  $('#guideWeatherTemp').textContent = live ? `${Math.round(temp)}°` : '—°';
+  $('#guideWeatherText').textContent = live ? weatherText(code) : 'Wetterdaten gerade nicht verfügbar.';
+  const wet = live && [51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(code);
+  $('#smartTipLabel').textContent = wet ? 'Wenn es draußen nass ist' : 'Für eure Auszeit';
   $('#smartTipTitle').textContent = wet ? 'Ein entspannter Tag mit Plan B.' : 'Arnika-Route nach Kronenburg.';
-  $('#smartTipText').textContent = wet ? 'Hauszeit genießen, später nach Stadtkyll – und die nächsten trockenen Stunden automatisch im Blick behalten.' : 'Leichte 7-km-Runde direkt aus Kerschenbach – Natur, Aussicht und historischer Ortskern.';
-  if (!live) $('#guideWeatherText').textContent += ' · Demo';
+  $('#smartTipText').textContent = wet ? 'Hauszeit genießen und später spontan nach Stadtkyll – die wichtigsten Ideen bleiben griffbereit.' : 'Leichte 7-km-Runde direkt aus Kerschenbach – Natur, Aussicht und historischer Ortskern.';
 }
 
 async function loadWeather(){
@@ -132,20 +198,19 @@ async function loadWeather(){
     if (typeof data.current?.temperature_2m !== 'number') throw new Error('weather');
     appState.weather = {temp:data.current.temperature_2m, code:data.current.weather_code ?? 1, live:true};
   } catch (error) {
-    appState.weather = {temp:19, code:1, live:false};
+    appState.weather = {temp:null, code:1, live:false};
   }
   renderWeather();
 }
 
 function renderRecommendations(){
-  const top = guideItems.slice(0,3);
+  const top = [guideItems[0],guideItems[3],guideItems[1]];
   $('#homeRecommendations').innerHTML = top.map(item => `<article class="recommend-card"><small>${escapeHtml(item.kicker)}</small><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.meta.join(' · '))}</span></article>`).join('');
 }
 
 function renderGuide(){
   const items = appState.guideFilter === 'all' ? guideItems : guideItems.filter(item => item.category === appState.guideFilter);
-  $('#guideGrid').innerHTML = items.map(item => `<article class="guide-card"><span class="guide-kicker">${escapeHtml(item.kicker)}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p><div class="guide-meta">${item.meta.map(value=>`<span>${escapeHtml(value)}</span>`).join('')}</div>${item.url ? `<a class="text-link" href="${item.url}" target="_blank" rel="noreferrer">Mehr erfahren ↗</a>` : `<button class="text-link" type="button" data-view-target="house">Hauszeit ansehen →</button>`}</article>`).join('');
-  $$('[data-view-target]', $('#guideGrid')).forEach(btn => btn.addEventListener('click',()=>navigate(btn.dataset.viewTarget)));
+  $('#guideGrid').innerHTML = items.map(item => `<article class="guide-card"><span class="guide-kicker">${escapeHtml(item.kicker)}</span><h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.text)}</p><div class="guide-meta">${item.meta.map(value=>`<span>${escapeHtml(value)}</span>`).join('')}</div><a class="text-link" href="${item.url}" target="_blank" rel="noreferrer">Mehr erfahren ↗</a></article>`).join('');
 }
 
 function bindGuideFilters(){
@@ -198,9 +263,9 @@ function openSheet(key){
 function closeSheet(){ $('#detailSheet').classList.remove('is-open'); $('#detailSheet').setAttribute('aria-hidden','true'); $('#sheetBackdrop').hidden=true; }
 
 function bindOwnerConfigurator(){
-  $('#applyBrand').addEventListener('click',()=>{ updateBrand($('#brandInput').value); showToast('Hausname live übernommen'); });
+  $('#applyBrand').addEventListener('click',()=>{ updateBrand($('#brandInput').value); showToast('Hausname übernommen'); });
   $('#brandInput').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();$('#applyBrand').click();}});
-  $$('[data-accent-choice]').forEach(btn=>btn.addEventListener('click',()=>{applyAccent(btn.dataset.accentChoice);showToast('Designstimmung angepasst');}));
+  $$('[data-accent-choice]').forEach(btn=>btn.addEventListener('click',()=>{applyAccent(btn.dataset.accentChoice);showToast('Erscheinungsbild angepasst');}));
 }
 
 function bindInstall(){
@@ -225,6 +290,7 @@ function init(){
   applyAccent(appState.accent);
   setDynamicTrip();
   setGreeting();
+  configureProductMode();
   bindNavigation();
   bindGuideFilters();
   bindHouse();
@@ -236,6 +302,7 @@ function init(){
   renderCheckout();
   renderWeather();
   loadWeather();
+  if(modeParams.get('owner')==='1' && !appMode.demo) navigate('owner');
 }
 
 function loadOwnerOps(){

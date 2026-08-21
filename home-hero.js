@@ -1,6 +1,7 @@
 (() => {
-  const HERO_PARTS = Array.from({length:13},(_,index)=>`./assets/hero-start-clean.b64/part-${String(index+1).padStart(2,'0')}.txt`);
+  const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
   const HERO_BASE64_LENGTH = 128112;
+  const HERO_BYTE_LENGTH = 96084;
   let heroObjectUrl='';
 
   function ensureStyles(){
@@ -33,9 +34,7 @@
       const base64=chunks.join('');
       if(base64.length!==HERO_BASE64_LENGTH) throw new Error(`hero asset incomplete: ${base64.length}/${HERO_BASE64_LENGTH}`);
       const bytes=decodeBase64(base64);
-      if(bytes.length!==96084||String.fromCharCode(...bytes.slice(0,4))!=='RIFF'||String.fromCharCode(...bytes.slice(8,12))!=='WEBP'){
-        throw new Error('hero asset integrity check failed');
-      }
+      if(bytes.length!==HERO_BYTE_LENGTH||String.fromCharCode(...bytes.slice(0,4))!=='RIFF'||String.fromCharCode(...bytes.slice(8,12))!=='WEBP') throw new Error('hero asset integrity check failed');
       if(heroObjectUrl) URL.revokeObjectURL(heroObjectUrl);
       heroObjectUrl=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
       image.style.setProperty('background-image',`url("${heroObjectUrl}")`,'important');
@@ -43,7 +42,7 @@
       delete hero.dataset.heroImageError;
     }catch(error){
       hero.dataset.heroImageError='1';
-      console.warn('Waldhaus daytime hero could not be loaded',error);
+      console.warn('Waldhaus clean hero could not be loaded',error);
     }finally{
       delete hero.dataset.heroImageLoading;
     }
@@ -54,13 +53,11 @@
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
-
     const copy=hero.querySelector('.hero-copy');
     const heading=copy?.querySelector('h1');
     const body=copy?.querySelector('p:not(.eyebrow)');
     const actions=copy?.querySelector('.hero-actions');
     const buttons=actions?[...actions.querySelectorAll('.button')]:[];
-
     if(heading) heading.innerHTML='Was passt <em>heute</em><br>zu euch?';
     if(body) body.textContent='Ausgewählte Ideen für Natur, Essen, Ausflüge und die praktischen Dinge vor Ort.';
     if(buttons[0]){
@@ -69,7 +66,6 @@
       buttons[0].innerHTML='Meinen perfekten Tag planen <span>→</span>';
     }
     buttons.slice(1).forEach(button=>button.remove());
-
     loadHeroImage(hero);
     return true;
   }
@@ -82,7 +78,5 @@
     },40);
   }
 
-  document.readyState==='loading'
-    ? document.addEventListener('DOMContentLoaded',boot,{once:true})
-    : boot();
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',boot,{once:true}):boot();
 })();

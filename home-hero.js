@@ -8,14 +8,14 @@
     if(!document.querySelector('link[data-home-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='home-hero.css';
+      link.href='home-hero.css?v=39';
       link.dataset.homeHeroStyle='1';
       document.head.appendChild(link);
     }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='section-hero.css';
+      link.href='section-hero.css?v=38';
       link.dataset.sectionHeroStyle='1';
       document.head.appendChild(link);
     }
@@ -59,6 +59,32 @@
     mark.dataset.approvedLogo='1';
   }
 
+  function applyWelcomeCards(){
+    const home=document.querySelector('[data-view="home"]');
+    const trip=home?.querySelector('.trip-card');
+    if(trip){
+      trip.classList.add('welcome-trip-v2');
+      const addButton=trip.querySelector(':scope > .text-link');
+      if(addButton && addButton.dataset.welcomeV2!=='1'){
+        addButton.dataset.welcomeV2='1';
+        addButton.classList.add('trip-add-button');
+        addButton.textContent='+ Reise hinzufügen';
+      }
+      if(!trip.querySelector('.trip-details-link')){
+        const details=document.createElement('button');
+        details.type='button';
+        details.className='trip-details-link';
+        details.textContent='Details ansehen →';
+        details.addEventListener('click',()=>{
+          const target=document.querySelector('.desktop-nav [data-view-target="stay"], .mobile-nav [data-view-target="stay"]');
+          target?.click();
+        });
+        trip.appendChild(details);
+      }
+    }
+    home?.querySelector('.next-card')?.classList.add('welcome-next-v2');
+  }
+
   function decodeBase64(base64){
     const binary=atob(base64);
     const bytes=new Uint8Array(binary.length);
@@ -97,6 +123,7 @@
   function applyHero(){
     ensureStyles();
     applyHeaderLogo();
+    applyWelcomeCards();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -123,6 +150,7 @@
       tries+=1;
       ensureStyles();
       applyHeaderLogo();
+      applyWelcomeCards();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

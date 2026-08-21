@@ -1,0 +1,244 @@
+/*
+  Waldhaus2 · Eifel Linen & Forest
+  Authoritative visual layer for a modern, age-inclusive holiday experience.
+  Palette roles are intentionally semantic: light content canvas, deep forest brand,
+  warm gold accent, strong readable ink and restrained sage support.
+*/
+
+html:root{
+  color-scheme:light;
+  --bg:#F1EEE5;
+  --bg-soft:#E7E5DB;
+  --surface:#FBF9F4;
+  --surface-strong:#FFFFFF;
+  --surface-light:#FBF9F4;
+  --text:#1F2521;
+  --muted:#59625B;
+  --ink:#1F2521;
+  --accent:#1F3A30;
+  --accent-strong:#13261F;
+  --accent-ink:#F8F5ED;
+  --warm:#D6A65A;
+  --sage:#DDE2D8;
+  --line:#D7D3C8;
+  --shadow:0 22px 60px rgba(31,37,33,.10);
+  --focus:#1F3A30;
+}
+
+html body{
+  background:
+    radial-gradient(circle at 86% 8%,rgba(214,166,90,.10),transparent 30rem),
+    radial-gradient(circle at 8% 40%,rgba(93,123,103,.09),transparent 34rem),
+    var(--bg);
+  color:var(--text);
+}
+
+body .ambient span{opacity:.055;background:#7D9584}
+body .ambient span:nth-child(2){background:#D6A65A}
+body .ambient span:nth-child(3){background:#A8B8A9}
+
+/* Header & navigation: stable dark brand anchor on the light canvas. */
+body .topbar{
+  background:rgba(31,58,48,.96);
+  color:var(--accent-ink);
+  border-color:rgba(248,245,237,.16);
+  box-shadow:0 14px 38px rgba(19,38,31,.16);
+}
+body .brand-text strong{color:#F8F5ED}
+body .brand-text small{color:#DDE2D8}
+body .brand-mark{background:var(--warm);color:#13261F}
+body .desktop-nav{background:rgba(248,245,237,.08)}
+body .nav-item{color:#DDE2D8;min-height:42px}
+body .nav-item:hover,body .nav-item.is-active{color:#FFFFFF;background:rgba(248,245,237,.15)}
+body .icon-button{border-color:rgba(248,245,237,.18);background:rgba(248,245,237,.08);color:#F8F5ED}
+body .owner-switch{background:var(--warm);color:#13261F;min-height:44px}
+
+/* Hero remains cinematic, but the rest of the product gets daylight. */
+body .hero{border-color:rgba(248,245,237,.18);box-shadow:0 26px 68px rgba(19,38,31,.20)}
+body .hero-shade{background:linear-gradient(180deg,rgba(8,18,13,.18),rgba(8,18,13,.03) 34%,rgba(13,31,23,.60) 76%,rgba(13,31,23,.88))}
+body .hero-copy .eyebrow{color:#F8F5ED}
+body .hero h1,body .hero-copy>p:not(.eyebrow){color:#FFFFFF}
+body .hero h1 span{color:#F0C878}
+body .status-pill,body .weather-pill{background:rgba(19,38,31,.52);border-color:rgba(248,245,237,.28);color:#FFFFFF}
+body .weather-pill small{color:#E7E7DF}
+body .status-pill i{background:var(--warm);box-shadow:0 0 0 5px rgba(214,166,90,.18)}
+
+/* Buttons: forest is the main action; gold is reserved for high-emotion hero use. */
+body .button{min-height:48px;font-size:13px}
+body .button-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 10px 24px rgba(31,58,48,.16)}
+body .hero .button-primary{background:var(--warm);color:#13261F;box-shadow:0 12px 28px rgba(214,166,90,.20)}
+body .button-soft{background:#F7F4EC;border-color:var(--line);color:var(--text)}
+body .button-white{background:#FBF9F4;color:#1F3A30}
+body .button-glass{background:rgba(248,245,237,.12);border-color:rgba(248,245,237,.30);color:#FFFFFF}
+body .text-link{color:#1F3A30;font-size:12px}
+
+/* Core content surfaces. */
+body .card,
+body .quick-card,
+body .timeline-body,
+body .house-card,
+body .checkout-item,
+body .owner-stat,
+body .flow-grid article{
+  background:var(--surface);
+  color:var(--text);
+  border-color:var(--line);
+  box-shadow:0 16px 42px rgba(31,37,33,.075);
+}
+body .card-label,body .eyebrow{color:#385846}
+body .card-label.light{color:#F8F5ED}
+body .trip-copy p,body .next-card>p,body .timeline-body>p,body .house-card p,
+body .checkout-side>p,body .flow-grid p,body .configurator-card>p,body .owner-value>p{
+  color:var(--muted);
+}
+body .trip-date{background:#F7F3E9;color:#1F2521;box-shadow:0 12px 28px rgba(31,37,33,.10)}
+body .avatar-row span{border-color:#F1EEE5}
+body .next-icon,body .house-icon{background:#E8ECE5;color:#1F3A30}
+body .mini-list span,body .info-grid div,body .step-list span,body .farewell,body .benefit-list li{background:#F0F1EA;color:var(--text)}
+body .mini-list b{color:#1F2521}
+body .step-list b{background:#1F3A30;color:#F8F5ED}
+body .quick-card:hover{border-color:#9BA99E}
+body .quick-card.accent{background:#1F3A30;color:#F8F5ED;border-color:#1F3A30}
+
+/* Page headers create rhythm without turning the whole app into dark mode. */
+body .page-hero{
+  background:
+    radial-gradient(circle at 82% 8%,rgba(214,166,90,.15),transparent 32%),
+    linear-gradient(135deg,#24473A,#172E26);
+  color:#F8F5ED;
+  border-color:rgba(248,245,237,.14);
+  box-shadow:0 24px 62px rgba(19,38,31,.17);
+}
+body .page-hero h1{color:#FFFFFF}
+body .page-hero p{color:#DDE2D8;font-size:15px}
+body .page-hero .eyebrow{color:#E8C477}
+body .page-hero::before{background:#D6A65A;opacity:.11}
+body .page-hero .stay-badge,body .page-hero .weather-panel,body .page-hero .house-status{
+  background:rgba(248,245,237,.10);
+  border-color:rgba(248,245,237,.20);
+  color:#F8F5ED;
+}
+body .page-hero .stay-badge small,body .page-hero .stay-badge span,
+body .page-hero .weather-panel small,body .page-hero .house-status small{color:#DDE2D8}
+body .page-hero .weather-panel p{color:#F8F5ED}
+
+/* Stay / house / checkout content. */
+body .timeline::before{background:#CFCBC0}
+body .timeline-dot{background:#6C786F;border-color:#F1EEE5;box-shadow:0 0 0 1px #BDB9AE}
+body .timeline-card.is-highlighted .timeline-dot{background:var(--warm);box-shadow:0 0 0 6px rgba(214,166,90,.15)}
+body .info-grid small,body .timeline-time,body .house-card small,body .checkout-item small{color:var(--muted)}
+body .house-status{background:#FBF9F4;border-color:var(--line);color:var(--text)}
+body .house-status i{background:#1F3A30;box-shadow:0 0 0 5px rgba(31,58,48,.12)}
+body .house-card.featured{background:linear-gradient(135deg,#E2E8DF,#F8F6EF)}
+body .copy-button{background:#F2F1EA;color:#1F3A30;border-color:#D2D0C7;min-height:42px}
+body .checkout-hero{background:linear-gradient(135deg,#24473A,#13261F)}
+body .checkout-side{background:#FBF9F4;color:var(--text);border-color:var(--line);box-shadow:0 16px 42px rgba(31,37,33,.08)}
+body .progress-ring{background:conic-gradient(var(--warm) var(--progress,0%),rgba(248,245,237,.14) 0)}
+body .progress-ring::before{background:#1D382F}
+body .progress-ring span{color:#FFFFFF}
+body .progress-ring small{color:#DDE2D8}
+body .fake-check{border-color:#AEB5AE}
+body .checkout-item input:checked+.fake-check{background:#1F3A30;border-color:#1F3A30;color:#F8F5ED}
+
+/* Discover: light editorial containers, immersive photo cards. */
+body .guide-experience-hub .stay-experiences-intro h2{color:#1F2521}
+body .guide-experience-hub .stay-experiences-intro p{color:#59625B}
+body .guide-experience-hub .stay-experience-group{
+  background:linear-gradient(135deg,#FBF9F4,#ECEFE8);
+  color:#1F2521;
+  border-color:#D3D3C8;
+  box-shadow:0 18px 48px rgba(31,37,33,.085);
+}
+body .guide-experience-hub .stay-experience-head h2{color:#1F2521}
+body .guide-experience-hub .stay-experience-head .card-label{color:#385846}
+body .guide-experience-hub .stay-experience-controls button{
+  background:#FFFFFF;
+  color:#1F3A30;
+  border-color:#CBCFC7;
+  min-width:48px;
+  min-height:48px;
+}
+body .guide-experience-hub .stay-experience-controls button:hover{background:#E5EAE2;border-color:#8DA092}
+body .guide-experience-hub .stay-experience-card{
+  color:#FFFDF8;
+  background:#1F3A30;
+  border-color:rgba(255,255,255,.20);
+  box-shadow:0 18px 44px rgba(19,38,31,.18);
+}
+body .guide-experience-hub .stay-experience-card:hover{border-color:rgba(232,196,119,.68);box-shadow:0 26px 58px rgba(19,38,31,.25)}
+body .guide-experience-hub .stay-experience-card:after{background:linear-gradient(180deg,rgba(8,18,13,.01) 10%,rgba(8,18,13,.10) 42%,rgba(8,18,13,.78) 76%,rgba(8,18,13,.94))}
+body .guide-experience-hub .stay-experience-copy small{color:#F0C878}
+body .guide-experience-hub .stay-experience-copy p{color:rgba(255,253,248,.88);font-size:.9rem}
+body .guide-experience-hub .stay-experience-link{background:rgba(255,253,248,.15);border-color:rgba(255,253,248,.42);color:#FFFFFF;min-height:42px}
+body .guide-experience-hub .stay-experience-progress i{background:#C9CEC6}
+body .guide-experience-hub .stay-experience-progress i.active{background:#D6A65A}
+body .guide-experience-hub .stay-experience-note,body .guide-verification-note,body .verified-note{color:#59625B;font-size:.82rem}
+
+/* Owner area follows the same product language instead of returning to dark glass UI. */
+body .owner-hero{background:radial-gradient(circle at 80% 10%,rgba(214,166,90,.16),transparent 34%),linear-gradient(135deg,#24473A,#13261F)}
+body .owner-stat span,body .flow-grid span{color:#385846}
+body .input-row input,body .owner-form input,body .owner-form select{
+  background:#FFFFFF;
+  color:#1F2521;
+  border-color:#C9CDC5;
+  min-height:48px;
+}
+body .mood{background:#F5F3EC;color:#465049;border-color:#D2D0C7;min-height:42px}
+body .mood.is-active{background:#1F3A30;color:#F8F5ED;border-color:#1F3A30}
+body .benefit-list li>span{background:#E2E7DE;color:#1F3A30}
+body .sales-banner{background:#1F3A30;color:#F8F5ED}
+body .sales-banner .eyebrow{color:#E8C477;opacity:1}
+body .sales-banner .button-white{background:#F8F5ED;color:#1F3A30}
+
+body .owner-ops-head p,body .owner-weekdays,body .owner-legend,body .owner-item span,
+body .owner-item small,body .owner-empty,body .owner-form label{color:#59625B}
+body .owner-card-head button,body .owner-item button{background:#F4F2EB;color:#1F3A30;border-color:#CFD1C9;min-width:44px;height:44px}
+body .owner-day{background:#F5F3EC;color:#1F2521}
+body .owner-day.today{border-color:#1F3A30}
+body .owner-day.has-booking{background:#DCE7DE;color:#173025}
+body .owner-day.has-request{background:#EEE5D3;color:#41351F}
+body .owner-item{border-bottom-color:#D9D6CC}
+body .owner-legend i{background:#D2D3CC}
+body .owner-legend i.booked{background:#1F3A30}
+
+/* Sheets, notifications and mobile navigation. */
+body .sheet{background:#FBF9F4;color:#1F2521;border-color:#D2D0C7;box-shadow:0 24px 70px rgba(31,37,33,.18)}
+body .sheet-close{background:#F0EFE8;color:#1F3A30;border-color:#D2D0C7;min-width:44px;min-height:44px}
+body .sheet p,body .sheet li{color:#59625B;font-size:14px}
+body .toast{background:#1F3A30;color:#F8F5ED;box-shadow:0 16px 42px rgba(19,38,31,.22);font-size:12px}
+
+body .mobile-nav{
+  background:rgba(31,58,48,.97);
+  color:#F8F5ED;
+  border-color:rgba(248,245,237,.16);
+  box-shadow:0 16px 44px rgba(19,38,31,.22);
+}
+body .mobile-nav-item{color:#C9D1C9;min-height:50px}
+body .mobile-nav-item small{font-size:10px}
+body .mobile-nav-item.is-active{background:rgba(248,245,237,.15);color:#FFFFFF}
+
+/* Accessible focus. Gold is reserved for focus on dark areas; forest is clearer on light surfaces. */
+body button:focus-visible,body a:focus-visible,body input:focus-visible,body select:focus-visible{
+  outline:3px solid var(--focus);
+  outline-offset:3px;
+}
+body .topbar button:focus-visible,body .hero button:focus-visible,body .page-hero button:focus-visible,
+body .mobile-nav button:focus-visible,body .stay-experience-card:focus-visible{
+  outline-color:#F0C878;
+}
+
+/* Slightly more generous text sizing where information, not decoration, is the goal. */
+body .next-card>p,body .timeline-body>p,body .house-card p,body .checkout-side>p,
+body .verified-copy,body .stay-experiences-intro p{font-size:14px;line-height:1.65}
+
+@media(max-width:760px){
+  body .topbar{background:rgba(31,58,48,.98)}
+  body .page-hero p{font-size:14px}
+  body .guide-experience-hub .stay-experience-group{padding:20px 16px}
+}
+
+@media(prefers-contrast:more){
+  html:root{--muted:#424B45;--line:#B7B4AA}
+  body .card,body .timeline-body,body .house-card,body .checkout-item{border-width:2px}
+  body .guide-experience-hub .stay-experience-card:after{background:linear-gradient(180deg,rgba(5,12,8,.03) 8%,rgba(5,12,8,.18) 40%,rgba(5,12,8,.88) 72%,rgba(5,12,8,.98))}
+}

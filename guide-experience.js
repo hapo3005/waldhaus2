@@ -1,16 +1,41 @@
 (() => {
-  const ASSET='https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/';
-
   const extraConfig={
-    'Arnika-Route KB 3':{image:`${ASSET}carousel-activity-hiking.svg`,place:'Direkt ab Kerschenbach',tag:'Wandern'},
-    'XXL-Bank Kerschenbach':{image:`${ASSET}carousel-activity-forest.svg`,place:'Kerschenbach',tag:'Aussicht'},
-    'Wassererlebnisplatz':{image:`${ASSET}carousel-activity-kids.svg`,place:'Kerschenbach',tag:'Natur & Familie'},
-    'Café Doppelfeld':{image:`${ASSET}carousel-dining-coffee.svg`,place:'Stadtkyll',tag:'Café & Bäckerei'},
-    'REWE Stadtkyll':{image:`${ASSET}carousel-dining-market.svg`,place:'Stadtkyll',tag:'Einkaufen'},
-    'Marien-Apotheke':{image:`${ASSET}news-emergency.svg`,place:'Stadtkyll',tag:'Apotheke'},
-    'Ärztliche Versorgung':{image:`${ASSET}news-emergency.svg`,place:'Stadtkyll',tag:'Gesundheit'},
-    'E-Auto laden':{image:`${ASSET}news-wifi.svg`,place:'Kerschenbach',tag:'E-Mobilität'},
-    'Tourist-Information':{image:`${ASSET}carousel-activity-village.svg`,place:'Stadtkyll',tag:'Information'}
+    'Arnika-Route KB 3':{
+      image:'https://imxplatform-cust-et.fsn1.your-objectstorage.com/media/20250624_150912.jpg',
+      place:'Direkt ab Kerschenbach',tag:'Wandern'
+    },
+    'XXL-Bank Kerschenbach':{
+      image:'https://resc.deskline.net/images/RPT/1/3ee70ee3-6a3d-4c33-bd82-4c7dc548258b/99/image.jpg',
+      place:'Kerschenbach',tag:'Aussicht'
+    },
+    'Wassererlebnisplatz':{
+      image:'https://www.gerolstein.de/aktuelles/news/2021/westenergie-aktiv-vor-ort/wanderschutzhuette-am-wassererlebnisplatz-kerschenbach.jpg',
+      place:'Kerschenbach',tag:'Natur & Familie'
+    },
+    'Café Doppelfeld':{
+      image:'https://cafe-doppelfeld.de/wp-content/uploads/2022/10/rbd1-Cafe-Backerei-Eiscafe-Doppelfeld-facade.jpg',
+      place:'Stadtkyll',tag:'Café & Bäckerei'
+    },
+    'REWE Stadtkyll':{
+      image:'https://cs.rewe-static.de/v3/assets/blt23e2a0b7bfd23c1f/blt86632a6c3753bd9b/657703b2183f4a040ab88c47/heimat2.png?format=jpeg&quality=80',
+      place:'Stadtkyll',tag:'Einkaufen'
+    },
+    'Marien-Apotheke':{
+      image:'https://www.apotheke-stadtkyll.de/images/apotheke/marien_aussen_1200.webp',
+      place:'Stadtkyll',tag:'Apotheke'
+    },
+    'Ärztliche Versorgung':{
+      image:'https://drsteigerwald.de/assets/images/7/Praxis_dr_med_Steigerwald_1-rp5ddbrp108qe9a.jpg',
+      place:'Stadtkyll',tag:'Gesundheit'
+    },
+    'E-Auto laden':{
+      image:'https://www.gerolstein.de/leben-in-der-verbandsgemeinde/ortsgemeinden-und-staedte/kerschenbach/vg-gerolstein-kerschenbach.jpg?cid=kld.7eca&resize=e9112f%3A1200x400c',
+      place:'Kerschenbach',tag:'E-Mobilität'
+    },
+    'Tourist-Information':{
+      image:'https://resc.deskline.net/images/RPT/1/b2e9454c-9e94-4b76-9706-2721ac638006/99/image.jpg',
+      place:'Stadtkyll',tag:'Information'
+    }
   };
 
   const natureTitles=['Arnika-Route KB 3','XXL-Bank Kerschenbach','Wassererlebnisplatz'];
@@ -21,7 +46,7 @@
 
   function experienceCard(item,config){
     if(!item||!config)return '';
-    return `<a class="stay-experience-card guide-unified-card" href="${esc(item.url)}" target="_blank" rel="noreferrer"><div class="stay-experience-media guide-illustration"><img src="${esc(config.image)}" alt="" loading="lazy" decoding="async"></div><div class="stay-experience-copy"><small>${esc(config.place)} · ${esc(config.tag)}</small><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p><span class="stay-experience-link">mehr erfahren <b>↗</b></span></div></a>`;
+    return `<a class="stay-experience-card guide-unified-card" href="${esc(item.url)}" target="_blank" rel="noreferrer"><div class="stay-experience-media guide-illustration"><img src="${esc(config.image)}" alt="${esc(item.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div><div class="stay-experience-copy"><small>${esc(config.place)} · ${esc(config.tag)}</small><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p><span class="stay-experience-link">mehr erfahren <b>↗</b></span></div></a>`;
   }
 
   function railMarkup(id,title,titles){

@@ -29,7 +29,7 @@
     if(!document.querySelector('link[data-mobile-nav-icons-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='mobile-nav-icons.css?v=1';
+      link.href='mobile-nav-icons.css?v=2';
       link.dataset.mobileNavIconsStyle='1';
       document.head.appendChild(link);
     }

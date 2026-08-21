@@ -238,4 +238,12 @@ function init(){
   loadWeather();
 }
 
+function loadOwnerOps(){
+  const script=document.createElement('script');
+  script.src='owner-ops.js';
+  script.defer=true;
+  document.head.appendChild(script);
+}
+
+loadOwnerOps();
 document.addEventListener('DOMContentLoaded',init);

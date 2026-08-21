@@ -1,8 +1,8 @@
-const CACHE = 'waldhaus2-product-v40';
+const CACHE = 'waldhaus2-product-v41';
 const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./section-hero.css',
-  './app.js','./home-hero.js','./home-hero.css','./welcome-card-icon.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',
+  './app.js','./home-hero.js','./home-hero.css','./welcome-card-icon.css','./content-prune.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',
   ...HERO_PARTS,
   './assets/hero-sections-feriendorf.webp',
   './manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'

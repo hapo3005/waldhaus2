@@ -1,0 +1,47 @@
+/* Waldhaus2 · brand typography refinement
+   Align the wordmark treatment with the editorial serif language of the UI. */
+body .topbar .brand-text{
+  gap:3px;
+}
+body .topbar .brand-text strong{
+  font-family: Georgia, "Times New Roman", serif;
+  font-size:20px;
+  line-height:1;
+  font-weight:400;
+  letter-spacing:-.025em;
+  color:#fffdf8;
+}
+body .topbar .brand-text small{
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:10px;
+  line-height:1.25;
+  font-weight:650;
+  letter-spacing:.045em;
+  color:#cbd5cd;
+}
+
+body .waldhaus-footer-copy strong{
+  font-family: Georgia, "Times New Roman", serif;
+  font-size:22px;
+  line-height:1;
+  font-weight:400;
+  letter-spacing:-.025em;
+  color:#fffdf8;
+}
+body .waldhaus-footer-copy > span{
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:650;
+  letter-spacing:.045em;
+}
+
+@media(max-width:760px){
+  body .topbar .brand-text strong{
+    font-size:18px;
+  }
+  body .topbar .brand-text small{
+    font-size:9px;
+  }
+  body .waldhaus-footer-copy strong{
+    font-size:20px;
+  }
+}

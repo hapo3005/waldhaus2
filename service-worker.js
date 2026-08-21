@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-product-v10';
+const CACHE = 'waldhaus2-product-v11';
 const CORE = ['./','./index.html','./styles.css','./app.js','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',
@@ -32,6 +32,30 @@ self.addEventListener('fetch', event => {
   const isPresentationMedia = presentationHosts.has(url.hostname) && PRESENTATION_MEDIA.includes(url.href);
   if (!isLocal && !isPresentationMedia) return;
 
+  const isAppAsset = isLocal && (
+    event.request.mode === 'navigate' ||
+    ['document','script','style','manifest'].includes(event.request.destination) ||
+    /\.(html|js|css|webmanifest)$/.test(url.pathname)
+  );
+
+  if (isAppAsset) {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          const copy=response.clone();
+          caches.open(CACHE).then(cache=>cache.put(event.request,copy));
+          return response;
+        })
+        .catch(async () => {
+          const cached=await caches.match(event.request);
+          if(cached) return cached;
+          if(event.request.mode==='navigate') return caches.match('./index.html');
+          return Response.error();
+        })
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
@@ -39,7 +63,7 @@ self.addEventListener('fetch', event => {
         const copy = response.clone();
         caches.open(CACHE).then(cache => cache.put(event.request, copy));
         return response;
-      }).catch(() => isLocal ? caches.match('./index.html') : Response.error());
+      }).catch(() => Response.error());
     })
   );
 });

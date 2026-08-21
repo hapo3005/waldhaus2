@@ -8,5 +8,91 @@ body .feature-card .feature-copy p{color:rgba(255,253,248,.96)}
 body .feature-card .feature-copy .card-label,body .feature-card .feature-copy h2,body .feature-card .feature-copy p{text-shadow:0 2px 14px rgba(0,0,0,.38)}
 body .feature-card .button-white{text-shadow:none}
 
-@media(prefers-contrast:more){body .feature-card .feature-overlay{background:linear-gradient(90deg,rgba(3,12,8,.88) 0%,rgba(3,12,8,.72) 38%,rgba(3,12,8,.46) 60%,rgba(3,12,8,.16) 80%,rgba(3,12,8,.04) 100%)}}
+/* Home quick actions: hospitality shortcuts instead of empty dashboard tiles. */
+body .quick-grid{gap:12px}
+body .quick-card{
+  min-height:0;
+  padding:18px 18px 16px;
+  justify-content:flex-start;
+  align-items:flex-start;
+  border-radius:18px;
+  background:#FFFDF8;
+  border-color:#D9DED8;
+  box-shadow:0 7px 22px rgba(31,47,40,.05);
+}
+body .quick-card .quick-icon{
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  margin:0 0 18px;
+  border-radius:13px;
+  background:#EEF4EF;
+  color:#245542;
+  box-shadow:inset 0 0 0 1px rgba(36,85,66,.07);
+  font-size:20px;
+}
+body .quick-card strong{
+  margin:0;
+  color:#1F2521;
+  font-size:18px;
+  line-height:1.2;
+  font-weight:820;
+  letter-spacing:-.02em;
+}
+body .quick-card small{
+  margin:7px 0 0;
+  color:#59625B;
+  font-size:14px;
+  line-height:1.4;
+  opacity:1;
+}
+body .quick-card::after{
+  display:block;
+  margin-top:auto;
+  padding-top:14px;
+  color:#2B5B49;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:-.01em;
+  transition:transform 160ms cubic-bezier(.2,.8,.2,1),color 160ms ease;
+}
+body .quick-card:nth-child(1)::after{content:'WLAN ansehen  →'}
+body .quick-card:nth-child(2)::after{content:'Hausinfos  →'}
+body .quick-card:nth-child(3)::after{content:'Tipps entdecken  →'}
+body .quick-card:nth-child(4)::after{content:'Check-out starten  →'}
+body .quick-card:hover::after{transform:translateX(2px);color:#173D2F}
+body .quick-card.accent{
+  background:linear-gradient(145deg,#E4ECE5,#F1F4EF);
+  color:#1F2521;
+  border-color:#BAC8BD;
+  box-shadow:0 8px 24px rgba(31,58,48,.075),inset 4px 0 0 #2C5B48;
+}
+body .quick-card.accent .quick-icon{
+  background:#D6E3D8;
+  color:#1F4B3A;
+  box-shadow:inset 0 0 0 1px rgba(31,75,58,.08);
+}
+body .quick-card.accent strong{color:#19392D}
+body .quick-card.accent small{color:#4C5A52}
+body .quick-card.accent::after{color:#1F4B3A}
+body .quick-card:hover{border-color:#BFCBC2;box-shadow:0 12px 28px rgba(31,47,40,.085)}
+
+@media(prefers-contrast:more){
+  body .feature-card .feature-overlay{background:linear-gradient(90deg,rgba(3,12,8,.88) 0%,rgba(3,12,8,.72) 38%,rgba(3,12,8,.46) 60%,rgba(3,12,8,.16) 80%,rgba(3,12,8,.04) 100%)}
+  body .quick-card{border-color:#AEB8B0}
+  body .quick-card small{color:#3F4942}
+  body .quick-card.accent{border-color:#8FA293}
+}
+@media(max-width:760px){
+  body .quick-card{min-height:158px;padding:17px 16px 15px}
+  body .quick-card .quick-icon{margin-bottom:15px}
+  body .quick-card strong{font-size:17px}
+  body .quick-card small{font-size:13px}
+  body .quick-card::after{font-size:12px;padding-top:12px}
+}
 @media(max-width:620px){.guide-experience-hub{margin-top:14px}.guide-experience-hub .stay-experience-group{margin-top:1.75rem}.guide-verification-note{padding-left:2px!important;padding-right:2px!important}}
+@media(max-width:480px){
+  body .quick-grid{grid-template-columns:1fr;gap:10px}
+  body .quick-card{min-height:148px}
+}

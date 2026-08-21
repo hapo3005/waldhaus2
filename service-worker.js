@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-product-v35';
+const CACHE = 'waldhaus2-product-v36';
 const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./section-hero.css',

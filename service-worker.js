@@ -1,5 +1,11 @@
-const CACHE = 'waldhaus2-product-v23';
-const CORE = ['./','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./app.js','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+const CACHE = 'waldhaus2-product-v24';
+const CORE = [
+  './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css',
+  './app.js','./home-hero.js','./home-hero.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',
+  './assets/hero-start-day.parts/part-01.txt','./assets/hero-start-day.parts/part-02.txt','./assets/hero-start-day.parts/part-03.txt',
+  './assets/hero-start-day.parts/part-04.txt','./assets/hero-start-day.parts/part-05.txt','./assets/hero-start-day.parts/part-06.txt',
+  './manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'
+];
 const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-activity-hiking.svg',

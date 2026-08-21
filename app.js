@@ -305,6 +305,13 @@ function init(){
   if(modeParams.get('owner')==='1' && !appMode.demo) navigate('owner');
 }
 
+function loadHomeHero(){
+  const script=document.createElement('script');
+  script.src='home-hero.js';
+  script.defer=true;
+  document.head.appendChild(script);
+}
+
 function loadOwnerOps(){
   const script=document.createElement('script');
   script.src='owner-ops.js';
@@ -312,5 +319,6 @@ function loadOwnerOps(){
   document.head.appendChild(script);
 }
 
+loadHomeHero();
 loadOwnerOps();
 document.addEventListener('DOMContentLoaded',init);

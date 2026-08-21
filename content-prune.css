@@ -1,19 +1,18 @@
 /* Waldhaus2 · content pruning + permanent rental-house map focus
-   Remove low-value informational blocks and keep the red marked rental house
-   visible in every Feriendorf hero at desktop, tablet and mobile sizes. */
+   Keep low-value blocks out of the guest journey and make the red marked rental
+   house the unmistakable visual anchor of every Feriendorf hero. */
 #guestContribution,
 #verifiedHouseFacts{
   display:none!important;
 }
 
-/* The separate welcome badge duplicates the brand header and is intentionally
-   removed from the home hero. */
+/* The separate welcome badge duplicates the brand header. */
 body .view[data-view="home"] .hero-daytime .status-pill{
   display:none!important;
 }
 
-/* Per-view desktop focus. The rental house sits on the right-hand side of the
-   approved map, so the crop is biased toward that side without changing scale. */
+/* Desktop / tablet: retain the established cinematic composition but bias the
+   crop toward the rental house. */
 body .view[data-view="stay"] .page-hero{--rental-map-x:72%;}
 body .view[data-view="guide"] .page-hero{--rental-map-x:74%;}
 body .view[data-view="house"] .page-hero{--rental-map-x:78%;}
@@ -28,8 +27,6 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
   }
 }
 
-/* Tablets crop the source more strongly. Keep the right side of the village in
-   the safe area so the red rental-house marker cannot slip out of frame. */
 @media (min-width:761px) and (max-width:1100px){
   body .view[data-view="stay"] .page-hero,
   body .view[data-view="guide"] .page-hero,
@@ -39,14 +36,198 @@ body .view[data-view="checkout"] .page-hero{--rental-map-x:74%;}
   }
 }
 
-/* Mobile: align the map to its right edge. This is the robust crop for the
-   approved artwork because the marked rental house is close to that edge. */
+/* Mobile principle:
+   1) a dedicated map strip at the top,
+   2) copy below on calm forest green,
+   3) only compact functional status controls after the copy.
+   Nothing is allowed to cover the red rental-house marker. */
 @media (max-width:760px){
-  body .view[data-view="stay"] .page-hero,
-  body .view[data-view="guide"] .page-hero,
-  body .view[data-view="house"] .page-hero,
-  body .view[data-view="checkout"] .page-hero{
-    background-size:auto 100%!important;
-    background-position:100% center!important;
+  html body .view[data-view="stay"] .page-hero,
+  html body .view[data-view="guide"] .page-hero,
+  html body .view[data-view="house"] .page-hero,
+  html body .view[data-view="checkout"] .page-hero{
+    min-height:0!important;
+    padding:252px 24px 24px!important;
+    display:block!important;
+    position:relative!important;
+    overflow:hidden!important;
+    background:#13261f!important;
+    background-image:none!important;
+    border-radius:26px!important;
+  }
+
+  /* Dedicated location image. The shorter strip reveals substantially more of
+     the wide source artwork than the previous full-height mobile crop. */
+  html body .view[data-view="stay"] .page-hero::after,
+  html body .view[data-view="guide"] .page-hero::after,
+  html body .view[data-view="house"] .page-hero::after,
+  html body .view[data-view="checkout"] .page-hero::after{
+    content:"";
+    position:absolute;
+    z-index:0;
+    left:0;
+    top:0;
+    right:0;
+    height:220px;
+    pointer-events:none;
+    background-color:#163027;
+    background-image:
+      linear-gradient(180deg,rgba(19,38,31,.03),rgba(19,38,31,.10)),
+      url('./assets/hero-sections-feriendorf.webp');
+    background-repeat:no-repeat;
+    background-size:auto 100%;
+    background-position:100% center;
+    border-bottom:1px solid rgba(248,245,237,.15);
+  }
+
+  /* Small legend instead of a floating control: it explains why the map is
+     here without hiding the property itself. */
+  html body .view[data-view="stay"] .page-hero::before,
+  html body .view[data-view="guide"] .page-hero::before,
+  html body .view[data-view="house"] .page-hero::before,
+  html body .view[data-view="checkout"] .page-hero::before{
+    content:"●  Rot markiert: Euer Waldhaus"!important;
+    position:absolute!important;
+    z-index:3!important;
+    left:16px!important;
+    top:176px!important;
+    right:auto!important;
+    bottom:auto!important;
+    inset:auto!important;
+    width:auto!important;
+    height:auto!important;
+    padding:7px 10px!important;
+    border:1px solid rgba(248,245,237,.20)!important;
+    border-radius:999px!important;
+    background:rgba(19,38,31,.82)!important;
+    color:#f8f5ed!important;
+    opacity:1!important;
+    filter:none!important;
+    box-shadow:0 5px 14px rgba(6,15,11,.14)!important;
+    font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+    font-size:10px!important;
+    line-height:1.2!important;
+    font-weight:800!important;
+    letter-spacing:.01em!important;
+    pointer-events:none!important;
+  }
+
+  html body .view[data-view="stay"] .page-hero>* ,
+  html body .view[data-view="guide"] .page-hero>* ,
+  html body .view[data-view="house"] .page-hero>* ,
+  html body .view[data-view="checkout"] .page-hero>*{
+    position:relative;
+    z-index:1;
+  }
+
+  html body .view[data-view="stay"] .page-hero>div:first-child,
+  html body .view[data-view="guide"] .page-hero>div:first-child,
+  html body .view[data-view="house"] .page-hero>div:first-child,
+  html body .view[data-view="checkout"] .page-hero>div:first-child{
+    max-width:100%!important;
+  }
+
+  /* Aufenthalt: one quiet information row instead of a large card. */
+  html body .view[data-view="stay"] .stay-badge{
+    width:100%!important;
+    min-width:0!important;
+    min-height:52px!important;
+    margin:18px 0 0!important;
+    padding:10px 13px!important;
+    transform:none!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    gap:9px!important;
+    border-radius:14px!important;
+  }
+  html body .view[data-view="stay"] .stay-badge small{
+    font-size:10px!important;
+    letter-spacing:.10em!important;
+    text-transform:uppercase!important;
+  }
+  html body .view[data-view="stay"] .stay-badge strong{
+    font-size:24px!important;
+    line-height:1!important;
+  }
+  html body .view[data-view="stay"] .stay-badge span{
+    margin-left:auto!important;
+    font-size:11px!important;
+  }
+
+  /* Entdecken: live weather becomes a compact horizontal status row. */
+  html body .view[data-view="guide"] .weather-panel{
+    width:100%!important;
+    min-width:0!important;
+    margin:18px 0 0!important;
+    padding:10px 13px!important;
+    transform:none!important;
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    grid-template-areas:"temp copy" "temp meta"!important;
+    column-gap:12px!important;
+    row-gap:2px!important;
+    align-items:center!important;
+    border-radius:14px!important;
+  }
+  html body .view[data-view="guide"] .weather-panel>div{
+    grid-area:temp!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:6px!important;
+  }
+  html body .view[data-view="guide"] .weather-panel>div span{
+    font-size:18px!important;
+  }
+  html body .view[data-view="guide"] .weather-panel>div strong{
+    font-size:27px!important;
+    line-height:1!important;
+  }
+  html body .view[data-view="guide"] .weather-panel p{
+    grid-area:copy!important;
+    margin:0!important;
+    font-size:12px!important;
+    line-height:1.25!important;
+  }
+  html body .view[data-view="guide"] .weather-panel small{
+    grid-area:meta!important;
+    font-size:9px!important;
+    line-height:1.2!important;
+  }
+
+  /* House needs no separate status control; the map + red marker is the status. */
+  html body .view[data-view="house"] .house-status{
+    display:none!important;
+  }
+
+  /* Abreise: turn the progress circle into one compact status pill. */
+  html body .view[data-view="checkout"] .progress-ring{
+    width:max-content!important;
+    height:auto!important;
+    min-width:0!important;
+    min-height:50px!important;
+    margin:18px 0 0!important;
+    padding:9px 14px!important;
+    transform:none!important;
+    display:inline-flex!important;
+    align-items:baseline!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    border-radius:14px!important;
+    background:#284238!important;
+  }
+  html body .view[data-view="checkout"] .progress-ring::before{
+    display:none!important;
+    content:none!important;
+  }
+  html body .view[data-view="checkout"] .progress-ring span{
+    position:static!important;
+    font-size:25px!important;
+    line-height:1!important;
+  }
+  html body .view[data-view="checkout"] .progress-ring small{
+    position:static!important;
+    font-size:10px!important;
+    line-height:1!important;
   }
 }

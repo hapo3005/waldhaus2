@@ -1,14 +1,7 @@
 (() => {
-  const HERO_PARTS = [
-    './assets/hero-start-day.parts/part-01.txt',
-    './assets/hero-start-day.parts/part-01-tail.txt',
-    './assets/hero-start-day.parts/part-02.txt',
-    './assets/hero-start-day.parts/part-03.txt',
-    './assets/hero-start-day.parts/part-04.txt',
-    './assets/hero-start-day.parts/part-05.txt',
-    './assets/hero-start-day.parts/part-06.txt'
-  ];
-  const HERO_BASE64_LENGTH = 69368;
+  const HERO_PARTS = Array.from({length:13},(_,index)=>`./assets/hero-start-clean.b64/part-${String(index+1).padStart(2,'0')}.txt`);
+  const HERO_BASE64_LENGTH = 128112;
+  let heroObjectUrl='';
 
   function ensureStyles(){
     if(document.querySelector('link[data-home-hero-style]')) return;
@@ -17,6 +10,13 @@
     link.href='home-hero.css';
     link.dataset.homeHeroStyle='1';
     document.head.appendChild(link);
+  }
+
+  function decodeBase64(base64){
+    const binary=atob(base64);
+    const bytes=new Uint8Array(binary.length);
+    for(let i=0;i<binary.length;i+=1) bytes[i]=binary.charCodeAt(i);
+    return bytes;
   }
 
   async function loadHeroImage(hero){
@@ -28,12 +28,17 @@
       const chunks=await Promise.all(HERO_PARTS.map(async url=>{
         const response=await fetch(url,{cache:'no-store'});
         if(!response.ok) throw new Error(`hero asset ${response.status}`);
-        return response.text();
+        return (await response.text()).trim();
       }));
-      const base64=chunks.join('').trim();
+      const base64=chunks.join('');
       if(base64.length!==HERO_BASE64_LENGTH) throw new Error(`hero asset incomplete: ${base64.length}/${HERO_BASE64_LENGTH}`);
-      const source=`url("data:image/webp;base64,${base64}")`;
-      image.style.setProperty('background-image',source,'important');
+      const bytes=decodeBase64(base64);
+      if(bytes.length!==96084||String.fromCharCode(...bytes.slice(0,4))!=='RIFF'||String.fromCharCode(...bytes.slice(8,12))!=='WEBP'){
+        throw new Error('hero asset integrity check failed');
+      }
+      if(heroObjectUrl) URL.revokeObjectURL(heroObjectUrl);
+      heroObjectUrl=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
+      image.style.setProperty('background-image',`url("${heroObjectUrl}")`,'important');
       hero.dataset.heroImageReady='1';
       delete hero.dataset.heroImageError;
     }catch(error){

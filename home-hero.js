@@ -33,6 +33,13 @@
       link.dataset.mobileNavIconsStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-footer-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='footer.css?v=1';
+      link.dataset.footerStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
@@ -106,6 +113,50 @@
     home?.querySelector('.next-card')?.classList.add('welcome-next-v2');
   }
 
+  function applyFooter(){
+    if(document.querySelector('.waldhaus-footer')) return;
+    const shell=document.querySelector('.app-shell');
+    const mobileNav=shell?.querySelector('.mobile-nav');
+    if(!shell||!mobileNav) return;
+
+    const footer=document.createElement('footer');
+    footer.className='waldhaus-footer';
+    footer.setAttribute('aria-label','Waldhaus Abschluss');
+    footer.innerHTML=`
+      <div class="waldhaus-footer-main">
+        <div class="waldhaus-footer-brand">
+          <span class="waldhaus-footer-mark" aria-hidden="true">W</span>
+          <div class="waldhaus-footer-copy">
+            <strong>Waldhaus</strong>
+            <span>Kerschenbach · Eifel</span>
+            <p>Euer digitaler Begleiter für eine entspannte Auszeit im Waldhaus.</p>
+          </div>
+        </div>
+        <nav class="waldhaus-footer-nav" aria-label="Seitennavigation im Footer">
+          <button type="button" data-footer-view="home">Start</button>
+          <button type="button" data-footer-view="stay">Aufenthalt</button>
+          <button type="button" data-footer-view="guide">Entdecken</button>
+          <button type="button" data-footer-view="house">Haus</button>
+          <button type="button" data-footer-view="checkout">Abreise</button>
+        </nav>
+      </div>
+      <div class="waldhaus-footer-bottom">
+        <span>© 2026 Waldhaus</span>
+        <span>Kerschenbach · Eifel</span>
+      </div>`;
+
+    footer.querySelectorAll('[data-footer-view]').forEach(button=>{
+      button.addEventListener('click',()=>{
+        const view=button.dataset.footerView;
+        const target=document.querySelector(`.desktop-nav [data-view-target="${view}"], .mobile-nav [data-view-target="${view}"]`);
+        target?.click();
+        window.scrollTo({top:0,behavior:'smooth'});
+      });
+    });
+
+    shell.insertBefore(footer,mobileNav);
+  }
+
   function decodeBase64(base64){
     const binary=atob(base64);
     const bytes=new Uint8Array(binary.length);
@@ -145,6 +196,7 @@
     ensureStyles();
     applyHeaderLogo();
     applyWelcomeCards();
+    applyFooter();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -172,6 +224,7 @@
       ensureStyles();
       applyHeaderLogo();
       applyWelcomeCards();
+      applyFooter();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

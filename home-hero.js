@@ -1,12 +1,14 @@
 (() => {
   const HERO_PARTS = [
     './assets/hero-start-day.parts/part-01.txt',
+    './assets/hero-start-day.parts/part-01-tail.txt',
     './assets/hero-start-day.parts/part-02.txt',
     './assets/hero-start-day.parts/part-03.txt',
     './assets/hero-start-day.parts/part-04.txt',
     './assets/hero-start-day.parts/part-05.txt',
     './assets/hero-start-day.parts/part-06.txt'
   ];
+  const HERO_BASE64_LENGTH = 69368;
 
   function ensureStyles(){
     if(document.querySelector('link[data-home-hero-style]')) return;
@@ -28,7 +30,9 @@
         if(!response.ok) throw new Error(`hero asset ${response.status}`);
         return response.text();
       }));
-      const source=`url("data:image/webp;base64,${chunks.join('')}")`;
+      const base64=chunks.join('').trim();
+      if(base64.length!==HERO_BASE64_LENGTH) throw new Error(`hero asset incomplete: ${base64.length}/${HERO_BASE64_LENGTH}`);
+      const source=`url("data:image/webp;base64,${base64}")`;
       image.style.setProperty('background-image',source,'important');
       hero.dataset.heroImageReady='1';
       delete hero.dataset.heroImageError;

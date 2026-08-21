@@ -242,3 +242,211 @@ body .verified-copy,body .stay-experiences-intro p{font-size:14px;line-height:1.
   body .card,body .timeline-body,body .house-card,body .checkout-item{border-width:2px}
   body .guide-experience-hub .stay-experience-card:after{background:linear-gradient(180deg,rgba(5,12,8,.03) 8%,rgba(5,12,8,.18) 40%,rgba(5,12,8,.88) 72%,rgba(5,12,8,.98))}
 }
+
+/* Hospitality UI refinement
+   Carries over the interaction discipline of Feriendorf Intern without copying its dashboard look:
+   compact controls, defined icon tiles, restrained shadows and text-first secondary actions. */
+html:root{
+  --ui-line:#DCE1DB;
+  --ui-line-strong:#C8D1CA;
+  --ui-soft:#EEF3EF;
+  --ui-shadow-sm:0 8px 24px rgba(31,47,40,.055);
+  --ui-shadow-md:0 16px 38px rgba(27,45,37,.09);
+  --ui-radius:14px;
+  --ui-ease:cubic-bezier(.2,.8,.2,1);
+}
+
+/* Buttons: compact, tactile, never pill-like by default. */
+body .button{
+  min-height:48px;
+  padding:0 16px;
+  border-radius:13px;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:-.005em;
+  box-shadow:var(--ui-shadow-sm);
+  transition:transform 160ms var(--ui-ease),box-shadow 180ms ease,background-color 160ms ease,border-color 160ms ease,color 160ms ease;
+}
+body .button:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(31,47,40,.10)}
+body .button:active{transform:translateY(0) scale(.985);box-shadow:0 5px 14px rgba(31,47,40,.08)}
+body .button>span{transition:transform 160ms var(--ui-ease)}
+body .button:hover>span:last-child{transform:translateX(2px)}
+body .button-primary{border-color:#1F3A30;background:#1F3A30;color:#F8F5ED;box-shadow:0 8px 22px rgba(19,56,44,.16)}
+body .button-primary:hover{background:#193228;border-color:#193228}
+body .button-soft{background:#FFFDF8;border-color:#D8DED8;color:#1F2521;box-shadow:0 5px 18px rgba(31,47,40,.045)}
+body .button-soft:hover{background:#F0F4EF;border-color:#C3CEC5}
+body .button-white{background:#FFFDF8;border-color:#E6E1D6;color:#1F3A30;box-shadow:0 8px 22px rgba(18,46,36,.08)}
+body .button-glass{box-shadow:none}
+body .hero .button-primary{border-color:#D6A65A;background:#D6A65A;color:#13261F;box-shadow:0 9px 24px rgba(214,166,90,.22)}
+body .hero .button-primary:hover{background:#DFB56D;border-color:#DFB56D}
+
+/* Text actions: use typography as the control whenever a filled button is unnecessary. */
+body .text-link{
+  min-height:44px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:5px;
+  padding:8px 2px;
+  border-radius:8px;
+  color:#234C3D;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:-.005em;
+  transition:color 160ms ease,transform 160ms var(--ui-ease),background-color 160ms ease;
+}
+body .text-link:hover{color:#13261F;transform:translateX(2px)}
+body .text-link:active{transform:translateX(1px) scale(.99)}
+
+/* Compact icon controls borrow the calm tile treatment from the companion product. */
+body .icon-button,
+body .sheet-close,
+body .copy-button,
+body .owner-card-head button,
+body .owner-item button{
+  border-radius:13px;
+  border:1px solid var(--ui-line);
+  transition:transform 160ms var(--ui-ease),box-shadow 180ms ease,background-color 160ms ease,border-color 160ms ease;
+}
+body .icon-button:hover,
+body .sheet-close:hover,
+body .copy-button:hover,
+body .owner-card-head button:hover,
+body .owner-item button:hover{
+  transform:translateY(-1px);
+  box-shadow:var(--ui-shadow-sm);
+}
+body .copy-button{min-height:44px;padding:0 13px;background:#F8FAF7;border-color:#DCE3DE;font-size:13px;font-weight:800}
+body .sheet-close{background:#F8FAF7;border-color:#DCE3DE}
+
+/* Navigation: quieter chrome, clearer active state. */
+body .desktop-nav{padding:4px;border:1px solid rgba(248,245,237,.07);border-radius:15px}
+body .nav-item{
+  min-height:42px;
+  border-radius:11px;
+  padding:9px 13px;
+  transition:background-color 160ms ease,color 160ms ease,box-shadow 180ms ease,transform 160ms var(--ui-ease);
+}
+body .nav-item:hover{background:rgba(248,245,237,.10);transform:translateY(-1px)}
+body .nav-item.is-active{background:rgba(248,245,237,.16);box-shadow:inset 0 0 0 1px rgba(248,245,237,.08)}
+
+/* Pills/status chips stay compact but get firmer edges and less glassiness. */
+body .status-pill,body .weather-pill{
+  min-height:42px;
+  border-radius:14px;
+  padding:0 13px;
+  background:rgba(19,38,31,.62);
+  border-color:rgba(248,245,237,.22);
+  box-shadow:0 8px 22px rgba(8,28,20,.10);
+}
+body .page-hero .stay-badge,body .page-hero .weather-panel,body .page-hero .house-status{
+  border-radius:18px;
+  box-shadow:0 10px 28px rgba(8,28,20,.08);
+}
+
+/* Core cards: sharper hierarchy, less generic soft-card feel. */
+body .card,
+body .timeline-body,
+body .house-card,
+body .checkout-item{
+  border-color:var(--ui-line);
+  box-shadow:var(--ui-shadow-sm);
+}
+body .card:hover,body .house-card:hover{border-color:#D1D9D2}
+body .next-icon,
+body .house-icon,
+body .quick-icon{
+  width:44px;
+  height:44px;
+  flex:0 0 44px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#EAF1EC,#F5F7F3);
+  color:#275B47;
+  box-shadow:inset 0 0 0 1px rgba(45,86,68,.055);
+}
+body .next-icon{font-size:20px;margin-bottom:18px}
+body .house-icon{font-size:20px}
+
+/* Quick actions: more like premium utility tiles, less like oversized generic cards. */
+body .quick-card{
+  border-radius:20px;
+  border-color:var(--ui-line);
+  box-shadow:var(--ui-shadow-sm);
+  transition:transform 180ms var(--ui-ease),box-shadow 180ms ease,border-color 180ms ease,background-color 180ms ease;
+}
+body .quick-card:hover{transform:translateY(-2px);border-color:#C8D4CB;box-shadow:0 13px 30px rgba(32,52,44,.09)}
+body .quick-card:active{transform:translateY(0) scale(.99)}
+body .quick-card strong{font-weight:800;letter-spacing:-.01em}
+body .quick-card small{opacity:.78}
+body .quick-card.accent{box-shadow:0 10px 28px rgba(19,56,44,.14)}
+body .quick-card.accent .quick-icon{background:rgba(248,245,237,.13);color:#F8F5ED;box-shadow:inset 0 0 0 1px rgba(248,245,237,.10)}
+
+/* Information tiles: subtle outline plus soft elevation improves scanability. */
+body .info-grid div,
+body .mini-list span,
+body .step-list span{
+  border:1px solid #DEE3DE;
+  box-shadow:0 4px 14px rgba(31,47,40,.025);
+}
+body .mini-list span{border-radius:11px;background:#F5F7F3}
+body .step-list span{border-radius:13px}
+
+/* House cards/actions receive the same crisp interaction language. */
+body .house-card{
+  transition:border-color 180ms ease,box-shadow 180ms ease,transform 180ms var(--ui-ease);
+}
+body .house-card:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(31,47,40,.075)}
+body .house-card.featured{box-shadow:0 12px 30px rgba(31,58,48,.085)}
+
+/* Discover controls: square-rounded controls instead of generic pills. */
+body .guide-experience-hub .stay-experience-controls button{
+  border-radius:13px;
+  box-shadow:0 6px 18px rgba(31,47,40,.055);
+  transition:transform 160ms var(--ui-ease),background-color 160ms ease,border-color 160ms ease,box-shadow 180ms ease;
+}
+body .guide-experience-hub .stay-experience-controls button:hover{transform:translateY(-1px);box-shadow:0 9px 22px rgba(31,47,40,.085)}
+body .guide-experience-hub .stay-experience-controls button:active{transform:scale(.97)}
+body .guide-experience-hub .stay-experience-link{
+  min-height:44px;
+  padding:.62rem .88rem;
+  border-radius:12px;
+  background:rgba(255,253,248,.13);
+  border-color:rgba(255,253,248,.34);
+  backdrop-filter:blur(8px);
+  font-weight:800;
+  transition:background-color 160ms ease,border-color 160ms ease,transform 160ms var(--ui-ease);
+}
+body .guide-experience-hub .stay-experience-link:hover{background:rgba(255,253,248,.19);border-color:rgba(255,253,248,.48)}
+
+/* Checkout and form actions use the same touch-friendly visual grammar. */
+body .checkout-item{transition:border-color 180ms ease,box-shadow 180ms ease,transform 180ms var(--ui-ease)}
+body .checkout-item:hover{border-color:#CBD5CD;box-shadow:0 10px 25px rgba(31,47,40,.065)}
+body .fake-check{border-width:1.5px}
+body .input-row input,body .owner-form input,body .owner-form select{border-radius:13px;box-shadow:inset 0 0 0 1px rgba(31,47,40,.015)}
+
+/* Mobile navigation gets a defined active tile, mirroring Feriendorf's confident active state. */
+body .mobile-nav{padding:5px}
+body .mobile-nav-item{
+  min-height:56px;
+  border-radius:12px;
+  transition:background-color 160ms ease,color 160ms ease,transform 160ms var(--ui-ease);
+}
+body .mobile-nav-item.is-active{background:rgba(248,245,237,.16);box-shadow:inset 0 0 0 1px rgba(248,245,237,.07)}
+body .mobile-nav-item:active{transform:scale(.97)}
+
+@media(max-width:760px){
+  body .button{min-height:50px;padding-inline:17px}
+  body .text-link{min-height:46px;font-size:13px}
+  body .quick-icon,body .next-icon,body .house-icon{width:46px;height:46px;flex-basis:46px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body .button,body .text-link,body .icon-button,body .sheet-close,body .copy-button,
+  body .nav-item,body .quick-card,body .house-card,body .checkout-item,
+  body .mobile-nav-item,body .guide-experience-hub .stay-experience-controls button,
+  body .guide-experience-hub .stay-experience-link{transition:none!important}
+  body .button:hover,body .text-link:hover,body .nav-item:hover,body .quick-card:hover,
+  body .house-card:hover,body .mobile-nav-item:active{transform:none!important}
+}

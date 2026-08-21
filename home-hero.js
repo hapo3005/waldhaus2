@@ -19,6 +19,13 @@
       link.dataset.welcomeIconStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-content-prune-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='content-prune.css?v=41';
+      link.dataset.contentPruneStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';

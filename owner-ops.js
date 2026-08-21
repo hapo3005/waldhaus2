@@ -1,4 +1,9 @@
 (() => {
+  const verifiedScript=document.createElement('script');
+  verifiedScript.src='verified-content.js';
+  verifiedScript.defer=true;
+  document.head.appendChild(verifiedScript);
+
   const BKEY='waldhaus2.bookings', RKEY='waldhaus2.requests', DAY=86400000;
   const mode=window.WALDHAUS_APP_MODE || {demo:false,owner:false};
   const iso=d=>new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);

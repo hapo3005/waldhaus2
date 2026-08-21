@@ -17,7 +17,7 @@
       place:'Stadtkyll',tag:'Café & Bäckerei'
     },
     'REWE Stadtkyll':{
-      image:'https://cs.rewe-static.de/v3/assets/blt23e2a0b7bfd23c1f/blt86632a6c3753bd9b/657703b2183f4a040ab88c47/heimat2.png?format=jpeg&quality=80',
+      image:'https://cs.rewe-static.de/v3/assets/blt23e2a0b7bfd23c1f/blt84858cfe9f6a12ce/657703b2e66582040a062b43/markt_alt.jpg',
       place:'Stadtkyll',tag:'Einkaufen'
     },
     'Marien-Apotheke':{
@@ -85,6 +85,26 @@
     const progress=hub.querySelector('[data-progress-for="stayDiningRail"]');if(progress)progress.appendChild(document.createElement('i'));
   }
 
+  function prependNatureToActivities(hub){
+    const rail=hub.querySelector('#stayActivityRail');
+    if(!rail||rail.querySelector('[data-guide-local-nature]'))return;
+    const cards=natureTitles.map(title=>experienceCard(itemByTitle(title),extraConfig[title])).filter(Boolean);
+    if(!cards.length)return;
+
+    const holder=document.createElement('div');
+    holder.innerHTML=cards.join('');
+    const fragment=document.createDocumentFragment();
+    [...holder.children].forEach(card=>{card.dataset.guideLocalNature='1';fragment.appendChild(card);});
+    rail.prepend(fragment);
+    rail.scrollLeft=0;
+
+    const progress=hub.querySelector('[data-progress-for="stayActivityRail"]');
+    if(progress){
+      const count=rail.querySelectorAll('.stay-experience-card').length;
+      progress.replaceChildren(...Array.from({length:count},(_,index)=>{const dot=document.createElement('i');if(index===0)dot.classList.add('active');return dot;}));
+    }
+  }
+
   function unifyDiscover(){
     const guide=document.querySelector('[data-view="guide"]');
     const hub=document.querySelector('#stayExperiences');
@@ -101,11 +121,12 @@
 
     guide.querySelector('.page-hero')?.insertAdjacentElement('afterend',hub);
     appendCafeToDining(hub);
+    prependNatureToActivities(hub);
 
     hub.querySelectorAll('.guide-unified-group').forEach(node=>node.remove());
     const note=hub.querySelector('.stay-experience-note');
     const extra=document.createElement('div');extra.className='guide-unified-rails';
-    extra.innerHTML=railMarkup('guideNatureRail','Natur & kleine Auszeiten',natureTitles)+railMarkup('guideServiceRail','Praktisch vor Ort',serviceTitles);
+    extra.innerHTML=railMarkup('guideServiceRail','Praktisch vor Ort',serviceTitles);
     if(note)note.insertAdjacentElement('beforebegin',extra);else hub.appendChild(extra);
 
     if(note)note.textContent='Alle Empfehlungen sind bewusst nur einmal einsortiert. Die Carousels lassen sich mit Pfeilen, Maus-Drag oder auf Handy und Tablet per Swipe bedienen. Öffnungszeiten und Saisonbetrieb bitte vor der Abfahrt über den jeweiligen Link prüfen.';

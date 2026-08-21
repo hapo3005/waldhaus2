@@ -1,7 +1,18 @@
 (() => {
+  const guideStyles=document.createElement('link');
+  guideStyles.rel='stylesheet';
+  guideStyles.href='guide-experience.css';
+  document.head.appendChild(guideStyles);
+
   const verifiedScript=document.createElement('script');
   verifiedScript.src='verified-content.js';
   verifiedScript.defer=true;
+  verifiedScript.addEventListener('load',()=>{
+    const guideScript=document.createElement('script');
+    guideScript.src='guide-experience.js';
+    guideScript.defer=true;
+    document.head.appendChild(guideScript);
+  },{once:true});
   document.head.appendChild(verifiedScript);
 
   const BKEY='waldhaus2.bookings', RKEY='waldhaus2.requests', DAY=86400000;

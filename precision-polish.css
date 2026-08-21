@@ -137,6 +137,55 @@ body .verified-facts .verified-copy{
   line-height:1.65;
 }
 
+/* Expanded equipment overview: more useful information without a wall of prose. */
+body .equipment-card>h2{margin-bottom:20px}
+body .fact-subhead{
+  display:block;
+  margin:0 0 12px;
+  color:#385846;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+body .equipment-overview{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px 12px;
+  margin:0 0 14px;
+}
+body .equipment-overview>span{
+  min-height:74px;
+  padding:13px 15px;
+  border:1px solid #DDDCD3;
+  border-radius:16px;
+  background:#F0F1EA;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+body .equipment-overview small{
+  margin:0 0 6px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.2;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+body .equipment-overview strong{
+  color:var(--text);
+  font-size:15px;
+  line-height:1.35;
+}
+body .equipment-detail{
+  margin:0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.6;
+}
+body .location-subhead{margin-top:24px}
+body .equipment-card .location-grid{margin-bottom:0}
+
 /* Aufenthalt: preserve cards, fix the timeline geometry and internal rhythm. */
 body .timeline-body{
   padding:30px 34px 32px;
@@ -251,6 +300,7 @@ body .mobile-nav-item small{font-size:12px;line-height:1.2}
   body .verified-facts>.card>h2{margin-bottom:22px}
   body .verified-facts .verified-info{margin-bottom:20px;gap:12px}
   body .verified-facts .verified-info>div{min-height:96px;padding:16px}
+  body .equipment-overview>span{min-height:70px;padding:12px 14px}
 }
 
 @media(max-width:520px){
@@ -262,11 +312,14 @@ body .mobile-nav-item small{font-size:12px;line-height:1.2}
   body .sheet p,body .sheet li{font-size:16px}
   body .verified-facts>.card{padding:22px 18px}
   body .verified-facts>.card>h2{font-size:29px}
+  body .equipment-overview{grid-template-columns:1fr;gap:9px}
+  body .equipment-overview>span{min-height:64px}
 }
 
 @media(prefers-contrast:more){
   html:root{--muted:#374139;--line:#AAA79D}
   body .card,body .quick-card,body .timeline-body,body .house-card,body .checkout-item{border-width:2px}
+  body .equipment-overview>span{border-width:2px;border-color:#B5B2A8}
 }
 
 @media(prefers-reduced-transparency:reduce){

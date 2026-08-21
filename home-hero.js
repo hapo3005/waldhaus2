@@ -26,6 +26,13 @@
       link.dataset.contentPruneStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-mobile-nav-icons-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='mobile-nav-icons.css?v=1';
+      link.dataset.mobileNavIconsStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';

@@ -100,6 +100,37 @@ body .view[data-view="house"] .house-status {
   body .view[data-view="checkout"] .progress-ring {
     transform: translateY(clamp(36px, 3vw, 50px));
   }
+
+  /* Entdecken uses a deliberately compact live-weather control so the marked
+     rental house remains clearly visible as the primary map orientation point. */
+  body .view[data-view="guide"] .weather-panel {
+    min-width: 188px;
+    width: 188px;
+    padding: 14px 15px;
+    border-radius: 18px;
+  }
+
+  body .view[data-view="guide"] .weather-panel > div {
+    gap: 8px;
+  }
+
+  body .view[data-view="guide"] .weather-panel > div span {
+    font-size: 21px;
+  }
+
+  body .view[data-view="guide"] .weather-panel > div strong {
+    font-size: 38px;
+  }
+
+  body .view[data-view="guide"] .weather-panel p {
+    margin: 7px 0 3px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  body .view[data-view="guide"] .weather-panel small {
+    font-size: 9px;
+  }
 }
 
 body .view[data-view="house"] .house-status i {

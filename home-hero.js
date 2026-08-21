@@ -22,7 +22,7 @@
     if(!document.querySelector('link[data-content-prune-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='content-prune.css?v=42';
+      link.href='content-prune.css?v=44';
       link.dataset.contentPruneStyle='1';
       document.head.appendChild(link);
     }

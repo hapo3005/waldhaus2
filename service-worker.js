@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-product-v13';
+const CACHE = 'waldhaus2-product-v14';
 const CORE = ['./','./index.html','./styles.css','./design-system.css','./app.js','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',
@@ -68,7 +68,7 @@ self.addEventListener('fetch', event => {
       if (cached) return cached;
       return fetch(event.request).then(response => {
         const copy = response.clone();
-        caches.open(CACHE).then(cache=>cache.put(event.request, copy));
+        caches.open(CACHE).then(cache => cache.put(event.request, copy));
         return response;
       }).catch(() => Response.error());
     })

@@ -20,6 +20,8 @@ jobs:
           test -f index.html
           test -f styles.css
           test -f app.js
+          test -f home-hero.js
+          test -f home-hero.css
           test -f owner-ops.js
           test -f owner-ops.css
           test -f verified-content.js
@@ -33,9 +35,37 @@ jobs:
       - name: Validate JavaScript syntax
         run: |
           node --check app.js
+          node --check home-hero.js
           node --check owner-ops.js
           node --check verified-content.js
           node --check guide-experience.js
+
+      - name: Validate Start hero image payload
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import base64, struct
+
+          parts = [
+              'assets/hero-start-day.parts/part-01.txt',
+              'assets/hero-start-day.parts/part-01-tail.txt',
+              'assets/hero-start-day.parts/part-02.txt',
+              'assets/hero-start-day.parts/part-03.txt',
+              'assets/hero-start-day.parts/part-04.txt',
+              'assets/hero-start-day.parts/part-05.txt',
+              'assets/hero-start-day.parts/part-06.txt',
+          ]
+          payload = ''.join(Path(path).read_text().strip() for path in parts)
+          if len(payload) != 69368:
+              raise SystemExit(f'Hero base64 incomplete: {len(payload)}/69368')
+          data = base64.b64decode(payload, validate=True)
+          if data[:4] != b'RIFF' or data[8:12] != b'WEBP':
+              raise SystemExit('Hero payload is not a WebP RIFF file')
+          expected = struct.unpack('<I', data[4:8])[0] + 8
+          if len(data) != expected:
+              raise SystemExit(f'Hero WebP incomplete: {len(data)}/{expected} bytes')
+          print(f'Hero WebP valid: {len(data)} bytes')
+          PY
 
       - name: Validate web manifest JSON
         run: python -m json.tool manifest.webmanifest > /dev/null

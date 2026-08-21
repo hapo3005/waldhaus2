@@ -40,6 +40,7 @@
 
   const natureTitles=['Arnika-Route KB 3','XXL-Bank Kerschenbach','Wassererlebnisplatz'];
   const serviceTitles=['REWE Stadtkyll','Marien-Apotheke','Ärztliche Versorgung','E-Auto laden','Tourist-Information'];
+  const homeCuratedTitles=['Kronenburger See','XXL-Bank Kerschenbach','Historische Wassermühle Birgel'];
   const HOME_ROTATION_KEY='waldhaus2.homeDiscoverTipIndex';
   let currentHomeFeature=null;
 
@@ -107,9 +108,42 @@
     }
   }
 
+  function discoverCards(hub){
+    return [...hub.querySelectorAll('#stayActivityRail .stay-experience-card,#stayDiningRail .stay-experience-card')];
+  }
+
+  function discoverCardByTitle(hub,title){
+    return discoverCards(hub).find(card=>card.querySelector('h3')?.textContent.trim()===title)||null;
+  }
+
+  function renderHomeCurated(hub){
+    const root=document.querySelector('#homeRecommendations');
+    if(!root)return;
+    const cards=homeCuratedTitles.map(title=>discoverCardByTitle(hub,title)).filter(Boolean);
+    if(cards.length!==homeCuratedTitles.length)return;
+
+    root.classList.add('home-curated-selection');
+    root.innerHTML=cards.map(card=>{
+      const title=card.querySelector('h3')?.textContent.trim()||'';
+      const label=card.querySelector('small')?.textContent.trim()||'Entdecken';
+      const image=card.querySelector('img')?.currentSrc||card.querySelector('img')?.src||'';
+      return `<button class="recommend-card home-curated-card" type="button" data-home-curated-title="${esc(title)}" aria-label="${esc(title)} in Entdecken öffnen"><img src="${esc(image)}" alt="${esc(title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer"><span class="home-curated-copy"><small>${esc(label)}</small><strong>${esc(title)}</strong><b>In Entdecken ansehen <i>→</i></b></span></button>`;
+    }).join('');
+
+    root.querySelectorAll('[data-home-curated-title]').forEach(button=>button.addEventListener('click',()=>{
+      const title=button.dataset.homeCuratedTitle;
+      document.querySelector('.nav-item[data-view-target="guide"]')?.click();
+      setTimeout(()=>{
+        const target=discoverCardByTitle(hub,title);
+        if(!target)return;
+        target.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+        target.focus({preventScroll:true});
+      },100);
+    }));
+  }
+
   function homeFeatureCards(hub){
-    return [...hub.querySelectorAll('#stayActivityRail .stay-experience-card,#stayDiningRail .stay-experience-card')]
-      .filter(card=>card.querySelector('img')&&card.querySelector('h3')&&card.querySelector('p'));
+    return discoverCards(hub).filter(card=>card.querySelector('img')&&card.querySelector('h3')&&card.querySelector('p'));
   }
 
   function featureFromCard(card){
@@ -208,6 +242,7 @@
     guide.querySelector('.page-hero')?.insertAdjacentElement('afterend',hub);
     appendCafeToDining(hub);
     prependNatureToActivities(hub);
+    renderHomeCurated(hub);
 
     hub.querySelectorAll('.guide-unified-group').forEach(node=>node.remove());
     const note=hub.querySelector('.stay-experience-note');

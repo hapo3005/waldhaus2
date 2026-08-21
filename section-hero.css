@@ -80,27 +80,32 @@ body .view[data-view="checkout"] .page-hero .eyebrow {
   color: #e8c477;
 }
 
+/* One restrained Waldhaus accent: dark forest glass remains dominant, while a
+   clearly visible warm-gold edge and key values provide hierarchy without colour noise. */
 body .view[data-view="stay"] .stay-badge,
 body .view[data-view="guide"] .weather-panel,
 body .view[data-view="house"] .house-status {
+  position: relative;
+  overflow: hidden;
   background:
-    linear-gradient(145deg, rgba(214,166,90,.055), rgba(19,38,31,.74) 40%),
-    rgba(19,38,31,.72);
-  border-color: rgba(214,166,90,.28);
+    linear-gradient(145deg, rgba(214,166,90,.12), rgba(19,38,31,.82) 48%),
+    rgba(19,38,31,.82) !important;
+  border: 1px solid rgba(232,196,119,.46) !important;
+  border-left: 3px solid rgba(232,196,119,.86) !important;
   color: #f8f5ed;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow:
-    0 14px 30px rgba(6,15,11,.12),
-    inset 0 1px 0 rgba(248,245,237,.04);
+    0 14px 30px rgba(6,15,11,.15),
+    inset 0 1px 0 rgba(248,245,237,.055),
+    0 0 0 1px rgba(214,166,90,.035);
 }
 
-/* A single restrained warm accent keeps the guest controls distinguishable
-   without turning the interface into a multi-colour dashboard. */
 body .view[data-view="stay"] .stay-badge strong,
 body .view[data-view="guide"] .weather-panel > div span,
 body .view[data-view="guide"] .weather-panel > div strong {
-  color: #e8c477;
+  color: #e8c477 !important;
+  text-shadow: 0 1px 12px rgba(214,166,90,.12);
 }
 
 /* The red house in the approved map is the rental property and is a permanent
@@ -146,8 +151,8 @@ body .view[data-view="guide"] .weather-panel > div strong {
 }
 
 body .view[data-view="house"] .house-status i {
-  background: #d6a65a;
-  box-shadow: 0 0 0 5px rgba(214,166,90,.17);
+  background: #d6a65a !important;
+  box-shadow: 0 0 0 5px rgba(214,166,90,.17) !important;
 }
 
 body .view[data-view="stay"] .stay-badge small,
@@ -162,15 +167,15 @@ body .view[data-view="guide"] .weather-panel p {
 }
 
 body .view[data-view="checkout"] .progress-ring {
-  background: conic-gradient(#d6a65a var(--progress,0%), rgba(255,255,255,.08) 0);
-  border: 1px solid rgba(214,166,90,.24);
+  background: conic-gradient(#d6a65a var(--progress,0%), rgba(255,255,255,.08) 0) !important;
+  border: 1px solid rgba(232,196,119,.48) !important;
   box-shadow:
     0 14px 34px rgba(6,15,11,.18),
-    0 0 0 5px rgba(214,166,90,.045);
+    0 0 0 5px rgba(214,166,90,.065) !important;
 }
 
 body .view[data-view="checkout"] .progress-ring span {
-  color: #e8c477;
+  color: #e8c477 !important;
 }
 
 @media (max-width: 760px) {
@@ -203,7 +208,7 @@ body .view[data-view="checkout"] .progress-ring span {
   body .view[data-view="guide"] .weather-panel,
   body .view[data-view="house"] .house-status {
     background:
-      linear-gradient(145deg, rgba(214,166,90,.05), rgba(19,38,31,.84) 42%),
-      rgba(19,38,31,.82);
+      linear-gradient(145deg, rgba(214,166,90,.12), rgba(19,38,31,.88) 48%),
+      rgba(19,38,31,.88) !important;
   }
 }

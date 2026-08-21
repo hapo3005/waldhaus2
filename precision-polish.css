@@ -6,6 +6,14 @@
 html:root{
   --muted:#4B554E;
   --line:#CBC8BD;
+  --space-1:8px;
+  --space-2:12px;
+  --space-3:16px;
+  --space-4:20px;
+  --space-5:24px;
+  --space-6:32px;
+  --space-7:40px;
+  --space-8:48px;
 }
 
 html body{
@@ -82,17 +90,126 @@ body .feature-copy{max-width:620px}
 body .feature-copy p{color:rgba(255,255,255,.92)}
 body .feature-card{box-shadow:0 20px 48px rgba(19,38,31,.15)}
 
-/* Aufenthalt: preserve the restored card/timeline composition; only improve clarity. */
-body .timeline-body{padding:30px;border-color:#D1CEC4}
+/* Verified house facts: deliberate vertical rhythm and equal internal spacing. */
+body .verified-facts{
+  gap:28px;
+  align-items:stretch;
+  margin-top:24px;
+}
+body .verified-facts>.card{
+  min-height:100%;
+  padding:30px 32px 28px;
+  display:flex;
+  flex-direction:column;
+}
+body .verified-facts>.card>.card-label{
+  display:block;
+  margin:0 0 14px;
+}
+body .verified-facts>.card>h2{
+  margin:0 0 26px;
+  font-size:clamp(30px,2.6vw,40px);
+  line-height:1.1;
+}
+body .verified-facts .verified-info{
+  margin:0 0 24px;
+  gap:14px;
+}
+body .verified-facts .verified-info>div{
+  min-height:104px;
+  padding:18px 20px 17px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-radius:18px;
+}
+body .verified-facts .verified-info small{
+  display:block;
+  margin:0 0 10px;
+  line-height:1.2;
+}
+body .verified-facts .verified-info strong{
+  display:block;
+  line-height:1.35;
+}
+body .verified-facts .verified-copy{
+  margin:0;
+  line-height:1.65;
+}
+
+/* Aufenthalt: preserve cards, fix the timeline geometry and internal rhythm. */
+body .timeline-body{
+  padding:30px 34px 32px;
+  border-color:#D1CEC4;
+}
+body .timeline-body>.card-label{
+  display:block;
+  margin:0 0 14px;
+}
+body .timeline-body>h2{
+  margin:0 0 18px;
+  line-height:1.08;
+}
+body .timeline-body>p{
+  margin:0 0 22px;
+}
+body .timeline-body>.inline-button,
+body .timeline-body>.button.inline-button{
+  margin-top:0;
+}
 body .timeline-card.is-highlighted .timeline-body{
   border-color:#BFC9BF;
   background:linear-gradient(135deg,#F1F4EF,#FBF9F4);
   box-shadow:0 18px 44px rgba(31,58,48,.09);
 }
-body .timeline-time{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+body .timeline-time{
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
 body .timeline-dot{width:14px;height:14px}
 body .info-grid div{background:#F0F1EA;border:1px solid #DEDDD5}
 body .step-list span{background:#F1F2EC}
+
+@media(min-width:761px){
+  body .timeline{
+    position:relative;
+  }
+  body .timeline::before{
+    left:178px;
+  }
+  body .timeline-card{
+    display:grid;
+    grid-template-columns:144px 28px minmax(0,1fr);
+    column-gap:20px;
+    align-items:start;
+    margin:0 0 26px;
+  }
+  body .timeline-card:last-child{margin-bottom:0}
+  body .timeline-time{
+    grid-column:1;
+    grid-row:1;
+    align-self:start;
+    text-align:right;
+    white-space:nowrap;
+    padding:30px 10px 0 0;
+  }
+  body .timeline-dot{
+    grid-column:2;
+    grid-row:1;
+    justify-self:center;
+    align-self:start;
+    margin-top:31px;
+    position:relative;
+    z-index:2;
+  }
+  body .timeline-body{
+    grid-column:3;
+    grid-row:1;
+    width:100%;
+    margin:0;
+  }
+}
 
 /* House and checkout: keep cards, strengthen hierarchy. */
 body .house-card h2{font-size:clamp(24px,2.4vw,32px)}
@@ -129,6 +246,11 @@ body .mobile-nav-item small{font-size:12px;line-height:1.2}
   body .timeline-body{padding:24px}
   body .quick-card{min-height:180px}
   body .guide-experience-hub .stay-experience-copy p{font-size:15px}
+  body .verified-facts{gap:18px;margin-top:20px}
+  body .verified-facts>.card{padding:24px 22px}
+  body .verified-facts>.card>h2{margin-bottom:22px}
+  body .verified-facts .verified-info{margin-bottom:20px;gap:12px}
+  body .verified-facts .verified-info>div{min-height:96px;padding:16px}
 }
 
 @media(max-width:520px){
@@ -138,6 +260,8 @@ body .mobile-nav-item small{font-size:12px;line-height:1.2}
   body .quick-card small{font-size:12px}
   body .info-grid strong{font-size:15px}
   body .sheet p,body .sheet li{font-size:16px}
+  body .verified-facts>.card{padding:22px 18px}
+  body .verified-facts>.card>h2{font-size:29px}
 }
 
 @media(prefers-contrast:more){

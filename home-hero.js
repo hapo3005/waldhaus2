@@ -40,6 +40,13 @@
       link.dataset.footerStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-brand-typography-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='brand-typography.css?v=49';
+      link.dataset.brandTypographyStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';

@@ -1,0 +1,143 @@
+/* Waldhaus2 · shared Feriendorf hero for guest subpages
+   Uses the approved village map artwork as a real background asset while keeping
+   all headings, status data and controls as accessible live UI. */
+
+body .view[data-view="stay"] .page-hero,
+body .view[data-view="guide"] .page-hero,
+body .view[data-view="house"] .page-hero,
+body .view[data-view="checkout"] .page-hero {
+  isolation: isolate;
+  min-height: clamp(350px, 31vw, 450px);
+  background-color: #13261f;
+  background-image:
+    linear-gradient(90deg,
+      rgba(19,38,31,.96) 0%,
+      rgba(19,38,31,.91) 24%,
+      rgba(19,38,31,.70) 43%,
+      rgba(19,38,31,.24) 66%,
+      rgba(19,38,31,.10) 100%),
+    url('./assets/hero-sections-feriendorf.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  border-color: rgba(248,245,237,.18);
+  box-shadow: 0 24px 62px rgba(19,38,31,.18);
+}
+
+body .view[data-view="stay"] .page-hero::before,
+body .view[data-view="guide"] .page-hero::before,
+body .view[data-view="house"] .page-hero::before,
+body .view[data-view="checkout"] .page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  right: auto;
+  top: auto;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(5,14,10,.05), rgba(5,14,10,.18));
+  opacity: 1;
+  filter: none;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body .view[data-view="stay"] .page-hero > *,
+body .view[data-view="guide"] .page-hero > *,
+body .view[data-view="house"] .page-hero > *,
+body .view[data-view="checkout"] .page-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+body .view[data-view="stay"] .page-hero > div:first-child,
+body .view[data-view="guide"] .page-hero > div:first-child,
+body .view[data-view="house"] .page-hero > div:first-child,
+body .view[data-view="checkout"] .page-hero > div:first-child {
+  max-width: 650px;
+}
+
+body .view[data-view="stay"] .page-hero h1,
+body .view[data-view="guide"] .page-hero h1,
+body .view[data-view="house"] .page-hero h1,
+body .view[data-view="checkout"] .page-hero h1 {
+  color: #fffdf8;
+  text-shadow: 0 2px 18px rgba(6,15,11,.18);
+}
+
+body .view[data-view="stay"] .page-hero p,
+body .view[data-view="guide"] .page-hero p,
+body .view[data-view="house"] .page-hero p,
+body .view[data-view="checkout"] .page-hero p {
+  color: #e6e6de;
+}
+
+body .view[data-view="stay"] .page-hero .eyebrow,
+body .view[data-view="guide"] .page-hero .eyebrow,
+body .view[data-view="house"] .page-hero .eyebrow,
+body .view[data-view="checkout"] .page-hero .eyebrow {
+  color: #e8c477;
+}
+
+body .view[data-view="stay"] .stay-badge,
+body .view[data-view="guide"] .weather-panel,
+body .view[data-view="house"] .house-status {
+  background: rgba(19,38,31,.72);
+  border-color: rgba(248,245,237,.25);
+  color: #f8f5ed;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 30px rgba(6,15,11,.12);
+}
+
+body .view[data-view="house"] .house-status i {
+  background: #d6a65a;
+  box-shadow: 0 0 0 5px rgba(214,166,90,.17);
+}
+
+body .view[data-view="stay"] .stay-badge small,
+body .view[data-view="stay"] .stay-badge span,
+body .view[data-view="guide"] .weather-panel small,
+body .view[data-view="house"] .house-status small {
+  color: #dde2d8;
+}
+
+body .view[data-view="guide"] .weather-panel p {
+  color: #f8f5ed;
+}
+
+body .view[data-view="checkout"] .progress-ring {
+  box-shadow: 0 14px 34px rgba(6,15,11,.18);
+}
+
+@media (max-width: 760px) {
+  body .view[data-view="stay"] .page-hero,
+  body .view[data-view="guide"] .page-hero,
+  body .view[data-view="house"] .page-hero,
+  body .view[data-view="checkout"] .page-hero {
+    min-height: 470px;
+    background-image:
+      linear-gradient(180deg,
+        rgba(19,38,31,.32) 0%,
+        rgba(19,38,31,.52) 34%,
+        rgba(19,38,31,.88) 76%,
+        rgba(19,38,31,.96) 100%),
+      url('./assets/hero-sections-feriendorf.webp');
+    background-size: auto 100%;
+    background-position: 72% center;
+  }
+
+  body .view[data-view="stay"] .page-hero > div:first-child,
+  body .view[data-view="guide"] .page-hero > div:first-child,
+  body .view[data-view="house"] .page-hero > div:first-child,
+  body .view[data-view="checkout"] .page-hero > div:first-child {
+    max-width: 100%;
+  }
+
+  body .view[data-view="stay"] .stay-badge,
+  body .view[data-view="guide"] .weather-panel,
+  body .view[data-view="house"] .house-status {
+    background: rgba(19,38,31,.82);
+  }
+}

@@ -12,6 +12,13 @@
       link.dataset.homeHeroStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-section-hero-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='section-hero.css';
+      link.dataset.sectionHeroStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('style[data-header-logo-style]')){
       const style=document.createElement('style');
       style.dataset.headerLogoStyle='1';

@@ -21,6 +21,15 @@ The product is not a dark luxury app and not a generic SaaS dashboard. Its stron
 
 Gold is an accent, never body text on light backgrounds. Forest is the primary brand/action color. Photography carries most of the emotional color.
 
+## Waldhaus logo rule
+The approved Waldhaus logo geometry is fixed: circular outline, centered A-frame house with chimney, `WALDHAUS` wordmark and `Natur & Entspannung` subtitle. Do not redraw, stretch, rearrange or replace the internal composition for stylistic reasons.
+
+- **Official / brand presentation:** Warm Gold on Deep Forest remains the premium master treatment.
+- **Website / product UI:** use the same logo geometry primarily in Warm White `#F8F5ED` or Warm Ivory `#FBF9F4` on Forest / Deep Forest surfaces.
+- Gold in the UI is a restrained accent, not the default logo color.
+- The logo must preserve its visual center and clear space; never squeeze it into a decorative badge shape that changes its proportions.
+- PWA / installed-app assets may retain the official gold brand treatment, while the in-product header may use the light UI treatment.
+
 ## Typography and readability
 - Ordinary important text should normally render at **16px or larger**.
 - Secondary labels may be smaller only when they are not required to understand or operate the interface.

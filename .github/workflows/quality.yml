@@ -22,6 +22,7 @@ jobs:
           test -f app.js
           test -f home-hero.js
           test -f home-hero.css
+          for i in $(seq -w 1 11); do test -f "assets/hero-start-clean.v2/part-${i}.txt"; done
           test -f owner-ops.js
           test -f owner-ops.css
           test -f verified-content.js
@@ -39,33 +40,40 @@ jobs:
           node --check owner-ops.js
           node --check verified-content.js
           node --check guide-experience.js
+          node --check service-worker.js
 
-      - name: Validate Start hero image payload
+      - name: Validate clean Start hero image payload
         run: |
           python - <<'PY'
           from pathlib import Path
-          import base64, struct
+          import base64, hashlib, struct
 
-          parts = [
-              'assets/hero-start-day.parts/part-01.txt',
-              'assets/hero-start-day.parts/part-01-tail.txt',
-              'assets/hero-start-day.parts/part-02.txt',
-              'assets/hero-start-day.parts/part-03.txt',
-              'assets/hero-start-day.parts/part-04.txt',
-              'assets/hero-start-day.parts/part-05.txt',
-              'assets/hero-start-day.parts/part-06.txt',
-          ]
+          parts = [f'assets/hero-start-clean.v2/part-{i:02d}.txt' for i in range(1, 12)]
           payload = ''.join(Path(path).read_text().strip() for path in parts)
-          if len(payload) != 69368:
-              raise SystemExit(f'Hero base64 incomplete: {len(payload)}/69368')
+          if len(payload) != 128112:
+              raise SystemExit(f'Clean hero base64 incomplete: {len(payload)}/128112')
+
           data = base64.b64decode(payload, validate=True)
+          if len(data) != 96084:
+              raise SystemExit(f'Clean hero size mismatch: {len(data)}/96084')
           if data[:4] != b'RIFF' or data[8:12] != b'WEBP':
-              raise SystemExit('Hero payload is not a WebP RIFF file')
+              raise SystemExit('Clean hero is not a WebP RIFF file')
           expected = struct.unpack('<I', data[4:8])[0] + 8
-          if len(data) != expected:
-              raise SystemExit(f'Hero WebP incomplete: {len(data)}/{expected} bytes')
-          print(f'Hero WebP valid: {len(data)} bytes')
+          if expected != len(data):
+              raise SystemExit(f'Clean hero RIFF incomplete: {len(data)}/{expected}')
+
+          digest = hashlib.sha256(data).hexdigest()
+          expected_sha = '121d21258a7ebbd4f664ff29e631f8c02c9c09a04585b625f3d53c4818726c84'
+          if digest != expected_sha:
+              raise SystemExit(f'Clean hero hash mismatch: {digest}')
+          print(f'Clean Start hero valid: {len(data)} bytes, sha256={digest}')
           PY
+
+      - name: Guard clean hero runtime
+        run: |
+          grep -q 'hero-start-clean.v2' home-hero.js
+          ! grep -q 'hero-start-day.parts' home-hero.js
+          ! grep -q 'backdrop-filter:blur(6px)' home-hero.css
 
       - name: Validate web manifest JSON
         run: python -m json.tool manifest.webmanifest > /dev/null

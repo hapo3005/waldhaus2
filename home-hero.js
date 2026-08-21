@@ -12,6 +12,13 @@
       link.dataset.homeHeroStyle='1';
       document.head.appendChild(link);
     }
+    if(!document.querySelector('link[data-welcome-icon-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='welcome-card-icon.css?v=40';
+      link.dataset.welcomeIconStyle='1';
+      document.head.appendChild(link);
+    }
     if(!document.querySelector('link[data-section-hero-style]')){
       const link=document.createElement('link');
       link.rel='stylesheet';

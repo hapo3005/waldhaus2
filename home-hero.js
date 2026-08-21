@@ -24,12 +24,14 @@
     if(!image) return;
     try{
       const chunks=await Promise.all(HERO_PARTS.map(async url=>{
-        const response=await fetch(url);
+        const response=await fetch(url,{cache:'no-store'});
         if(!response.ok) throw new Error(`hero asset ${response.status}`);
         return response.text();
       }));
-      image.style.backgroundImage=`url("data:image/webp;base64,${chunks.join('')}")`;
+      const source=`url("data:image/webp;base64,${chunks.join('')}")`;
+      image.style.setProperty('background-image',source,'important');
       hero.dataset.heroImageReady='1';
+      delete hero.dataset.heroImageError;
     }catch(error){
       hero.dataset.heroImageError='1';
       console.warn('Waldhaus daytime hero could not be loaded',error);

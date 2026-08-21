@@ -1,5 +1,5 @@
 /* Waldhaus2 · refined mobile navigation icons
-   One consistent, restrained line-icon language instead of glyphs / emoji. */
+   One restrained icon language, with brand-specific anchors for Start and Haus. */
 @media (max-width:760px){
   body .mobile-nav{
     padding:7px 8px calc(7px + env(safe-area-inset-bottom,0px));
@@ -42,7 +42,7 @@
     mask-repeat:no-repeat;
     mask-position:center;
     mask-size:contain;
-    opacity:.94;
+    opacity:.95;
   }
 
   body .mobile-nav-item small{
@@ -56,10 +56,11 @@
 
   body .mobile-nav-item.is-active small{opacity:1}
 
-  /* Start · simple home */
+  /* Start · Waldhaus brand mark. Deliberately not another generic house icon. */
   body .mobile-nav-item[data-view-target="home"] > span::before{
-    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 10.5 12 3.8l8.5 6.7'/%3E%3Cpath d='M5.5 9.4V20h13V9.4'/%3E%3Cpath d='M9.4 20v-5.8h5.2V20'/%3E%3C/svg%3E");
-    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 10.5 12 3.8l8.5 6.7'/%3E%3Cpath d='M5.5 9.4V20h13V9.4'/%3E%3Cpath d='M9.4 20v-5.8h5.2V20'/%3E%3C/svg%3E");
+    inset:0;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.2' y='3.2' width='17.6' height='17.6' rx='5'/%3E%3Cpath d='M6.9 8.1 9.2 16l2.8-5.1 2.8 5.1 2.3-7.9' stroke-width='2.05'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.2' y='3.2' width='17.6' height='17.6' rx='5'/%3E%3Cpath d='M6.9 8.1 9.2 16l2.8-5.1 2.8 5.1 2.3-7.9' stroke-width='2.05'/%3E%3C/svg%3E");
   }
 
   /* Aufenthalt · calendar */
@@ -74,10 +75,11 @@
     mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='m15.3 8.7-2.1 4.5-4.5 2.1 2.1-4.5 4.5-2.1Z'/%3E%3C/svg%3E");
   }
 
-  /* Haus · digital housebook */
+  /* Haus · characteristic Nurdach / A-frame silhouette of the Waldhaus. */
   body .mobile-nav-item[data-view-target="house"] > span::before{
-    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.2 5.3c2.5-.8 5-.4 7.8 1.2v13c-2.8-1.6-5.3-2-7.8-1.2v-13Z'/%3E%3Cpath d='M19.8 5.3c-2.5-.8-5-.4-7.8 1.2v13c2.8-1.6 5.3-2 7.8-1.2v-13Z'/%3E%3C/svg%3E");
-    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.2 5.3c2.5-.8 5-.4 7.8 1.2v13c-2.8-1.6-5.3-2-7.8-1.2v-13Z'/%3E%3Cpath d='M19.8 5.3c-2.5-.8-5-.4-7.8 1.2v13c2.8-1.6 5.3-2 7.8-1.2v-13Z'/%3E%3C/svg%3E");
+    inset:0;
+    -webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.8 20 12 4l8.2 16'/%3E%3Cpath d='M6.6 20 12 8.8 17.4 20' opacity='.72'/%3E%3Cpath d='M5.1 20h13.8'/%3E%3Cpath d='M8.2 20v-6.2h7.6V20'/%3E%3Cpath d='M10.4 20v-4h3.2v4'/%3E%3C/svg%3E");
+    mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.65' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.8 20 12 4l8.2 16'/%3E%3Cpath d='M6.6 20 12 8.8 17.4 20' opacity='.72'/%3E%3Cpath d='M5.1 20h13.8'/%3E%3Cpath d='M8.2 20v-6.2h7.6V20'/%3E%3Cpath d='M10.4 20v-4h3.2v4'/%3E%3C/svg%3E");
   }
 
   /* Abreise · leave through the door */

@@ -31,6 +31,29 @@ jobs:
       - name: Validate web manifest JSON
         run: python -m json.tool manifest.webmanifest > /dev/null
 
-      - name: Guard against accidental placeholder secrets
+      - name: Guard against accidental high-risk secrets
         run: |
-          ! grep -RniE '(api[_-]?key|secret|password)[[:space:]]*[:=][[:space:]]*["'"'][A-Za-z0-9_-]{20,}' --exclude-dir=.git .
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          patterns = {
+              "OpenAI-style key": re.compile(r"sk-[A-Za-z0-9_-]{20,}"),
+              "Google API key": re.compile(r"AIza[0-9A-Za-z_-]{30,}"),
+              "private key": re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"),
+          }
+          allowed_suffixes = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
+          findings = []
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts or path.suffix.lower() in allowed_suffixes:
+                  continue
+              try:
+                  text = path.read_text(errors='ignore')
+              except OSError:
+                  continue
+              for label, pattern in patterns.items():
+                  if pattern.search(text):
+                      findings.append(f"{label}: {path}")
+          if findings:
+              raise SystemExit("Potential secrets found:\n" + "\n".join(findings))
+          PY

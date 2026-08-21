@@ -83,12 +83,24 @@ body .view[data-view="checkout"] .page-hero .eyebrow {
 body .view[data-view="stay"] .stay-badge,
 body .view[data-view="guide"] .weather-panel,
 body .view[data-view="house"] .house-status {
-  background: rgba(19,38,31,.72);
-  border-color: rgba(248,245,237,.25);
+  background:
+    linear-gradient(145deg, rgba(214,166,90,.055), rgba(19,38,31,.74) 40%),
+    rgba(19,38,31,.72);
+  border-color: rgba(214,166,90,.28);
   color: #f8f5ed;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  box-shadow: 0 14px 30px rgba(6,15,11,.12);
+  box-shadow:
+    0 14px 30px rgba(6,15,11,.12),
+    inset 0 1px 0 rgba(248,245,237,.04);
+}
+
+/* A single restrained warm accent keeps the guest controls distinguishable
+   without turning the interface into a multi-colour dashboard. */
+body .view[data-view="stay"] .stay-badge strong,
+body .view[data-view="guide"] .weather-panel > div span,
+body .view[data-view="guide"] .weather-panel > div strong {
+  color: #e8c477;
 }
 
 /* The red house in the approved map is the rental property and is a permanent
@@ -150,7 +162,15 @@ body .view[data-view="guide"] .weather-panel p {
 }
 
 body .view[data-view="checkout"] .progress-ring {
-  box-shadow: 0 14px 34px rgba(6,15,11,.18);
+  background: conic-gradient(#d6a65a var(--progress,0%), rgba(255,255,255,.08) 0);
+  border: 1px solid rgba(214,166,90,.24);
+  box-shadow:
+    0 14px 34px rgba(6,15,11,.18),
+    0 0 0 5px rgba(214,166,90,.045);
+}
+
+body .view[data-view="checkout"] .progress-ring span {
+  color: #e8c477;
 }
 
 @media (max-width: 760px) {
@@ -182,6 +202,8 @@ body .view[data-view="checkout"] .progress-ring {
   body .view[data-view="stay"] .stay-badge,
   body .view[data-view="guide"] .weather-panel,
   body .view[data-view="house"] .house-status {
-    background: rgba(19,38,31,.82);
+    background:
+      linear-gradient(145deg, rgba(214,166,90,.05), rgba(19,38,31,.84) 42%),
+      rgba(19,38,31,.82);
   }
 }

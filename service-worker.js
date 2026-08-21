@@ -1,5 +1,5 @@
-const CACHE = 'waldhaus2-product-v21';
-const CORE = ['./','./index.html','./styles.css','./design-system.css','./precision-polish.css','./app.js','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
+const CACHE = 'waldhaus2-product-v22';
+const CORE = ['./','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./app.js','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'];
 const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/hero-waldhaus.png',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-activity-hiking.svg',

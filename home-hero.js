@@ -5,12 +5,51 @@
   let heroObjectUrl='';
 
   function ensureStyles(){
-    if(document.querySelector('link[data-home-hero-style]')) return;
-    const link=document.createElement('link');
-    link.rel='stylesheet';
-    link.href='home-hero.css';
-    link.dataset.homeHeroStyle='1';
-    document.head.appendChild(link);
+    if(!document.querySelector('link[data-home-hero-style]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='home-hero.css';
+      link.dataset.homeHeroStyle='1';
+      document.head.appendChild(link);
+    }
+    if(!document.querySelector('style[data-header-logo-style]')){
+      const style=document.createElement('style');
+      style.dataset.headerLogoStyle='1';
+      style.textContent=`
+        body .topbar .brand-mark{
+          width:58px;height:58px;flex:0 0 58px;
+          background:transparent!important;color:#F8F5ED!important;
+          border-radius:0!important;overflow:visible!important;
+          display:grid;place-items:center;
+        }
+        body .topbar .brand-mark svg{width:100%;height:100%;display:block;overflow:visible}
+        body .topbar .brand-mark image{pointer-events:none}
+        @media(max-width:760px){
+          body .topbar .brand-mark{width:50px;height:50px;flex-basis:50px}
+          body .topbar .brand{gap:9px}
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  function applyHeaderLogo(){
+    const mark=document.querySelector('.topbar .brand-mark');
+    if(!mark||mark.dataset.approvedLogo==='1') return;
+    mark.innerHTML=`<svg viewBox="0 0 192 192" role="presentation" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="waldhausHeaderLight" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+          <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="logoLuminance"/>
+          <feComponentTransfer in="logoLuminance" result="logoMask">
+            <feFuncA type="linear" slope="8" intercept="-4"/>
+          </feComponentTransfer>
+          <feFlood flood-color="#F8F5ED" result="warmWhite"/>
+          <feComposite in="warmWhite" in2="logoMask" operator="in"/>
+        </filter>
+      </defs>
+      <image href="icon-192.png?v=31" x="0" y="0" width="192" height="192" preserveAspectRatio="xMidYMid meet" filter="url(#waldhausHeaderLight)"/>
+    </svg>`;
+    mark.dataset.approvedLogo='1';
   }
 
   function decodeBase64(base64){
@@ -50,6 +89,7 @@
 
   function applyHero(){
     ensureStyles();
+    applyHeaderLogo();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -74,6 +114,8 @@
     let tries=0;
     const timer=setInterval(()=>{
       tries+=1;
+      ensureStyles();
+      applyHeaderLogo();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

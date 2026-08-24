@@ -76,6 +76,8 @@
           <p class="guest-request-copy">Kalender antippen oder Anreise und Abreise direkt eintragen.</p>
           <form id="guestRequestForm" class="guest-request-form">
             <label>Name / Familie<input id="guestRequestName" maxlength="80" placeholder="z. B. Familie Müller" autocomplete="name" required></label>
+            <div class="guest-contact-fields"><label>E-Mail-Adresse<input id="guestRequestEmail" type="email" maxlength="160" placeholder="name@beispiel.de" autocomplete="email" required></label><label>Telefon / WhatsApp <small>optional</small><input id="guestRequestPhone" type="tel" maxlength="40" placeholder="z. B. +49 170 …" autocomplete="tel"></label></div>
+            <p class="guest-contact-note">Wir nutzen eure Kontaktdaten nur, um auf eure Anfrage zu antworten.</p>
             <div><label>Anreise<input id="guestRequestStart" type="date" required></label><label>Abreise<input id="guestRequestEnd" type="date" required></label></div>
             <label>Personen<input id="guestRequestGuests" type="number" min="1" max="20" value="2" inputmode="numeric" required></label>
             <label>Nachricht<textarea id="guestRequestNote" rows="4" maxlength="320" placeholder="Optional: flexible Anreise, Kinder, Hund …"></textarea></label>
@@ -237,9 +239,13 @@
     form.onsubmit=event=>{
       event.preventDefault();
       refreshData();
+      const email=document.querySelector('#guestRequestEmail').value.trim();
+      const phone=document.querySelector('#guestRequestPhone').value.trim();
       const item={
         id:crypto.randomUUID?.()||`request-${Date.now()}`,
         guest:document.querySelector('#guestRequestName').value.trim(),
+        email,
+        phone,
         guests:+document.querySelector('#guestRequestGuests').value||1,
         start:start.value,
         end:end.value,
@@ -248,6 +254,7 @@
         createdAt:new Date().toISOString()
       };
       if(!item.guest)return;
+      if(!email){showStatus('Bitte gebt eine E-Mail-Adresse an, damit wir euch antworten können.','error');return;}
       if(!item.start||!item.end||item.end<=item.start){showStatus('Bitte wählt Anreise und Abreise aus.','error');return;}
       if(item.start<today()){showStatus('Die Anreise kann nicht in der Vergangenheit liegen.','error');return;}
       if(overlap(item.start,item.end)){showStatus('Dieser Zeitraum überschneidet sich mit einer bestehenden Belegung. Bitte wählt einen anderen Zeitraum.','error');return;}
@@ -260,7 +267,7 @@
       prepareDateInputs();
       renderCalendar();
       renderRequestStatus();
-      showStatus('Anfrage gespeichert. Euer Wunschzeitraum ist jetzt im Kalender als angefragt markiert.','success');
+      showStatus(`Danke für eure Anfrage. Wir schauen uns euren Wunschzeitraum an und melden uns per E-Mail an ${email}. Die Anfrage ist noch keine verbindliche Buchung.`,'success');
       window.dispatchEvent(new CustomEvent('waldhaus2:request-updated',{detail:item}));
     };
   }

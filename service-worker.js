@@ -1,8 +1,8 @@
-const CACHE = 'waldhaus2-product-v49';
+const CACHE = 'waldhaus2-product-v50';
 const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./section-hero.css',
-  './app.js','./home-hero.js','./home-hero.css','./welcome-card-icon.css','./content-prune.css','./mobile-nav-icons.css','./footer.css','./brand-typography.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css',
+  './app.js','./home-hero.js','./home-hero.css','./welcome-card-icon.css','./content-prune.css','./mobile-nav-icons.css','./footer.css','./brand-typography.css','./owner-ops.js','./owner-ops.css','./verified-content.js','./guide-experience.js','./guide-experience.css','./news-experience.js','./news-experience.css',
   ...HERO_PARTS,
   './assets/hero-sections-feriendorf.webp','./assets/waldhaus-logo-mark-white.svg',
   './manifest.webmanifest','./icon.svg','./icon-192.png','./icon-512.png'
@@ -15,8 +15,14 @@ const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-activity-village.svg',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-dining-coffee.svg',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-dining-market.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-firewood.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-wifi.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-terrace.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-heating.svg',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-emergency.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-wifi.svg'
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-cleaning.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-calendar.svg',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-admin.svg'
 ];
 const presentationHosts = new Set(['raw.githubusercontent.com']);
 

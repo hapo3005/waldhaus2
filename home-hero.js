@@ -96,7 +96,7 @@
         const details=document.createElement('button');
         details.type='button';
         details.className='trip-details-link';
-        details.textContent='Details ansehen →';
+        details.textContent='Alles zur Anreise →';
         details.addEventListener('click',()=>{
           const target=document.querySelector('.desktop-nav [data-view-target="stay"], .mobile-nav [data-view-target="stay"]');
           target?.click();
@@ -105,6 +105,103 @@
       }
     }
     home?.querySelector('.next-card')?.classList.add('welcome-next-v2');
+  }
+
+  function setText(selector,text){
+    const node=document.querySelector(selector);
+    if(node) node.textContent=text;
+  }
+
+  function applyGuestVoice(){
+    const home=document.querySelector('[data-view="home"]');
+    if(home){
+      const tripLabel=home.querySelector('.trip-card .card-label');
+      if(tripLabel) tripLabel.textContent='Eure Auszeit bei uns';
+      const neutralHeadline=home.querySelector('#tripHeadline');
+      const neutralRange=home.querySelector('#tripRange');
+      const neutralAvatars=home.querySelector('.avatar-row small');
+      if(neutralHeadline?.textContent.trim()==='Noch kein Aufenthalt geplant.') neutralHeadline.textContent='Wann dürfen wir euch begrüßen?';
+      if(neutralRange?.textContent.trim()==='Sobald ein Aufenthalt eingetragen ist, stehen hier die Reisedetails.') neutralRange.textContent='Schaut in unseren Kalender, sucht euch freie Tage aus und schickt uns euren Wunschzeitraum.';
+      if(neutralAvatars?.textContent.trim()==='Aufenthalt wird hier angezeigt') neutralAvatars.textContent='Wir freuen uns auf eure Anfrage';
+
+      const next=home.querySelector('.next-card');
+      if(next){
+        const label=next.querySelector('.card-label');
+        const title=next.querySelector('h2');
+        const copy=next.querySelector(':scope > p');
+        const button=next.querySelector('.button');
+        if(label) label.textContent='Gut vorbereitet';
+        if(title) title.textContent='Damit ihr entspannt bei uns ankommt.';
+        if(copy) copy.textContent='Wir haben euch Adresse, Parkplatz, Check-in und die wichtigsten Infos für die Anreise an einem Ort zusammengestellt.';
+        if(button) button.textContent='Alles zur Anreise';
+      }
+
+      const curated=home.querySelector('.section-heading');
+      if(curated){
+        const label=curated.querySelector('.card-label');
+        const title=curated.querySelector('h2');
+        if(label) label.textContent='Unsere Tipps für euch';
+        if(title) title.textContent='Was wir euch in der Eifel ans Herz legen.';
+      }
+    }
+
+    const stay=document.querySelector('[data-view="stay"]');
+    if(stay){
+      setText('[data-view="stay"] .page-hero .eyebrow','Gut ankommen');
+      setText('[data-view="stay"] .page-hero h1','Damit eure Auszeit entspannt beginnt.');
+      setText('[data-view="stay"] .page-hero > div:first-child > p','Wir haben euch hier alles zusammengestellt, was ihr vor der Anreise und für die ersten Minuten im Waldhaus braucht.');
+      const cards=stay.querySelectorAll('.timeline-card');
+      if(cards[0]){
+        setText('[data-view="stay"] .timeline-card:nth-child(1) .card-label','Für eure Anreise');
+        setText('[data-view="stay"] .timeline-card:nth-child(1) h2','So findet ihr entspannt zu uns.');
+        setText('[data-view="stay"] .timeline-card:nth-child(1) .timeline-body > p','Adresse, Parkmöglichkeit und Zugang haben wir euch hier übersichtlich zusammengefasst.');
+      }
+      if(cards[1]){
+        setText('[data-view="stay"] .timeline-card:nth-child(2) .card-label','Wenn ihr da seid');
+        setText('[data-view="stay"] .timeline-card:nth-child(2) h2','Erst einmal ankommen.');
+      }
+      if(cards[2]){
+        setText('[data-view="stay"] .timeline-card:nth-child(3) .card-label','Während eurer Auszeit');
+        setText('[data-view="stay"] .timeline-card:nth-child(3) h2','Fühlt euch einfach wie zu Hause.');
+        setText('[data-view="stay"] .timeline-card:nth-child(3) .timeline-body > p','Alles rund um Garten, Heizung, Geräte, Müll und unsere Tipps für die Umgebung bleibt für euch jederzeit griffbereit.');
+      }
+    }
+
+    const guide=document.querySelector('[data-view="guide"]');
+    if(guide){
+      setText('[data-view="guide"] .page-hero .eyebrow','Unsere Empfehlungen für euch');
+      setText('[data-view="guide"] .page-hero h1','Was wir euch gerne zeigen würden.');
+      setText('[data-view="guide"] .page-hero > div:first-child > p','Wir haben euch einige unserer liebsten Ideen für Natur, Essen und kleine Ausflüge rund um Kerschenbach zusammengestellt.');
+    }
+
+    const house=document.querySelector('[data-view="house"]');
+    if(house){
+      setText('[data-view="house"] .page-hero .eyebrow','Für eure Zeit bei uns');
+      setText('[data-view="house"] .page-hero h1','Alles, was ihr im Waldhaus wissen möchtet.');
+      setText('[data-view="house"] .page-hero > div:first-child > p','Damit ihr euch schnell zurechtfindet, haben wir die wichtigsten Dinge rund ums Haus kurz und verständlich für euch gesammelt.');
+    }
+
+    const checkout=document.querySelector('[data-view="checkout"]');
+    if(checkout){
+      setText('[data-view="checkout"] .page-hero .eyebrow','Bevor ihr fahrt');
+      setText('[data-view="checkout"] .page-hero h1','Schön, dass ihr bei uns wart.');
+      setText('[data-view="checkout"] .page-hero > div:first-child > p','Ein letzter kurzer Rundgang, dann wünschen wir euch eine gute Heimfahrt – und vielleicht bis zum nächsten Mal.');
+      const farewell=checkout.querySelector('.farewell p');
+      if(farewell) farewell.innerHTML='Danke, dass ihr so gut auf unser <strong data-brand-name>Waldhaus</strong> aufgepasst habt.';
+    }
+
+    const planner=document.querySelector('[data-view="planner"]');
+    if(planner){
+      setText('[data-view="planner"] .page-hero .eyebrow','Eure Auszeit bei uns');
+      setText('[data-view="planner"] .page-hero h1','Wann dürfen wir euch begrüßen?');
+      setText('[data-view="planner"] .page-hero > div:first-child > p','Schaut in unseren Kalender, sucht euch einen passenden freien Zeitraum aus und hinterlegt eure Anfrage ganz unkompliziert.');
+      setText('[data-view="planner"] .guest-request-card h2','Schickt uns euren Wunschzeitraum.');
+      setText('[data-view="planner"] .guest-request-copy','Wählt eure An- und Abreise direkt im Kalender oder tragt die Daten unten ein.');
+      const submit=planner.querySelector('#guestRequestForm .button');
+      if(submit) submit.innerHTML='Wunschzeitraum anfragen <span>→</span>';
+      const tip=planner.querySelector('.guest-calendar-tip p');
+      if(tip) tip.innerHTML='<strong>So geht’s:</strong> zuerst die Anreise, danach die Abreise antippen.';
+    }
   }
 
   function applyFooter(){
@@ -123,7 +220,7 @@
           <div class="waldhaus-footer-copy">
             <strong>Waldhaus</strong>
             <span>Kerschenbach · Eifel</span>
-            <p>Euer digitaler Begleiter für eine entspannte Auszeit im Waldhaus.</p>
+            <p>Wir wünschen euch eine richtig schöne und entspannte Zeit bei uns im Waldhaus.</p>
           </div>
         </div>
         <nav class="waldhaus-footer-nav" aria-label="Seitennavigation im Footer">
@@ -163,9 +260,10 @@
   function loadGuestPlanner(){
     if(document.querySelector('script[data-guest-planner-script]')) return;
     const script=document.createElement('script');
-    script.src='guest-planner.js?v=1';
+    script.src='guest-planner.js?v=2';
     script.defer=true;
     script.dataset.guestPlannerScript='1';
+    script.addEventListener('load',applyGuestVoice,{once:true});
     document.head.appendChild(script);
   }
 
@@ -211,6 +309,7 @@
     applyFooter();
     loadNewsExperience();
     loadGuestPlanner();
+    applyGuestVoice();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -219,12 +318,12 @@
     const body=copy?.querySelector('p:not(.eyebrow)');
     const actions=copy?.querySelector('.hero-actions');
     const buttons=actions?[...actions.querySelectorAll('.button')]:[];
-    if(heading) heading.innerHTML='Was passt <em>heute</em><br>zu euch?';
-    if(body) body.textContent='Ausgewählte Ideen für Natur, Essen, Ausflüge und die praktischen Dinge vor Ort.';
+    if(heading) heading.innerHTML='Willkommen <em>bei uns</em><br>im Waldhaus.';
+    if(body) body.textContent='Ob ihr eure Auszeit gerade plant oder schon vor Ort seid: Wir möchten, dass ihr euch bei uns vom ersten Moment an gut aufgehoben fühlt.';
     if(buttons[0]){
       buttons[0].dataset.viewTarget='guide';
       buttons[0].classList.add('hero-plan-button');
-      buttons[0].innerHTML='Meinen perfekten Tag planen <span>→</span>';
+      buttons[0].innerHTML='Unsere Tipps für eure Auszeit <span>→</span>';
     }
     buttons.slice(1).forEach(button=>button.remove());
     loadHeroImage(hero);
@@ -235,6 +334,7 @@
     let tries=0;
     loadNewsExperience();
     loadGuestPlanner();
+    applyGuestVoice();
     const timer=setInterval(()=>{
       tries+=1;
       ensureStyles();
@@ -243,6 +343,7 @@
       applyFooter();
       loadNewsExperience();
       loadGuestPlanner();
+      applyGuestVoice();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

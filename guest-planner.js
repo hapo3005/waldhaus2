@@ -16,11 +16,14 @@
     selectionEnd:''
   };
 
+  const isPending=item=>(item?.status||'pending')==='pending';
+  const pendingRequests=()=>state.requests.filter(isPending);
+
   function ensureStyle(){
     if(document.querySelector('link[data-guest-planner-style]'))return;
     const link=document.createElement('link');
     link.rel='stylesheet';
-    link.href='guest-planner.css?v=2';
+    link.href='guest-planner.css?v=3';
     link.dataset.guestPlannerStyle='1';
     document.head.appendChild(link);
   }
@@ -36,10 +39,11 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function overlap(start,end){return state.bookings.some(item=>start<item.end&&end>item.start);}
   function refreshData(){state.bookings=load(BKEY);state.requests=load(RKEY);}
+  function bookingOverlap(start,end){return state.bookings.some(item=>start<item.end&&end>item.start);}
+  function requestOverlap(start,end){return pendingRequests().some(item=>start<item.end&&end>item.start);}
   function isBookedDay(value){return state.bookings.some(item=>value>=item.start&&value<item.end);}
-  function isRequestedDay(value){return state.requests.some(item=>value>=item.start&&value<item.end);}
+  function isRequestedDay(value){return pendingRequests().some(item=>value>=item.start&&value<item.end);}
 
   function injectView(){
     const main=document.querySelector('main');
@@ -65,7 +69,8 @@
           </div>
           <div class="guest-weekdays" aria-hidden="true"><span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span></div>
           <div id="guestCalendar" class="guest-calendar" aria-label="Verfügbarkeitskalender"></div>
-          <div class="guest-legend"><span><i></i>Frei</span><span><i class="booked"></i>Belegt</span><span><i class="requested"></i>Angefragt</span></div>
+          <div class="guest-legend"><span><i></i>Frei</span><span><i class="requested"></i>Anfrage läuft</span><span><i class="booked"></i>Belegt</span></div>
+          <p class="guest-availability-note"><strong>Gut zu wissen:</strong> Gold markierte Tage sind noch nicht reserviert. Es liegt lediglich eine unverbindliche Anfrage vor – ihr könnt den Zeitraum weiterhin anfragen. Erst eine Bestätigung macht ihn belegt.</p>
           <div class="guest-calendar-tip"><span aria-hidden="true">☝</span><p><strong>Zeitraum wählen:</strong> zuerst Anreise, dann Abreise antippen.</p></div>
           <div id="guestSelectionSummary" class="guest-selection-summary" aria-live="polite"></div>
         </article>
@@ -158,11 +163,19 @@
       if(past)classes.push('is-past');
       if(booked)classes.push('has-booking');else if(requested)classes.push('has-request');
       const selected=selectionClass(value);
-      const stateLabel=booked?'belegt':requested?'angefragt':'frei';
+      const stateLabel=booked?'belegt':requested?'offene Anfrage, weiterhin anfragbar':'frei';
       return `<button class="${classes.join(' ')}${selected}" type="button" data-guest-date="${value}" ${past?'disabled':''} aria-label="${safe(new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).format(d))}, ${stateLabel}" aria-pressed="${selected?'true':'false'}"><span>${d.getDate()}</span>${booked||requested?'<i></i>':''}</button>`;
     }).join('');
     grid.querySelectorAll('[data-guest-date]:not(:disabled)').forEach(button=>button.onclick=()=>pickDate(button.dataset.guestDate));
     renderSelectionSummary();
+  }
+
+  function showRequestOverlapNotice(){
+    if(!state.selectionStart)return;
+    const end=state.selectionEnd||iso(plus(date(state.selectionStart),1));
+    if(requestOverlap(state.selectionStart,end)){
+      showStatus('Für einen Teil dieses Zeitraums liegt bereits eine unverbindliche Anfrage vor. Ihr könnt trotzdem anfragen – reserviert oder belegt ist der Zeitraum erst nach unserer Bestätigung.','info');
+    }
   }
 
   function pickDate(value){
@@ -171,16 +184,16 @@
     if(value<today())return;
 
     if(!state.selectionStart||state.selectionEnd){
-      if(isBookedDay(value)){showStatus('Dieser Tag ist bereits belegt. Bitte wählt einen freien Anreisetag.','error');return;}
+      if(isBookedDay(value)){showStatus('Dieser Tag ist bereits verbindlich belegt. Bitte wählt einen anderen Anreisetag.','error');return;}
       state.selectionStart=value;
       state.selectionEnd='';
     }else if(value<=state.selectionStart){
-      if(isBookedDay(value)){showStatus('Dieser Tag ist bereits belegt. Bitte wählt einen freien Anreisetag.','error');return;}
+      if(isBookedDay(value)){showStatus('Dieser Tag ist bereits verbindlich belegt. Bitte wählt einen anderen Anreisetag.','error');return;}
       state.selectionStart=value;
       state.selectionEnd='';
     }else{
-      if(overlap(state.selectionStart,value)){
-        showStatus('Zwischen Anreise und Abreise liegt bereits eine Belegung. Bitte wählt einen anderen Zeitraum.','error');
+      if(bookingOverlap(state.selectionStart,value)){
+        showStatus('Zwischen Anreise und Abreise liegt bereits eine bestätigte Belegung. Bitte wählt einen anderen Zeitraum.','error');
         return;
       }
       state.selectionEnd=value;
@@ -188,6 +201,7 @@
 
     syncFormFromSelection();
     renderCalendar();
+    showRequestOverlapNotice();
   }
 
   function syncFormFromSelection(){
@@ -210,14 +224,15 @@
       state.month=new Date(d.getFullYear(),d.getMonth(),1);
     }
     renderCalendar();
+    showRequestOverlapNotice();
   }
 
   function renderRequestStatus(){
     const target=document.querySelector('#guestRequestStatus');
     if(!target)return;
     refreshData();
-    const own=state.requests.filter(item=>item.createdBy==='guest-planner').sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||''))).slice(0,2);
-    target.innerHTML=own.length?`<span class="card-label">Eure Anfrage${own.length>1?'n':''}</span>${own.map(item=>`<article><strong>${safe(item.guest)}</strong><span>${new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit'}).format(date(item.start))}–${new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit'}).format(date(item.end))} · ${safe(item.guests)} Pers.</span><small>angefragt</small></article>`).join('')}`:'';
+    const own=pendingRequests().filter(item=>item.createdBy==='guest-planner').sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||''))).slice(0,2);
+    target.innerHTML=own.length?`<span class="card-label">Eure offene${own.length>1?'n':''} Anfrage${own.length>1?'n':''}</span>${own.map(item=>`<article><strong>${safe(item.guest)}</strong><span>${new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit'}).format(date(item.start))}–${new Intl.DateTimeFormat('de-DE',{day:'2-digit',month:'2-digit'}).format(date(item.end))} · ${safe(item.guests)} Pers.</span><small>offen</small></article>`).join('')}`:'';
   }
 
   function prepareDateInputs(){
@@ -250,6 +265,7 @@
         start:start.value,
         end:end.value,
         note:document.querySelector('#guestRequestNote').value.trim(),
+        status:'pending',
         createdBy:'guest-planner',
         createdAt:new Date().toISOString()
       };
@@ -257,7 +273,7 @@
       if(!email){showStatus('Bitte gebt eine E-Mail-Adresse an, damit wir euch antworten können.','error');return;}
       if(!item.start||!item.end||item.end<=item.start){showStatus('Bitte wählt Anreise und Abreise aus.','error');return;}
       if(item.start<today()){showStatus('Die Anreise kann nicht in der Vergangenheit liegen.','error');return;}
-      if(overlap(item.start,item.end)){showStatus('Dieser Zeitraum überschneidet sich mit einer bestehenden Belegung. Bitte wählt einen anderen Zeitraum.','error');return;}
+      if(bookingOverlap(item.start,item.end)){showStatus('Dieser Zeitraum überschneidet sich mit einer bestätigten Belegung. Bitte wählt einen anderen Zeitraum.','error');return;}
       state.requests.push(item);
       localStorage.setItem(RKEY,JSON.stringify(state.requests));
       form.reset();
@@ -267,7 +283,7 @@
       prepareDateInputs();
       renderCalendar();
       renderRequestStatus();
-      showStatus(`Danke für eure Anfrage. Wir schauen uns euren Wunschzeitraum an und melden uns per E-Mail an ${email}. Die Anfrage ist noch keine verbindliche Buchung.`,'success');
+      showStatus(`Danke für eure Anfrage. Wir prüfen euren Wunschzeitraum und melden uns per E-Mail an ${email}. Bis zu unserer Bestätigung ist der Zeitraum weder reserviert noch verbindlich gebucht.`,'success');
       window.dispatchEvent(new CustomEvent('waldhaus2:request-updated',{detail:item}));
     };
   }
@@ -280,7 +296,8 @@
   function showStatus(message,type){
     const target=document.querySelector('#guestRequestFeedback');
     if(!target)return;
-    target.innerHTML=`<p class="guest-request-message ${type==='error'?'is-error':'is-success'}">${safe(message)}</p>`;
+    const cls=type==='error'?'is-error':type==='info'?'is-info':'is-success';
+    target.innerHTML=`<p class="guest-request-message ${cls}">${safe(message)}</p>`;
   }
 
   function boot(){

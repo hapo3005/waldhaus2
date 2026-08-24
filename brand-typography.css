@@ -58,8 +58,11 @@ body .waldhaus-footer-copy > span{
     bottom:auto!important;
   }
 
-  /* The guest tab bar has no active destination inside the owner workspace.
-     Keeping it fixed there only covers calendar cards and form controls. */
+  /* The owner workspace should not be hidden behind guest chrome. */
+  body:has(.owner-view.is-active) .topbar{
+    position:relative!important;
+    top:auto!important;
+  }
   body:has(.owner-view.is-active) .mobile-nav{
     display:none!important;
   }

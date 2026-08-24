@@ -26,7 +26,7 @@
     {id:'demo-becker',guest:'Familie Becker',guests:4,start:iso(a),end:iso(plus(a,3)),source:'Direkt'},
     {id:'demo-schmitz',guest:'Familie Schmitz',guests:2,start:iso(b),end:iso(plus(b,4)),source:'Booking'}
   ];};
-  const demoRequests=()=>{const a=plus(new Date(),22);return[{id:'demo-weber',guest:'Familie Weber',guests:3,start:iso(a),end:iso(plus(a,3)),note:'Wochenende in der Eifel'}];};
+  const demoRequests=()=>{const a=plus(new Date(),22);return[{id:'demo-weber',guest:'Familie Weber',email:'familie.weber@example.de',phone:'+49 170 1234567',guests:3,start:iso(a),end:iso(plus(a,3)),note:'Wochenende in der Eifel'}];};
   const cleanDemoRows=rows=>mode.demo ? rows : rows.filter(x=>!String(x.id||'').startsWith('demo-'));
   const existingBookings=cleanDemoRows(load(BKEY));
   const existingRequests=cleanDemoRows(load(RKEY));
@@ -74,10 +74,17 @@
     grid.innerHTML=Array.from({length:42},(_,i)=>{const d=plus(start,i),s=iso(d),b=state.bookings.some(x=>s>=x.start&&s<x.end),r=state.requests.some(x=>s>=x.start&&s<x.end),c=['owner-day'];if(d.getMonth()!==m)c.push('outside');if(s===today)c.push('today');if(b)c.push('has-booking');else if(r)c.push('has-request');return`<div class="${c.join(' ')}"><span>${d.getDate()}</span>${b||r?'<i></i>':''}</div>`;}).join('');
   }
 
+  function requestContact(x){
+    const links=[];
+    if(x.email)links.push(`<a href="mailto:${safe(x.email)}">✉ ${safe(x.email)}</a>`);
+    if(x.phone)links.push(`<a href="tel:${safe(String(x.phone).replace(/[^+\d]/g,''))}">☎ ${safe(x.phone)}</a>`);
+    return links.length?`<div class="owner-request-contact">${links.join('')}</div>`:'';
+  }
+
   function renderLists(){
     const bl=document.querySelector('#ownerBookingList'),rl=document.querySelector('#ownerRequestList');if(!bl||!rl)return;
     const b=upcoming().slice(0,5);bl.innerHTML=b.length?b.map(x=>`<article class="owner-item"><div><strong>${safe(x.guest)}</strong><span>${fmt(x.start)}–${fmt(x.end)} · ${nights(x)} Nächte · ${x.guests} Pers.</span></div><div><small>${safe(x.source||'Direkt')}</small><button data-del-booking="${safe(x.id)}" aria-label="Aufenthalt entfernen">×</button></div></article>`).join(''):'<p class="owner-empty">Noch keine kommenden Aufenthalte.</p>';
-    rl.innerHTML=state.requests.length?state.requests.map(x=>`<article class="owner-item"><div><strong>${safe(x.guest)}</strong><span>${fmt(x.start)}–${fmt(x.end)} · ${x.guests} Pers.</span></div><div><button class="confirm" data-confirm="${safe(x.id)}">Bestätigen</button><button data-del-request="${safe(x.id)}" aria-label="Anfrage entfernen">×</button></div></article>`).join(''):'<p class="owner-empty">Keine offenen Anfragen.</p>';
+    rl.innerHTML=state.requests.length?state.requests.map(x=>`<article class="owner-item owner-request-item"><div><strong>${safe(x.guest)}</strong><span>${fmt(x.start)}–${fmt(x.end)} · ${x.guests} Pers.</span>${requestContact(x)}${x.note?`<small class="owner-request-note">${safe(x.note)}</small>`:''}</div><div><button class="confirm" data-confirm="${safe(x.id)}">Bestätigen</button><button data-del-request="${safe(x.id)}" aria-label="Anfrage entfernen">×</button></div></article>`).join(''):'<p class="owner-empty">Keine offenen Anfragen.</p>';
     document.querySelectorAll('[data-del-booking]').forEach(b=>b.onclick=()=>{state.bookings=state.bookings.filter(x=>x.id!==b.dataset.delBooking);persist();render();toast('Aufenthalt entfernt');});
     document.querySelectorAll('[data-del-request]').forEach(b=>b.onclick=()=>{state.requests=state.requests.filter(x=>x.id!==b.dataset.delRequest);persist();render();toast('Anfrage entfernt');});
     document.querySelectorAll('[data-confirm]').forEach(b=>b.onclick=()=>{const r=state.requests.find(x=>x.id===b.dataset.confirm);if(!r)return;if(overlap(r.start,r.end))return toast('Zeitraum ist bereits belegt');state.bookings.push({...r,source:'Direkt'});state.requests=state.requests.filter(x=>x.id!==r.id);persist();render();toast('Anfrage bestätigt');});
@@ -103,6 +110,19 @@
     form.onsubmit=e=>{e.preventDefault();const x={id:crypto.randomUUID?.()||`b-${Date.now()}`,guest:document.querySelector('#ownerGuest').value.trim(),guests:+document.querySelector('#ownerGuests').value||1,start:start.value,end:end.value,source:document.querySelector('#ownerSource').value};if(x.end<=x.start)return toast('Abreise muss nach der Anreise liegen');if(overlap(x.start,x.end))return toast('Zeitraum ist bereits belegt');state.bookings.push(x);persist();form.reset();document.querySelector('#ownerGuests').value=2;document.querySelector('#ownerSource').value='Direkt';seed();render();toast('Aufenthalt gespeichert');};
   }
 
-  function init(){cleanVisiblePlaceholders();inject();if(!document.querySelector('#ownerOps'))return;bind();render();}
+  function refreshRequests(){
+    state.requests=cleanDemoRows(load(RKEY));
+    if(mode.demo&&!state.requests.length)state.requests=demoRequests();
+    render();
+  }
+
+  function init(){
+    cleanVisiblePlaceholders();
+    inject();
+    if(!document.querySelector('#ownerOps'))return;
+    bind();
+    render();
+    window.addEventListener('waldhaus2:request-updated',refreshRequests);
+  }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init,{once:true}):init();
 })();

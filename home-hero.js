@@ -151,6 +151,15 @@
     shell.insertBefore(footer,mobileNav);
   }
 
+  function loadNewsExperience(){
+    if(document.querySelector('script[data-news-experience-script]')) return;
+    const script=document.createElement('script');
+    script.src='news-experience.js?v=1';
+    script.defer=true;
+    script.dataset.newsExperienceScript='1';
+    document.head.appendChild(script);
+  }
+
   function decodeBase64(base64){
     const binary=atob(base64);
     const bytes=new Uint8Array(binary.length);
@@ -191,6 +200,7 @@
     applyHeaderLogo();
     applyWelcomeCards();
     applyFooter();
+    loadNewsExperience();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -213,12 +223,14 @@
 
   function boot(){
     let tries=0;
+    loadNewsExperience();
     const timer=setInterval(()=>{
       tries+=1;
       ensureStyles();
       applyHeaderLogo();
       applyWelcomeCards();
       applyFooter();
+      loadNewsExperience();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

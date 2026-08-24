@@ -154,9 +154,18 @@
   function loadNewsExperience(){
     if(document.querySelector('script[data-news-experience-script]')) return;
     const script=document.createElement('script');
-    script.src='news-experience.js?v=1';
+    script.src='news-experience.js?v=3';
     script.defer=true;
     script.dataset.newsExperienceScript='1';
+    document.head.appendChild(script);
+  }
+
+  function loadGuestPlanner(){
+    if(document.querySelector('script[data-guest-planner-script]')) return;
+    const script=document.createElement('script');
+    script.src='guest-planner.js?v=1';
+    script.defer=true;
+    script.dataset.guestPlannerScript='1';
     document.head.appendChild(script);
   }
 
@@ -201,6 +210,7 @@
     applyWelcomeCards();
     applyFooter();
     loadNewsExperience();
+    loadGuestPlanner();
     const hero=document.querySelector('[data-view="home"] .hero');
     if(!hero) return false;
     hero.classList.add('hero-daytime');
@@ -224,6 +234,7 @@
   function boot(){
     let tries=0;
     loadNewsExperience();
+    loadGuestPlanner();
     const timer=setInterval(()=>{
       tries+=1;
       ensureStyles();
@@ -231,6 +242,7 @@
       applyWelcomeCards();
       applyFooter();
       loadNewsExperience();
+      loadGuestPlanner();
       if(applyHero()||tries>30) clearInterval(timer);
     },40);
   }

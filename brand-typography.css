@@ -44,4 +44,26 @@ body .waldhaus-footer-copy > span{
   body .waldhaus-footer-copy strong{
     font-size:20px;
   }
+
+  /* Regression fix: content-prune.css used the inset shorthand after left/top,
+     which reset the mobile map caption back to auto and made it collide with
+     the page eyebrow. Re-assert the intended anchored position here. */
+  html body .view[data-view="stay"] .page-hero::before,
+  html body .view[data-view="guide"] .page-hero::before,
+  html body .view[data-view="house"] .page-hero::before,
+  html body .view[data-view="checkout"] .page-hero::before{
+    left:24px!important;
+    top:228px!important;
+    right:auto!important;
+    bottom:auto!important;
+  }
+
+  /* The guest tab bar has no active destination inside the owner workspace.
+     Keeping it fixed there only covers calendar cards and form controls. */
+  body:has(.owner-view.is-active) .mobile-nav{
+    display:none!important;
+  }
+  body:has(.owner-view.is-active) main{
+    padding-bottom:30px!important;
+  }
 }

@@ -3,26 +3,49 @@
   const mode=window.WALDHAUS_APP_MODE || {owner:false,demo:false};
   const oldAsset=name=>`https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/${name}`;
   const defaults=[
-    {id:'firewood',category:'Haus-Update',title:'Neues Kaminholz aufgefüllt',text:'Der Holzkorb und das Lager sind frisch aufgefüllt. Bitte trockenes Holz zuerst aus dem Innenkorb nehmen.',image:oldAsset('news-firewood.svg')},
-    {id:'wifi',category:'Hinweis',title:'WLAN-Daten geprüft',text:'Netzwerk und Passwort wurden kontrolliert. Die aktuellen Zugangsdaten stehen weiterhin im Bereich Anreise.',image:oldAsset('news-wifi.svg')},
-    {id:'terrace',category:'Garten',title:'Terrasse vorbereitet',text:'Die Sitzgruppe ist gereinigt und die Auflagen liegen wieder trocken im vorgesehenen Fach.',image:oldAsset('news-terrace.svg')},
-    {id:'heating',category:'Technik',title:'Heizung im Sommermodus',text:'Die Heizung ist saisonal angepasst. Bei kühlen Abenden bitte nur kurz manuell nachregeln.',image:oldAsset('news-heating.svg')},
-    {id:'emergency',category:'Hausbuch',title:'Neue Notfallinfos',text:'Die Notfallseite wurde als Grundgerüst angelegt. Telefonnummern und konkrete Kontakte können ergänzt werden.',image:oldAsset('news-emergency.svg')},
-    {id:'cleaning',category:'Reinigung',title:'Checkliste aktualisiert',text:'Die Übergabe-Checkliste steuert jetzt den Status auf Start und hilft bei einer klaren Abreise.',image:oldAsset('news-cleaning.svg')},
-    {id:'calendar',category:'Kalender',title:'Agenda vorbereitet',text:'Anfragen, Reservierungen und blockierte Zeiträume haben jetzt einen sichtbaren Platz im Kalender.',image:oldAsset('news-calendar.svg')},
-    {id:'admin',category:'Admin',title:'Platz für Neuigkeiten',text:'Hier können Eigentümer künftig aktuelle Meldungen für Gäste direkt veröffentlichen.',image:oldAsset('news-admin.svg')}
+    {id:'firewood',category:'Haus-Update',title:'Neues Kaminholz aufgefüllt',text:'Der Holzkorb und das Lager sind frisch aufgefüllt. Bitte trockenes Holz zuerst aus dem Innenkorb nehmen.',image:oldAsset('news-firewood.png')},
+    {id:'wifi',category:'Hinweis',title:'WLAN-Daten geprüft',text:'Netzwerk und Passwort wurden kontrolliert. Die aktuellen Zugangsdaten stehen weiterhin im Bereich Anreise.',image:oldAsset('news-wifi.png')},
+    {id:'terrace',category:'Garten',title:'Terrasse vorbereitet',text:'Die Sitzgruppe ist gereinigt und die Auflagen liegen wieder trocken im vorgesehenen Fach.',image:oldAsset('news-terrace.png')},
+    {id:'heating',category:'Technik',title:'Heizung im Sommermodus',text:'Die Heizung ist saisonal angepasst. Bei kühlen Abenden bitte nur kurz manuell nachregeln.',image:oldAsset('news-heating.png')},
+    {id:'emergency',category:'Hausbuch',title:'Neue Notfallinfos',text:'Die Notfallseite wurde als Grundgerüst angelegt. Telefonnummern und konkrete Kontakte können ergänzt werden.',image:oldAsset('news-emergency.png')},
+    {id:'cleaning',category:'Reinigung',title:'Checkliste aktualisiert',text:'Die Übergabe-Checkliste steuert jetzt den Status auf Start und hilft bei einer klaren Abreise.',image:oldAsset('news-cleaning.png')},
+    {id:'calendar',category:'Kalender',title:'Agenda vorbereitet',text:'Anfragen, Reservierungen und blockierte Zeiträume haben jetzt einen sichtbaren Platz im Kalender.',image:oldAsset('news-calendar.png')},
+    {id:'admin',category:'Admin',title:'Platz für Neuigkeiten',text:'Hier können Eigentümer künftig aktuelle Meldungen für Gäste direkt veröffentlichen.',image:oldAsset('news-admin.png')}
   ];
+  const originalNewsIds=new Set(['firewood','wifi','terrace','heating','emergency','cleaning','calendar','admin']);
 
   const safe=value=>String(value??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;');
   const uid=()=>crypto.randomUUID?.()||`news-${Date.now()}`;
-  const load=()=>{try{const raw=localStorage.getItem(STORAGE_KEY);if(raw){const parsed=JSON.parse(raw);if(Array.isArray(parsed))return parsed;}}catch{}return defaults.map(item=>({...item}));};
+  const upgradeOriginalImage=item=>{
+    if(!item||typeof item!=='object')return item;
+    if(!originalNewsIds.has(item.id))return item;
+    const image=String(item.image||'');
+    const expected=oldAsset(`news-${item.id}.png`);
+    if(image===expected)return item;
+    if(!image || image.includes(`/news-${item.id}.svg`) || image.includes(`/news-${item.id}.png`))return {...item,image:expected};
+    return item;
+  };
+  const load=()=>{
+    try{
+      const raw=localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        const parsed=JSON.parse(raw);
+        if(Array.isArray(parsed)){
+          const upgraded=parsed.map(upgradeOriginalImage);
+          if(JSON.stringify(upgraded)!==JSON.stringify(parsed))localStorage.setItem(STORAGE_KEY,JSON.stringify(upgraded));
+          return upgraded;
+        }
+      }
+    }catch{}
+    return defaults.map(item=>({...item}));
+  };
   const state={items:load()};
   const persist=()=>localStorage.setItem(STORAGE_KEY,JSON.stringify(state.items));
 
   function ensureStyle(){
     if(document.querySelector('link[data-news-experience-style]'))return;
     const link=document.createElement('link');
-    link.rel='stylesheet';link.href='news-experience.css?v=2';link.dataset.newsExperienceStyle='1';document.head.appendChild(link);
+    link.rel='stylesheet';link.href='news-experience.css?v=3';link.dataset.newsExperienceStyle='1';document.head.appendChild(link);
   }
 
   function go(view){
@@ -90,7 +113,7 @@
       event.preventDefault();
       const category=section.querySelector('#ownerNewsCategory').value.trim(),title=section.querySelector('#ownerNewsTitle').value.trim(),text=section.querySelector('#ownerNewsText').value.trim();
       if(!category||!title||!text)return;
-      state.items.unshift({id:uid(),category,title,text,image:oldAsset('news-admin.svg')});persist();event.target.reset();render();
+      state.items.unshift({id:uid(),category,title,text,image:oldAsset('news-admin.png')});persist();event.target.reset();render();
       if(typeof window.showToast==='function')window.showToast('Neuigkeit veröffentlicht');
     };
   }

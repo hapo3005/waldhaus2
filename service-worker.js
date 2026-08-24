@@ -1,4 +1,4 @@
-const CACHE = 'waldhaus2-product-v50';
+const CACHE = 'waldhaus2-product-v51';
 const HERO_PARTS = Array.from({length:11},(_,index)=>`./assets/hero-start-clean.v2/part-${String(index+1).padStart(2,'0')}.txt`);
 const CORE = [
   './','./index.html','./styles.css','./design-system.css','./precision-polish.css','./quick-card-illustrations.css','./section-hero.css',
@@ -15,14 +15,14 @@ const PRESENTATION_MEDIA = [
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-activity-village.svg',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-dining-coffee.svg',
   'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/carousel-dining-market.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-firewood.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-wifi.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-terrace.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-heating.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-emergency.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-cleaning.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-calendar.svg',
-  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-admin.svg'
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-firewood.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-wifi.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-terrace.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-heating.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-emergency.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-cleaning.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-calendar.png',
+  'https://raw.githubusercontent.com/hapo3005/Waldhaus/main/assets/news-admin.png'
 ];
 const presentationHosts = new Set(['raw.githubusercontent.com']);
 
@@ -60,7 +60,7 @@ self.addEventListener('fetch', event => {
 
   if (isAppAsset) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request,{cache:'no-store'})
         .then(response => {
           const copy=response.clone();
           caches.open(CACHE).then(cache=>cache.put(event.request,copy));

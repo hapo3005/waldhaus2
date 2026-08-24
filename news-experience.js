@@ -22,7 +22,7 @@
   function ensureStyle(){
     if(document.querySelector('link[data-news-experience-style]'))return;
     const link=document.createElement('link');
-    link.rel='stylesheet';link.href='news-experience.css?v=1';link.dataset.newsExperienceStyle='1';document.head.appendChild(link);
+    link.rel='stylesheet';link.href='news-experience.css?v=2';link.dataset.newsExperienceStyle='1';document.head.appendChild(link);
   }
 
   function go(view){
@@ -51,11 +51,16 @@
 
   function injectHome(){
     const home=document.querySelector('[data-view="home"]');
-    if(!home||home.querySelector('#homeNews'))return;
+    if(!home)return;
+    const hero=home.querySelector('.hero');
+    const existing=home.querySelector('#homeNews');
+    if(existing){
+      if(hero&&existing.previousElementSibling!==hero)hero.insertAdjacentElement('afterend',existing);
+      return;
+    }
     const section=document.createElement('section');section.id='homeNews';section.className='content-section news-home';
     section.innerHTML=`<div class="section-heading news-heading"><div><span class="card-label">Aktuelles</span><h2>Neuigkeiten aus dem Waldhaus.</h2></div><button class="text-link" type="button" data-open-news-view>Alle Neuigkeiten →</button></div><div id="homeNewsGrid" class="news-home-grid"></div>`;
-    const anchor=home.querySelector('.section-heading');
-    if(anchor)home.insertBefore(section,anchor);else home.appendChild(section);
+    if(hero)hero.insertAdjacentElement('afterend',section);else home.prepend(section);
     section.querySelector('[data-open-news-view]').onclick=()=>go('news');
   }
 
